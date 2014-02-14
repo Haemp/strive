@@ -1,0 +1,14 @@
+{
+  "name": "angular-filesystem",
+  "homepage": "https://github.com/maciel310/angular-filesystem",
+  "_release": "fce5eeee29",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "fce5eeee29dbbc7171f6071fcca3333b2af1ef08"
+  },
+  "_source": "https://github.com/maciel310/angular-filesystem.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/maciel310/angular-filesystem.git",
+  "_direct": true
+}

@@ -1,0 +1,17 @@
+{
+  "name": "App",
+  "description": "Default app",
+  "version": "0.1.1",
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "permissions": [
+    "storage",
+    "fileSystem",
+    "notifications",
+    "alarms"
+  ],
+  "icons": { "16": "/img/img.png", "128": "/img/img.png" }
+}

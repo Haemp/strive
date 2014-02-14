@@ -1,0 +1,23 @@
+{
+  "name": "click-hide",
+  "main": "ClickHide.js",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt",
+    "*.md",
+    "*.css",
+    "**/*.css"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "homepage": "https://github.com/Haemp/click-hide",
+  "_release": "0dedc8b4e0",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "0dedc8b4e0aec8f85ae23a1071bc14e9158b6830"
+  },
+  "_source": "git://github.com/Haemp/click-hide.git",
+  "_target": "*",
+  "_originalSource": "click-hide"
+}

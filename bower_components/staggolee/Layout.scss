@@ -1,0 +1,146 @@
+/**
+ * TODO: 
+ */
+ @mixin flexbox() {
+ 	display: -webkit-box;
+ 	display: -moz-box;
+ 	display: -ms-flexbox;
+ 	display: -webkit-flex;
+ 	display: flex;
+ }
+
+ @mixin flex($values) {
+ 	-webkit-box-flex: $values;
+ 	-moz-box-flex:  $values;
+ 	-webkit-flex:  $values;
+ 	-ms-flex:  $values;
+ 	flex:  $values;
+ }
+
+ @mixin flexVerticalAlign($values){
+ 	-webkit-box-align: $values;
+ 	-moz-box-align:  $values;
+ 	-ms-box-align:  $values;
+ 	-webkit-align-items: $values;
+ 	-moz-align-items:  $values;
+ 	-ms-align-items:  $values;
+ 	align-items: $values;
+ }
+
+ @mixin order($val) {
+ 	-webkit-box-ordinal-group: $val;  
+ 	-moz-box-ordinal-group: $val;     
+ 	-ms-flex-order: $val;     
+ 	-webkit-order: $val;  
+ 	order: $val;
+ }
+
+@mixin orient($val) {
+	-webkit-box-ordinal-group: $val;  
+	-moz-box-ordinal-group: $val;     
+	-ms-flex-order: $val;     
+	-webkit-order: $val;  
+	order: $val;
+}
+
+/**
+ * Adjustment classes. Solves exceptions.
+ */
+ .L-fr{ float:right; }
+ .L-fl{ float:left; }
+ .L-center{ text-align: center; }
+ .L-bfc{ overflow:hidden; }
+ .L-left{ text-align: left; }
+ .L-right{ text-align: right; }
+ .L-full-height{ height: 100%;}
+ .L-fullw{ width: 100%;}
+ .L-maxw-30{ max-width: 30px; } .L-minw-30{  min-width:30px; }
+ .L-maxw-100{ max-width: 100px; } .L-minw-100{ min-width: 100px; }
+ .L-maxw-250{ max-width: 250px; } .L-minw-250{ min-width: 250px; }
+ .L-maxw-150{ max-width: 150px; } .L-minw-150{ min-width:150px; }
+ .L-minmaxw-150{ max-width: 150px; min-width: 150px; }
+ .L-minmaxw-100{ max-width: 100px; min-width: 100px; }
+ .L-minmaxw-80{ max-width: 80px; min-width: 80px; }
+ .L-minmaxw-40{ max-width: 40px; min-width: 40px; }
+
+
+
+/**
+ * Layout module absolute. Solves the problem of special positioning
+ */
+ .L-abs-bottom{ position:absolute; bottom:0; }
+ .L-abs-top{ position:absolute; top:0; }
+ .L-abs-left{ position:absolute; left:0; }
+ .L-abs-left{ position:absolute; left:0; }
+ .L-abs-container{ position:relative; }
+ .L-abs-full-width{left: 0; right: 0;}
+ .L-abs-full-height{top: 0; bottom: 0;}
+
+
+/** 
+ * Horizontal layout module.
+ * Note: Hbox children that are inturn hboxes must be wrapped in their on container - otherwise the display block will nullify them
+ *
+ */
+ .L-hbox{ @include flexbox(); }
+ .L-hbox-constrained{ &>[class*='L-hbox-']{ width:0; } }
+ .L-hbox-1{ @include flex(1);  display:block;}
+ .L-hbox-2{ @include flex(2); display:block;}
+ .L-hbox-3{ @include flex(3); display:block;}
+ .L-hbox-4{ @include flex(4); display:block;}
+ .L-hbox-5{ @include flex(5); display:block;}
+ .L-hbox-6{ @include flex(6); display:block;}
+ .L-hbox-7{ @include flex(7); display:block;}
+ .L-hbox-8{ @include flex(8); display:block;}
+ .L-hbox-9{ @include flex(9); display:block; }
+ .L-hbox-10{ @include flex(10); display:block; }
+ .L-hbox-11{ @include flex(11); display:block; }
+ .L-hbox-vcenter{ @include flexVerticalAlign(center); }
+ .L-hbox-sep5{ &>*{ margin-left: 5px; } &>*:first-child{ margin-left:0;}}
+ .L-hbox-sep10{ &>*{ margin-left: 10px; } &>*:first-child{ margin-left:0;}}
+ .L-hbox-sep15{ &>*{ margin-left: 15px; } &>*:first-child{ margin-left:0;}}
+
+ .L-spacer{ @extend .L-hbox-1; }
+
+ /* ---------------------------------- *
+  * 	Containers
+  * ---------------------------------- */
+ .L-vbox-15{ &>*{ margin-top:15px; } &>*:first-child{ margin-top:0px; } };
+ .L-vbox-10{ &>*{ margin-top:10px; } &>*:first-child{ margin-top:0px; } };
+ .L-ib-container{ &>*{ display:inline-block; } }
+ .L-ib-vcenter{ &>*{ vertical-align: middle; } }
+ .L-fl-container{ 
+ 	&>{ float:left; }
+ }
+
+// double col variation of hbox - can be more efficient but at the cost
+// of not being able to set margin on right item and is not very dynamic.
+@mixin declareMarginHBox( $size ){
+	.L-hboxm-#{$size}{ overflow:hidden;
+		>.L-hboxm-l{ width: #{$size}px; float:left; }
+		>.L-hboxm-r{ margin-left: #{$size}px; }
+	}
+}
+
+
+ // hBox Old version
+ //[class*='L-hbox-']{ display:-webkit-box; }
+ @mixin declareHBox( $left, $right ){
+ 	.L-hbox-#{$left}-#{$right}{ 
+ 		&>.L-hbox-item:first-child{ -webkit-box-flex: $left; }
+ 		&>.L-hbox-item:nth-child(2){ -webkit-box-flex: $right; }
+ 	}
+ }
+
+/**
+ * Tile module
+ */
+ [class*='L-tile-']{ overflow: auto; }
+ @mixin declareTiles( $cols:2 ){ 
+ 	.L-tile-#{$cols}{ 
+ 		$grid-size: 100%/$cols;
+ 		&>.L-tile-item{ width: $grid-size; float:left; box-sizing: border-box; }
+ 	}
+ }
+
+ //@include declareTiles(5);

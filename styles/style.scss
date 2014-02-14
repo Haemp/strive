@@ -1,0 +1,15 @@
+@import 'bower_components/staggolee/Layout';
+
+/* Reset */
+h1,h2,h3,body, ul, li, input, button{ margin:0; padding:0; }
+button, input{ border:none; }
+*{ -webkit-tap-highlight-color: rgba(0,0,0,0); }
+
+/* Icons */ 
+@import 'img/sprites.css';
+
+/* Typography */
+@import 'fonts/font-sabado';
+.sprites{ display: inline-block;}
+
+}

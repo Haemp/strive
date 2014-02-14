@@ -1,0 +1,18 @@
+{
+  "name": "click-hide",
+  "version": "0.1.0",
+  "main": "ClickHide.js",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt",
+    "*.md",
+    "*.css",
+    "**/*.css"
+  ],
+  "dependencies": {
+   
+  },
+  "devDependencies": {
+    
+  }
+}
