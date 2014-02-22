@@ -23,8 +23,9 @@ button{ border:none; background:transparent; }
 
 
 /* Icons */ 
-@import 'icon.css';
-.icon{ display: inline-block;}
+.Icon{ display: inline-block; }
+@import 'sprites.css';
+
 
 /* Button */
 	[class*='Btn-']{ 

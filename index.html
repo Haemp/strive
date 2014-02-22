@@ -32,10 +32,10 @@
 				
 				<div ng-if="isTickedToday(habit)" class="Box_medium">
 					<div class="IconText IconText_medium">
-						<i class="icon flame-{{ StriveHelper.getStreakIcon(habit.streak); }} IconText-icon"></i><div class="IconText-text">{{ habit.streak }}</div>
+						<i class="Icon flame-{{ StriveHelper.getStreakIcon(habit.streak); }} IconText-icon"></i><div class="IconText-text">{{ habit.streak }}</div>
 					</div>
 				</div>
-				<button ng-if="!isTickedToday(habit)" ng-click="tickHabit(habit.id)" class="Btn-reg Btn_icon Btn_medium Habit-tick"><i class="icon checkmark-gray"></i></button>
+				<button ng-if="!isTickedToday(habit)" ng-click="tickHabit(habit.id)" class="Btn-reg Btn_icon Btn_medium Habit-tick"><i class="Icon checkmark-gray"></i></button>
 				
 			</li>
 		</ul>

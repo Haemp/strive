@@ -1,4 +1,4 @@
-.icon{ background:url("icon.png") top left no-repeat; }
+.icon{ /* background:url("icon.png") top left no-repeat; */ }
 .flame-orage{ width:28px; height:37px; background-position:-10px -10px; }
 .flame-purple{ width:28px; height:37px; background-position:-10px -57px; }
 .flame-green{ width:28px; height:37px; background-position:-10px -104px; }
