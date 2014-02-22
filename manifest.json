@@ -1,17 +1,25 @@
 {
-  "name": "App",
-  "description": "Default app",
-  "version": "0.1.1",
+  "name": "Strive",
+  "description": "Habit tracking app",
+  "version": "0.1.2",
   "app": {
     "background": {
-      "scripts": ["background.js"]
+      "scripts": [
+      	"bower_components/angular/angular.js", 
+      	"bower_components/angular-filesystem/src/filesystem.js", 
+      	"bower_components/Datejs/build/date.js", 
+      	"libs/JsonStorage.js",
+      	"background.js"
+      ]
     }
   },
   "permissions": [
     "storage",
     "fileSystem",
     "notifications",
-    "alarms"
+    "alarms",
+    "unlimitedStorage",
+    "idle"
   ],
-  "icons": { "16": "/img/img.png", "128": "/img/img.png" }
+  "icons": { "16": "/img/strive-32.png", "128": "/img/strive-128.png" }
 }

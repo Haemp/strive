@@ -99,14 +99,18 @@
  .L-hbox-sep5{ &>*{ margin-left: 5px; } &>*:first-child{ margin-left:0;}}
  .L-hbox-sep10{ &>*{ margin-left: 10px; } &>*:first-child{ margin-left:0;}}
  .L-hbox-sep15{ &>*{ margin-left: 15px; } &>*:first-child{ margin-left:0;}}
+ .L-hbox-sep20{ &>*{ margin-left: 20px; } &>*:first-child{ margin-left:0;}}
 
  .L-spacer{ @extend .L-hbox-1; }
 
  /* ---------------------------------- *
   * 	Containers
   * ---------------------------------- */
+ .L-vbox-20{ &>*{ margin-top:20px; } &>*:first-child{ margin-top:0px; } };
  .L-vbox-15{ &>*{ margin-top:15px; } &>*:first-child{ margin-top:0px; } };
  .L-vbox-10{ &>*{ margin-top:10px; } &>*:first-child{ margin-top:0px; } };
+ .L-vbox-5{ &>*{ margin-top:5px; } &>*:first-child{ margin-top:0px; } };
+
  .L-ib-container{ &>*{ display:inline-block; } }
  .L-ib-vcenter{ &>*{ vertical-align: middle; } }
  .L-fl-container{ 

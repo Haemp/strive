@@ -1,0 +1,10 @@
+.icon{ background:url("icon.png") top left no-repeat; }
+.flame-orage{ width:28px; height:37px; background-position:-10px -10px; }
+.flame-purple{ width:28px; height:37px; background-position:-10px -57px; }
+.flame-green{ width:28px; height:37px; background-position:-10px -104px; }
+.flame-gray{ width:28px; height:37px; background-position:-10px -151px; }
+.flame-gold{ width:28px; height:36px; background-position:-10px -198px; }
+.flame-blue{ width:28px; height:36px; background-position:-10px -244px; }
+.checkmark-gray{ width:31px; height:31px; background-position:-10px -290px; }
+.cross-red{ width:24px; height:26px; background-position:-10px -331px; }
+

@@ -1,10 +1,8 @@
 <html>
 	<head>
-		<title>App name</title>
-		<link rel="stylesheet" href="style.css">
-
+		<title>Strive</title>
+		<link rel="stylesheet" href="styles/style.css">
 		<link rel="shortcut icon" href="img/favicon.png" type="image/png">
-
 		<script src="bower_components/jquery/jquery.js"></script>
 		<script src="bower_components/fastclick/lib/fastclick.js"></script>
 		<script src="bower_components/angular/angular.js"></script>
@@ -13,10 +11,40 @@
 		<script src="bower_components/hammerjs/hammer.js"></script>
 		<script src="bower_components/angular-ui-router/angular-ui-router.min.js"></script>
 		<script src="bower_components/click-hide/ClickHide.js"></script>
+		<script src="bower_components/Datejs/build/date.js"></script>
+		<script src="libs/JsonStorage.js"></script>
 		
-		<script src="App.js"></script>
+		<script src="Strive.js"></script>
+		<script src="StriveModel.js"></script>
 	</head>
-	<body ng-app="App" ng-csp ng-controller="AppCtrl" >
-		
+	<body ng-app="Strive" ng-csp ng-controller="StriveCtrl" >
+		<div class="MainHeader">
+			<img class="MainHeader-logo" src="img/logo-strive-2x.png" alt="">
+		</div>
+		<ul class="HabitList L-vbox-15">
+			<li class="Box-reg L-hbox Habit" ng-repeat="habit in StriveModel.habits">
+				<button class="Btn-reg Btn_icon Btn_medium Habit-remove" ng-click="removeHabit(habit)" ng-if="habit.selected">
+					<i class="icon cross-red"></i>
+				</button>
+				<div class="Box_medium L-hbox-1 Habit-name" ng-click="selectHabit(habit)" ng-class="{'Habit_selected': habit.selected}">
+					{{ habit.name }}
+				</div>
+				
+				<div ng-if="isTickedToday(habit)" class="Box_medium">
+					<div class="IconText IconText_medium">
+						<i class="icon flame-{{ StriveHelper.getStreakIcon(habit.streak); }} IconText-icon"></i><div class="IconText-text">{{ habit.streak }}</div>
+					</div>
+				</div>
+				<button ng-if="!isTickedToday(habit)" ng-click="tickHabit(habit.id)" class="Btn-reg Btn_icon Btn_medium Habit-tick"><i class="icon checkmark-gray"></i></button>
+				
+			</li>
+		</ul>
+
+		<div class="AddHabit">
+			<div class="AddHabit-inner Box-reg Box_round L-hbox">
+				<input class="L-hbox-1 Input-reg AddHabit-input-name" placeholder="Name" type="text" ng-model="StriveModel.newHabit.name">
+				<button class="Btn-alt Btn_medium AddHabit-btn" ng-click="createHabit(StriveModel.newHabit)">Add</button>
+			</div>
+		</div>
 	</body>	
-</html>
+</html>	

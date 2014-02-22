@@ -1,0 +1,17 @@
+{
+  "name": "Strive",
+  "version": "0.0.1",
+  "description": "Habit tracker",
+  "main": "Strive.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Habit",
+    "tracker",
+    "goal",
+    "tracker"
+  ],
+  "author": "+HampusAhlgren",
+  "license": "BSD"
+}

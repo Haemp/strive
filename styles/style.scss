@@ -1,15 +1,89 @@
 @import 'bower_components/staggolee/Layout';
+@import 'bower_components/staggolee/Effects';
 
 /* Reset */
 h1,h2,h3,body, ul, li, input, button{ margin:0; padding:0; }
 button, input{ border:none; }
 *{ -webkit-tap-highlight-color: rgba(0,0,0,0); }
+body{ background-color:#eee; font: 16px normal "Open sans" sans-serif; padding-bottom: 150px;}
+button{ border:none; background:transparent; }
+
+.L-hbox >*{ display:block; }
+/* Fonts */
+@font-face {
+    font-family: 'RobotoSlab';
+    src: url('../fonts/robotoslab-regular-webfont.eot');
+    src: url('../fonts/robotoslab-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/robotoslab-regular-webfont.woff') format('woff'),
+         url('../fonts/robotoslab-regular-webfont.ttf') format('truetype'),
+         url('../fonts/robotoslab-regular-webfont.svg#roboto_slabregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 /* Icons */ 
-@import 'img/sprites.css';
+@import 'icon.css';
+.icon{ display: inline-block;}
 
-/* Typography */
-@import 'fonts/font-sabado';
-.sprites{ display: inline-block;}
+/* Button */
+	[class*='Btn-']{ 
+	    &:active{ outline:none;}
+	    &:focus{ outline:none;}
+	}
+	.Btn_icon{ cursor:pointer;
+	    &:hover{ background-color: #f9f9f9; }
+	    &:active{ background-color: #f0f0f0;}
+	}
+	.Btn_medium{ padding: 5px 10px; font-size: 15px;}
+	.Btn-alt{ font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-family: "Open sans" sans-serif;  background:#444; color: #f4f4f4;  }
+	.Btn-reg{ }
 
+
+/* Input */
+	[class*='Input-']{
+	    &:focus{ outline:none; }
+	}
+	.Input-reg{ font: normal 16px "RobotoSlab" sans-serif; padding: 5px 10px; }
+	
+
+/* Box */
+	.Box-reg{ background-color:#fff; box-shadow: 0px 1px 1px rgba(0,0,0,0.2);  }
+	.Box_medium{ padding: 15px 30px; }
+	.Box_round{ border-radius: 50px; -webkit-border-radius:50px; }
+
+/* IconText */
+	.IconText{ @extend .L-hbox; @extend .L-hbox-vcenter; }
+	.IconText-icon{ display:block; margin-right: 8px; }
+	.IconText-text{ margin-top: 3px;display:block; line-height:1; }
+	.IconText_medium{ font: normal 18px "RobotoSlab" sans-serif;  }
+
+
+/* Header */
+.MainHeader{ @extend .L-center; padding: 20px; }
+.MainHeader-logo{ width:125px; }
+
+/* Habit */
+.Habit-name{ font-family: "RobotoSlab" sans-serif; cursor:pointer; }
+.Habit-tick{ padding: 10px 50px; border-left: 1px solid #ddd; }
+.Habit_selected{ background-color: #f4f4f4; }
+.Habit-remove{ border-right: 1px solid #ddd; }
+
+/* Add Habit */
+.AddHabit{ position: fixed; bottom: 20px; left: 20px; right: 20px; }
+.AddHabit-inner{ overflow:hidden;  }
+.AddHabit-btn{ padding: 15px 30px;  }
+.AddHabit-input-name{ padding: 15px 10px 15px 30px;}
+
+/* Animations */
+.Habit-remove{
+	&.ng-enter{ @include trans(0.2s); }
+	&.ng-enter{ -webkit-transform: translateX(-30px); }
+	&.ng-enter.ng-enter-active{ -webkit-transform: translateX(0px); }
+	&.ng-leave{ @include trans(0.1s !important); -webkit-transform: translateX(-30px); }
+}
+.Habit{
+	&.ng-enter{ @include trans(0.3s); -webkit-transform: translateX(-100%); }
+	&.ng-enter.ng-enter-active{ -webkit-transform: translateX(0px); }
+	&.ng-leave{ @include trans(0.13s !important); -webkit-transform: translateX(-100%); }
 }

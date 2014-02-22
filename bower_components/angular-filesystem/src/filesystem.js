@@ -51,7 +51,7 @@ fileSystem.factory('fileSystem', ['$q', '$timeout', function($q, $timeout) {
 		requestQuota: function(newQuotaMB) {
 			var def = $q.defer();
 			
-			window.webkitStorageInfo.requestQuota(window.PERSISTENT, newQuotaMB*1024*1024, function(grantedBytes) {
+			navigator.webkitPersistentStorage.requestQuota(newQuotaMB*1024*1024, function(grantedBytes) {
 				safeResolve(def, grantedBytes);
 			}, function(e) {
 				safeReject(def, {text: "Error requesting quota increase", obj: e});
