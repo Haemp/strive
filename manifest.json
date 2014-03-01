@@ -1,7 +1,7 @@
 {
   "name": "Strive",
   "description": "Habit tracking app",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "app": {
     "background": {
       "scripts": [
@@ -18,8 +18,7 @@
     "fileSystem",
     "notifications",
     "alarms",
-    "unlimitedStorage",
-    "idle"
+    "unlimitedStorage"
   ],
   "icons": { "16": "/img/strive-32.png", "128": "/img/strive-128.png" }
 }

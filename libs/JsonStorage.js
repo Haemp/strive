@@ -3,7 +3,7 @@ var JsonStorage = angular.module('JsonStorage', ['fileSystem']);
 JsonStorage.service('JsonStorage', function( $q, $timeout, fileSystem ){
 	var self = this;
 
-	self.isPackaged = (!!chrome.storage);
+	self.isPackaged = (typeof chrome != 'undefined') ? (!!chrome.storage) : false;
 	
 	self.fileSystem = {
 		perferFs: fileSystem.isSupported(),

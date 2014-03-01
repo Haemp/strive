@@ -2,11 +2,13 @@
 @import 'bower_components/staggolee/Effects';
 
 /* Reset */
+html,body{ overflow:auto !important; } 
 h1,h2,h3,body, ul, li, input, button{ margin:0; padding:0; }
 button, input{ border:none; }
 *{ -webkit-tap-highlight-color: rgba(0,0,0,0); }
 body{ background-color:#eee; font: 16px normal "Open sans" sans-serif; padding-bottom: 150px;}
 button{ border:none; background:transparent; }
+
 
 .L-hbox >*{ display:block; }
 /* Fonts */
@@ -49,14 +51,14 @@ button{ border:none; background:transparent; }
 	
 
 /* Box */
-	.Box-reg{ background-color:#fff; box-shadow: 0px 1px 1px rgba(0,0,0,0.2);  }
+	.Box-reg{ background-color:#fff; border-bottom: 1px solid #ccc; }
 	.Box_medium{ padding: 15px 30px; }
-	.Box_round{ border-radius: 50px; -webkit-border-radius:50px; }
+	.Box_round{ border-radius: 30px; -webkit-border-radius:30px; }
 
 /* IconText */
 	.IconText{ @extend .L-hbox; @extend .L-hbox-vcenter; }
 	.IconText-icon{ display:block; margin-right: 8px; }
-	.IconText-text{ margin-top: 3px;display:block; line-height:1; }
+	.IconText-text{ margin-top: 3px;display:block; line-height:0; }
 	.IconText_medium{ font: normal 18px "RobotoSlab" sans-serif;  }
 
 
@@ -65,7 +67,10 @@ button{ border:none; background:transparent; }
 .MainHeader-logo{ width:125px; }
 
 /* Habit */
-.Habit-name{ font-family: "RobotoSlab" sans-serif; cursor:pointer; }
+.Habit{ height: 50px; }
+
+.Habit-name{ font-family: "RobotoSlab" sans-serif;
+}
 .Habit-tick{ padding: 10px 50px; border-left: 1px solid #ddd; }
 .Habit_selected{ background-color: #f4f4f4; }
 .Habit-remove{ border-right: 1px solid #ddd; }
@@ -87,4 +92,25 @@ button{ border:none; background:transparent; }
 	&.ng-enter{ @include trans(0.3s); -webkit-transform: translateX(-100%); }
 	&.ng-enter.ng-enter-active{ -webkit-transform: translateX(0px); }
 	&.ng-leave{ @include trans(0.13s !important); -webkit-transform: translateX(-100%); }
+}
+
+
+.Flip-inner.switched{
+	-webkit-transform: rotateY(180deg); 
+	.Flip-front{ background-color: #eee; }
+}
+.Flip-container { -webkit-perspective: 1000; }
+.Flip-inner { @include trans(1s); -webkit-transform-style: preserve-3d; }
+
+.Flip-front, .Flip-back { height:50px; box-sizing: border-box; -webkit-backface-visibility: hidden; }
+
+.Flip-front {  z-index: 2; padding: 18px 50px; border-left: 1px solid #eee; }
+
+/* back, initially hidden pane */
+.Flip-back {
+	background-color: #fff;
+	padding-left: 39px;
+	margin-top: -50px;
+	position: relative;
+	-webkit-transform: rotateY(180deg);
 }

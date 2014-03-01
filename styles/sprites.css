@@ -1,22 +1,9 @@
-.Icon.flame-purple {
-	background-image: url(../img/sprites@2x.png);
-	width: 14px;
-	height: 18.5px;
-	background-position: -0px -121px;
-	background-size: 16px 139.5px;
-}
 .Icon.flame-blue {
 	background-image: url(../img/sprites@2x.png);
 	width: 14px;
 	height: 18px;
 	background-position: -0px -29.5px;
-	background-size: 16px 139.5px;
-}
-.Icon.cross-red {
-	background-image: url(../img/sprites@2x.png);
-	width: 12px;
-	height: 13px;
-	background-position: -0px -0px;
+	-webkit-background-size: 16px 139.5px;
 	background-size: 16px 139.5px;
 }
 .Icon.flame-gold {
@@ -24,27 +11,7 @@
 	width: 14px;
 	height: 18px;
 	background-position: -0px -47.5px;
-	background-size: 16px 139.5px;
-}
-.Icon.flame-gray {
-	background-image: url(../img/sprites@2x.png);
-	width: 14px;
-	height: 18.5px;
-	background-position: -0px -65.5px;
-	background-size: 16px 139.5px;
-}
-.Icon.checkmark-gray {
-	background-image: url(../img/sprites@2x.png);
-	width: 16px;
-	height: 16.5px;
-	background-position: -0px -13px;
-	background-size: 16px 139.5px;
-}
-.Icon.flame-orange {
-	background-image: url(../img/sprites@2x.png);
-	width: 14px;
-	height: 18.5px;
-	background-position: -0px -102.5px;
+	-webkit-background-size: 16px 139.5px;
 	background-size: 16px 139.5px;
 }
 .Icon.flame-green {
@@ -52,5 +19,46 @@
 	width: 14px;
 	height: 18.5px;
 	background-position: -0px -84px;
+	-webkit-background-size: 16px 139.5px;
+	background-size: 16px 139.5px;
+}
+.Icon.checkmark-gray {
+	background-image: url(../img/sprites@2x.png);
+	width: 16px;
+	height: 16.5px;
+	background-position: -0px -13px;
+	-webkit-background-size: 16px 139.5px;
+	background-size: 16px 139.5px;
+}
+.Icon.flame-gray {
+	background-image: url(../img/sprites@2x.png);
+	width: 14px;
+	height: 18.5px;
+	background-position: -0px -65.5px;
+	-webkit-background-size: 16px 139.5px;
+	background-size: 16px 139.5px;
+}
+.Icon.cross-red {
+	background-image: url(../img/sprites@2x.png);
+	width: 12px;
+	height: 13px;
+	background-position: -0px -0px;
+	-webkit-background-size: 16px 139.5px;
+	background-size: 16px 139.5px;
+}
+.Icon.flame-purple {
+	background-image: url(../img/sprites@2x.png);
+	width: 14px;
+	height: 18.5px;
+	background-position: -0px -121px;
+	-webkit-background-size: 16px 139.5px;
+	background-size: 16px 139.5px;
+}
+.Icon.flame-orange {
+	background-image: url(../img/sprites@2x.png);
+	width: 14px;
+	height: 18.5px;
+	background-position: -0px -102.5px;
+	-webkit-background-size: 16px 139.5px;
 	background-size: 16px 139.5px;
 }

@@ -1,26 +1,35 @@
 var Strive = angular.module('Strive', ['ui.router', 'ClickHide', 'ngAnimate', 'fileSystem', 'JsonStorage']);
 
-Strive.controller('StriveCtrl', function( $scope, StriveModel, StriveHelper ){
+Strive.controller('StriveCtrl', function( $scope, StriveModel, StriveHelper, StateModel ){
 	var self = this;
 	
 	$scope.StriveModel = StriveModel;
+	$scope.StateModel = StateModel;
 	$scope.StriveHelper = StriveHelper;
 	
 	$scope._init = function(){
 
-		// detect if the app is focused
-		window.addEventListener('focus', function(){
-		  console.log('onfocus');
-		});
-		window.addEventListener('blur', function(){
-		  console.log('blur');
-		});
-		window.addEventListener('focusin', function(){
-		  console.log('focusin');
-		});
-		window.addEventListener('focusout', function(){
-		  console.log('focusout');
-		});
+
+		
+		document.addEventListener("touchstart", function(){}, true);
+		document.addEventListener("mouseover", function(){}, true);
+		
+		// skip the 300ms delay
+		FastClick.attach(document.body);
+		
+		// if the app is resumed as a focused activity
+		// this event is called and we then make an attempt
+		// at recalculating the streaks. The usecase here is
+		// when a user resumes the app after a new day has passed,
+		// if we don't recalculate the streaks there will be no
+		// checkmarks to tick
+		if( typeof chrome != 'undefined' && chrome.runtime && chrome.runtime.onSuspendCanceled ){
+			chrome.runtime.onSuspendCanceled.addListener(function(){
+				StriveModel.recalculateAllStreaks();
+			}); 
+		}
+
+		
 		StriveModel.loadHabits()
 			.then(function(){
 				StriveModel.recalculateAllStreaks();					

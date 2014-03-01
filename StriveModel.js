@@ -128,6 +128,13 @@ Strive.service('StriveModel', function( JsonStorage, $q ){
 	}
 });
 
+Strive.service('StateModel', function(){
+	var self = this;
+	self.isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+
+	console.log('Is it chrome: ', self.isChrome);
+});
+
 Strive.service('StriveHelper', function(){
 	var self = this;
 
