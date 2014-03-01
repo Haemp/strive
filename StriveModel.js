@@ -132,6 +132,7 @@ Strive.service('StateModel', function(){
 	var self = this;
 	self.isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 
+	//alert('Is it chrome: '+ self.isChrome);
 	console.log('Is it chrome: ', self.isChrome);
 });
 
