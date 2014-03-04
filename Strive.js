@@ -9,8 +9,6 @@ Strive.controller('StriveCtrl', function( $scope, StriveModel, StriveHelper, Sta
 	
 	$scope._init = function(){
 
-
-		
 		document.addEventListener("touchstart", function(){}, true);
 		document.addEventListener("mouseover", function(){}, true);
 		
@@ -35,7 +33,17 @@ Strive.controller('StriveCtrl', function( $scope, StriveModel, StriveHelper, Sta
 				StriveModel.recalculateAllStreaks();					
 			});
 	}	
-
+	$scope.toggleEditMode = function( habit ){
+		
+		// if we go from editable to 
+		// non editable -> we save the 
+		// current state of all habits
+		habit.isEditable = !habit.isEditable;	
+		if( !habit.isEditable ){
+			habit.selected = false;	
+			$scope.saveAll();
+		}
+	}
 	$scope.isTickedToday = function( habit ){
 		if( !habit.ticks ) return;
 		
@@ -48,6 +56,9 @@ Strive.controller('StriveCtrl', function( $scope, StriveModel, StriveHelper, Sta
 		StriveModel.create( habit );
 		
 		StriveModel.newHabit = undefined;
+	}
+	$scope.saveAll = function(){
+		StriveModel.save()
 	}
 	$scope.selectHabit = function( habit ){
 		if( $scope.selectedHabit )

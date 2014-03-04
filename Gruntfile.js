@@ -22,6 +22,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-spritesheet');
 
   // Default task.
-  grunt.registerTask('default', ['sprite:generate']);
+  grunt.registerTask('default', ['spritesheet:generate']);
 
 };

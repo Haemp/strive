@@ -22,7 +22,9 @@ button{ border:none; background:transparent; }
     font-weight: normal;
     font-style: normal;
 }
-
+/* Typography */
+.T-alt{ font-family: "RobotoSlab" sans-serif; }
+.T-50{ font-size: 16px; }
 
 /* Icons */ 
 .Icon{ display: inline-block; }
@@ -48,7 +50,7 @@ button{ border:none; background:transparent; }
 	    &:focus{ outline:none; }
 	}
 	.Input-reg{ font: normal 16px "RobotoSlab" sans-serif; padding: 5px 10px; }
-	
+	.Input-alt{ border-bottom: 1px solid #999; @include rounded(4px); padding: 0 5px; }
 
 /* Box */
 	.Box-reg{ background-color:#fff; border-bottom: 1px solid #ccc; }
@@ -66,14 +68,15 @@ button{ border:none; background:transparent; }
 .MainHeader{ @extend .L-center; padding: 20px; }
 .MainHeader-logo{ width:125px; }
 
-/* Habit */
-.Habit{ height: 50px; }
-
-.Habit-name{ font-family: "RobotoSlab" sans-serif;
-}
+/* Habit */ 
+.Habit{ display:block; background-color:#fff; border-bottom: 1px solid #ccc; }
+.Habit-head{ height: 50px; }
+.Habit-name{ font-family: "RobotoSlab" sans-serif; padding: 15px 30px; }
+.Habit_selected .Habit-name{ padding-left: 10px; }
 .Habit-tick{ padding: 10px 50px; border-left: 1px solid #ddd; }
-.Habit_selected{ background-color: #f4f4f4; }
-.Habit-remove{ border-right: 1px solid #ddd; }
+.Habit_selected{  }
+.Habit-meta{ padding: 15px 30px; min-height: 50px; background-color:#f8f8f8; }
+.Habit-remove{  }
 
 /* Add Habit */
 .AddHabit{ position: fixed; bottom: 20px; left: 20px; right: 20px; }

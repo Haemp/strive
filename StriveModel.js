@@ -42,13 +42,6 @@ Strive.service('StriveModel', function( JsonStorage, $q ){
 		self.save();
 	}
 
-	self.updateHabit = function( updatedHabit ){
-		var oldHabit = self.getHabit(habit.id);
-		oldHabit.name = updatedHabit.name;
-
-		self.save();
-	}
-
 	self.getHabit = function( id ){
 		for (var i = self.habits.length - 1; i >= 0; i--) {
 			if( self.habits[i].id == id )
@@ -131,7 +124,7 @@ Strive.service('StriveModel', function( JsonStorage, $q ){
 Strive.service('StateModel', function(){
 	var self = this;
 	self.isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-
+	self.userAgent = navigator.userAgent;
 	//alert('Is it chrome: '+ self.isChrome);
 	console.log('Is it chrome: ', self.isChrome);
 });
