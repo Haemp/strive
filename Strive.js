@@ -65,6 +65,7 @@ Strive.controller('StriveCtrl', function( $scope, StriveModel, StriveHelper, Sta
 		if( $scope.selectedHabit ){
 			$scope.selectedHabit.selected = false;
 			$scope.selectedHabit.isEditable = false;
+			$scope.selectedHabit.confirmDelete = false;
 		}
 			
 		

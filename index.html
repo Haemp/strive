@@ -69,13 +69,25 @@
 					<div>
 						<div ng-if="!habit.isEditable">
 							{{ habit.description }}	
+							<span ng-if="!habit.description" ng-click="toggleEditMode(habit)">Add description</span>	
 						</div>
 						<div ng-if="habit.isEditable" class="L-hbox">
 							<input class="Input-alt Input_-medium L-hbox-1" placeholder="Describe it" type="text" ng-model="habit.description">
 						</div>
 					</div> 
-					<div class="L-hbox">
-						<button ng-click="removeHabit(habit)" class="Btn Btn-lilly Btn_small">Delete Habit</button>
+					<div>
+						<button ng-click="habit.confirmDelete = true" ng-if="!habit.confirmDelete" class="Btn Btn-lilly Btn_small">Delete Habit</button>
+						<div ng-if="habit.confirmDelete" >
+							<h2 class="Head medium">Whoa there cowboy!</h2>
+							<div class="L-vbox-15">
+								<p class="Para small">Deleting this habit will erase all the streaks you've earned. Really dude?</p>
+								<div class="L-hbox">
+									<button class="Btn-lilly Btn_small" ng-click="habit.confirmDelete = false">Cancel</button>
+									<div class="L-spacer"></div>
+									<button class="Btn-lilly Btn_small" ng-click="removeHabit(habit)">Got it - Delete</button>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</li>
