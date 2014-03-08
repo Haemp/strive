@@ -41,6 +41,7 @@ Strive.controller('StriveCtrl', function( $scope, StriveModel, StriveHelper, Sta
 		habit.isEditable = !habit.isEditable;	
 		if( !habit.isEditable ){
 			habit.selected = false;	
+			$scope.selectedHabit = undefined;
 			$scope.saveAll();
 		}
 	}
@@ -61,8 +62,11 @@ Strive.controller('StriveCtrl', function( $scope, StriveModel, StriveHelper, Sta
 		StriveModel.save()
 	}
 	$scope.selectHabit = function( habit ){
-		if( $scope.selectedHabit )
+		if( $scope.selectedHabit ){
 			$scope.selectedHabit.selected = false;
+			$scope.selectedHabit.isEditable = false;
+		}
+			
 		
 		if( $scope.selectedHabit != habit ){
 			habit.selected = true;

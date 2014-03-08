@@ -33,9 +33,11 @@
 					<button class="Btn-reg Btn_icon Btn_medium Habit-remove" ng-click="toggleEditMode( habit )" ng-if="habit.selected">
 						<i class="Icon edit" ng-class="{ edit: !habit.isEditable, save: habit.isEditable }"></i>
 					</button>
-					<div class="L-hbox-1 Habit-name" ng-click="selectHabit(habit)">
-						<span ng-if="!habit.isEditable">{{ habit.name }}</span>
-						<input placeholder="Habit name" ng-if="habit.isEditable" type="text" class="Input-alt T-50 T-alt" ng-model="habit.name">
+					<div class="L-hbox-1 Habit-name" ng-if="!habit.isEditable" ng-click="selectHabit(habit)">
+						<span >{{ habit.name }}</span>
+					</div>
+					<div class="L-hbox-1 Habit-name" ng-if="habit.isEditable" >
+						<input  placeholder="Habit name" type="text" class="Input-alt T-50 T-alt" ng-model="habit.name">
 					</div>
 					
 					<!-- Fancy pancy flip thingy if we're in a chrome environment -->
@@ -57,18 +59,23 @@
 					
 					<div ng-if="isTickedToday(habit) && !StateModel.isChrome" class="Box_medium">
 						<div class="IconText IconText_medium">
-							<i class="Icon flame-green IconText-icon"></i><div class="IconText-text">{{ habit.streak }}</div>
+							<i class="Icon flame-{{ StriveHelper.getStreakIcon(habit.streak); }} IconText-icon"></i><div class="IconText-text">{{ habit.streak }}</div>
 						</div>
 					</div>
 					<button ng-if="!isTickedToday(habit) && !StateModel.isChrome" ng-click="tickHabit(habit.id)" class="Btn-reg Btn_icon Btn_medium Habit-tick"><i class="Icon checkmark-gray"></i></button>
 				</div>
 				
-				<div class="Habit-meta" ng-if="habit.selected">
+				<div class="Habit-meta L-vbox-15" ng-if="habit.selected">
 					<div>
-						{{ habit.description }}	
-					</div>
-					<div ng-if="habit.isEditable">
-						<input type="text" ng-model="habit.description">
+						<div ng-if="!habit.isEditable">
+							{{ habit.description }}	
+						</div>
+						<div ng-if="habit.isEditable" class="L-hbox">
+							<input class="Input-alt Input_-medium L-hbox-1" placeholder="Describe it" type="text" ng-model="habit.description">
+						</div>
+					</div> 
+					<div class="L-hbox">
+						<button ng-click="removeHabit(habit)" class="Btn Btn-lilly Btn_small">Delete Habit</button>
 					</div>
 				</div>
 			</li>
