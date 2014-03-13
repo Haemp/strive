@@ -1,0 +1,74 @@
+<div>
+     <ul class="HabitList L-vbox-15">
+        <li class="Habit" ng-class="{'Habit_selected': habit.selected}" ng-repeat="habit in StriveModel.habits">
+    
+            <div class="Habit-head L-hbox">					
+                <button class="Btn-reg Btn_icon Btn_medium Habit-remove" ng-click="toggleEditMode( habit )" ng-if="habit.selected">
+                    <i class="Icon edit" ng-class="{ edit: !habit.isEditable, save: habit.isEditable }"></i>
+                </button>
+                <div class="L-hbox-1 Habit-name" ng-if="!habit.isEditable" ng-click="selectHabit(habit)">
+                    <span >{{ habit.name }}</span>
+                </div>
+                <div class="L-hbox-1 Habit-name" ng-if="habit.isEditable" >
+                    <input  placeholder="Habit name" type="text" class="Input-alt T-50 T-alt" ng-model="habit.name">
+                </div>
+                
+                <!-- Fancy pancy flip thingy if we're in a chrome environment -->
+                <div ng-if="StateModel.isChrome">
+                    <div class="Flip-container">
+                        <div class="Flip-inner" ng-class="{switched: isTickedToday(habit)}">
+                            <div class="Box_medium Flip-front Btn-reg Btn_icon" ng-click="tickHabit(habit.id)">
+                                <i class="Icon checkmark-gray"></i>
+                            </div>
+                            <div class="Flip-back  Box_medium">
+                                <div class="IconText IconText_medium">
+                                    <i class="Icon flame-{{ StriveHelper.getStreakIcon(habit.streak); }} IconText-icon"></i>
+                                    <div class="IconText-text">{{ habit.streak }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div ng-if="isTickedToday(habit) && !StateModel.isChrome" class="Box_medium">
+                    <div class="IconText IconText_medium">
+                        <i class="Icon flame-{{ StriveHelper.getStreakIcon(habit.streak); }} IconText-icon"></i><div class="IconText-text">{{ habit.streak }}</div>
+                    </div>
+                </div>
+                <button ng-if="!isTickedToday(habit) && !StateModel.isChrome" ng-click="tickHabit(habit.id)" class="Btn-reg Btn_icon Btn_medium Habit-tick"><i class="Icon checkmark-gray"></i></button>
+            </div>
+            
+            <div class="Habit-meta L-vbox-15" ng-if="habit.selected">
+                <div>
+                    <div ng-if="!habit.isEditable">
+                        {{ habit.description }}	
+                        <span ng-if="!habit.description" ng-click="toggleEditMode(habit)">Add description</span>	
+                    </div>
+                    <div ng-if="habit.isEditable" class="L-hbox">
+                        <input class="Input-alt Input_-medium L-hbox-1" placeholder="Describe it" type="text" ng-model="habit.description">
+                    </div>
+                </div> 
+                <div>
+                    <button ng-click="habit.confirmDelete = true" ng-if="!habit.confirmDelete" class="Btn Btn-lilly Btn_small">Delete Habit</button>
+                    <div ng-if="habit.confirmDelete" >
+                        <h2 class="Head medium">Whoa there cowboy!</h2>
+                        <div class="L-vbox-15">
+                            <p class="Para small">Deleting this habit will erase all the streaks you've earned. Really dude?</p>
+                            <div class="L-hbox">
+                                <button class="Btn-lilly Btn_small" ng-click="habit.confirmDelete = false">Cancel</button>
+                                <div class="L-spacer"></div>
+                                <button class="Btn-lilly Btn_small" ng-click="removeHabit(habit)">Got it - Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="MainInput">
+        <div class="MainInput-inner Box-reg Box_round L-hbox">
+            <input class="L-hbox-1 Input-reg MainInput-input-name" placeholder="Habit" type="text" ng-model="StriveModel.newHabit.name">
+            <button class="Btn-alt Btn_medium MainInput-btn" ng-click="createHabit(StriveModel.newHabit)">Add</button>
+        </div>
+    </div>
+</div>

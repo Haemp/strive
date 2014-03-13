@@ -1,0 +1,36 @@
+{
+  "name": "ah-basement",
+  "homepage": "https://github.com/Haemp/ah-basement",
+  "authors": [
+    "Hampus Ahlgren <hampus@qudini.com>"
+  ],
+  "description": "A basement slide in menu directive for mobile for Angular JS",
+  "main": "Basement.js",
+  "keywords": [
+    "AngularJS",
+    "Menu",
+    "Basement"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "click-hide": "*",
+    "hammerjs": "~1.0.6"
+  },
+  "_release": "5dfa28f927",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "5dfa28f92785efee6ccd1fac1d5ebbd5a6edc027"
+  },
+  "_source": "git://github.com/Haemp/ah-basement.git",
+  "_target": "*",
+  "_originalSource": "ah-basement",
+  "_direct": true
+}

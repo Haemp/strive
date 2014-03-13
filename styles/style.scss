@@ -1,5 +1,6 @@
 @import 'bower_components/staggolee/Layout';
 @import 'bower_components/staggolee/Effects';
+@import 'bower_components/ah-basement/basement';
 
 /* Reset */
 html,body{ overflow:auto !important; } 
@@ -32,7 +33,7 @@ input{ background-color: transparent; }
 /* Icons */ 
 .Icon{ display: inline-block; }
 @import 'sprites.css';
-
+.Icon-circle-white{ width: 10px; height: 10px; background-color: #ccc; display: inline-block; border-radius: 20px;}
 
 /* Button */
 	[class*='Btn-']{ 
@@ -51,6 +52,7 @@ input{ background-color: transparent; }
 	.Btn-lilly{ @include rounded(30px); border:1px solid #666; color: #333; }
 
 
+
 /* Input */
 	[class*='Input-']{
 	    &:focus{ outline:none; }
@@ -63,6 +65,7 @@ input{ background-color: transparent; }
 	.Box-reg{ background-color:#fff; border-bottom: 1px solid #ccc; }
 	.Box_medium{ padding: 15px 30px; }
 	.Box_round{ border-radius: 30px; -webkit-border-radius:30px; }
+	.Box-ali{ background-color:#fff; border-bottom: 1px solid #ccc; }
 
 /* IconText */
 	.IconText{ @extend .L-hbox; @extend .L-hbox-vcenter; }
@@ -70,13 +73,18 @@ input{ background-color: transparent; }
 	.IconText-text{ margin-top: 3px;display:block; line-height:0; }
 	.IconText_medium{ font: normal 18px "RobotoSlab" sans-serif;  }
 
+/* MainInput */
+	.MainInput{  position: fixed; bottom: 20px; left: 20px; right: 20px; }
+	.MainInput-inner{ overflow:hidden; }
+	.MainInput-btn{ padding: 15px 30px; }
+	.MainInput-input-name{ padding: 15px 10px 15px 30px;}
 
 /* Header */
 .MainHeader{ @extend .L-center; padding: 20px; }
 .MainHeader-logo{ width:125px; }
 
 /* Habit */ 
-.Habit{ display:block; background-color:#fff; border-bottom: 1px solid #ccc; }
+.Habit{ display:block; @extend .Box-ali;}
 .Habit-head{ height: 50px; }
 .Habit-name{ font-family: "RobotoSlab" sans-serif; padding: 15px 30px; }
 .Habit_selected .Habit-name{ padding-left: 10px; }
@@ -86,10 +94,15 @@ input{ background-color: transparent; }
 .Habit-remove{  }
 
 /* Add Habit */
-.AddHabit{ position: fixed; bottom: 20px; left: 20px; right: 20px; }
-.AddHabit-inner{ overflow:hidden;  }
-.AddHabit-btn{ padding: 15px 30px;  }
-.AddHabit-input-name{ padding: 15px 10px 15px 30px;}
+
+
+/* Basement */
+.Basement{ padding-top: 0;}
+.Basement-menu{  }
+
+.Basement-menu-item_active{ margin-right: 5px; @extend .Icon-circle-white}
+.Basement-menu-item{ border-bottom: 1px solid #222222; box-shadow: 0px 1px 0px #444; -webkit-box-shadow: 0px 1px 0px #444; padding: 10px; }
+.Basement-menu-item-name{  }
 
 /* Animations */
 .Habit-remove{

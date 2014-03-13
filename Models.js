@@ -11,9 +11,6 @@ Strive.service('StriveModel', function( JsonStorage, $q ){
 		JsonStorage.get('habits')
 			.then(function( habits ){
 				self.habits = habits;
-			
-				console.log('baits!');
-
 				def.resolve();
 			}, function( error ){
 				console.log('There was an error getting the habits', error);
@@ -128,6 +125,82 @@ Strive.service('StateModel', function(){
 	//alert('Is it chrome: '+ self.isChrome);
 	console.log('Is it chrome: ', self.isChrome);
 });
+
+
+Strive.service('MonitorModel', function( JsonStorage, $q ){
+	var self = this;
+	self.monitors;
+	
+	self._init = function(){
+	
+	}
+	
+	self.loadMonitors = function(){
+		var def = $q.defer();
+		JsonStorage.get('monitors')
+			.then(function( monitors ){
+				self.monitors = monitors;
+				def.resolve();
+			}, function( error ){
+				console.log('There was an error getting the monitors', error);
+				def.reject();
+			});
+	
+		return def.promise;
+	}
+	
+	self.save = function(){
+		JsonStorage.save('monitors', self.monitors).
+			then(function(){ 
+				console.log('Habits saved!') 
+			}, function( error ){
+				console.log('There was an error saving the habits', error);
+			});
+	}
+	
+	self.create = function( newMonitor ){
+
+		newMonitor.createdAt = newHabit.id = Date.now();
+
+		if( !self.monitors ) self.monitors = [];
+		self.monitors.push( angular.copy(newMonitor) );
+
+		self.save();
+	}
+
+	self.remove = function( monitor ){
+		for (var i = self.monitors.length - 1; i >= 0; i--) {
+			if( self.monitors[i].id == habit.id )
+				self.monitors.splice(i, 1);
+		}
+
+		self.save();
+	}
+
+	self.getMonitor = function( id ){
+		for (var i = self.monitors.length - 1; i >= 0; i--) {
+			if( self.monitors[i].id == id )
+				return self.monitors[i];
+		}
+	}
+	
+	self.addDataPoint = function( monitorId, dataPointValue ){
+		var monitor = self.getMonitor( monitorId );
+
+		if( !monitor.ticks )
+			monitor.dataPoints = [];
+
+		habit.dataPoints.unshift({ 
+			createdAt: Date.now(),
+			value: dataPointValue
+		});
+
+		self.save();
+	}
+	
+	self._init();
+});
+
 
 Strive.service('StriveHelper', function(){
 	var self = this;
