@@ -4,7 +4,7 @@ var Strive = angular.module('Strive', [
 	'ngAnimate', 
 	'fileSystem', 
 	'JsonStorage', 
-	'Basement'
+	'Basement',
 ]);
 
 Strive.config(function( $stateProvider ){

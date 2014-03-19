@@ -1,15 +1,15 @@
 <div>
-     <ul class="HabitList L-vbox-15">
-        <li class="Habit" ng-class="{'Habit_selected': habit.selected}" ng-repeat="habit in StriveModel.habits">
+     <ul class="L-vbox-15">
+        <li class="ListItem" ng-class="{'ListItem_selected': habit.selected}" ng-repeat="habit in StriveModel.habits">
     
-            <div class="Habit-head L-hbox">					
-                <button class="Btn-reg Btn_icon Btn_medium Habit-remove" ng-click="toggleEditMode( habit )" ng-if="habit.selected">
+            <div class="ListItem-head L-hbox">					
+                <button class="Btn-reg Btn_icon Btn_medium ListItem-edit" ng-click="toggleEditMode( habit )" ng-if="habit.selected">
                     <i class="Icon edit" ng-class="{ edit: !habit.isEditable, save: habit.isEditable }"></i>
                 </button>
-                <div class="L-hbox-1 Habit-name" ng-if="!habit.isEditable" ng-click="selectHabit(habit)">
-                    <span >{{ habit.name }}</span>
+                <div class="L-hbox-1 ListItem-name" ng-if="!habit.isEditable" ng-click="selectHabit(habit)">
+                    <span>{{ habit.name }}</span>
                 </div>
-                <div class="L-hbox-1 Habit-name" ng-if="habit.isEditable" >
+                <div class="L-hbox-1 ListItem-name" ng-if="habit.isEditable" >
                     <input  placeholder="Habit name" type="text" class="Input-alt T-50 T-alt" ng-model="habit.name">
                 </div>
                 
@@ -38,8 +38,8 @@
                 <button ng-if="!isTickedToday(habit) && !StateModel.isChrome" ng-click="tickHabit(habit.id)" class="Btn-reg Btn_icon Btn_medium Habit-tick"><i class="Icon checkmark-gray"></i></button>
             </div>
             
-            <div class="Habit-meta L-vbox-15" ng-if="habit.selected">
-                <div>
+            <div class="ListItem-meta" ng-if="habit.selected">
+                <div class="ListItem-meta-section">
                     <div ng-if="!habit.isEditable">
                         {{ habit.description }}	
                         <span ng-if="!habit.description" ng-click="toggleEditMode(habit)">Add description</span>	
@@ -48,7 +48,7 @@
                         <input class="Input-alt Input_-medium L-hbox-1" placeholder="Describe it" type="text" ng-model="habit.description">
                     </div>
                 </div> 
-                <div>
+                <div class="ListItem-meta-section">
                     <button ng-click="habit.confirmDelete = true" ng-if="!habit.confirmDelete" class="Btn Btn-lilly Btn_small">Delete Habit</button>
                     <div ng-if="habit.confirmDelete" >
                         <h2 class="Head medium">Whoa there cowboy!</h2>

@@ -160,7 +160,7 @@ Strive.service('MonitorModel', function( JsonStorage, $q ){
 	
 	self.create = function( newMonitor ){
 
-		newMonitor.createdAt = newHabit.id = Date.now();
+		newMonitor.createdAt = newMonitor.id = Date.now();
 
 		if( !self.monitors ) self.monitors = [];
 		self.monitors.push( angular.copy(newMonitor) );
@@ -170,11 +170,20 @@ Strive.service('MonitorModel', function( JsonStorage, $q ){
 
 	self.remove = function( monitor ){
 		for (var i = self.monitors.length - 1; i >= 0; i--) {
-			if( self.monitors[i].id == habit.id )
+			if( self.monitors[i].id == monitor.id )
 				self.monitors.splice(i, 1);
 		}
 
 		self.save();
+	}
+
+	self.hasDataPointToday = function( monitorId ){
+		var monitor = self.getMonitor( monitorId );
+
+		if( typeof monitor.dataPoints == 'undefined' ||
+			monitor.dataPoints.length < 1 ) return false;
+		
+		return new Date(monitor.dataPoints[0].createdAt).isToday();
 	}
 
 	self.getMonitor = function( id ){
@@ -185,12 +194,13 @@ Strive.service('MonitorModel', function( JsonStorage, $q ){
 	}
 	
 	self.addDataPoint = function( monitorId, dataPointValue ){
+		console.log('Creating data point', monitorId, dataPointValue);
 		var monitor = self.getMonitor( monitorId );
 
-		if( !monitor.ticks )
+		if( !monitor.dataPoints )
 			monitor.dataPoints = [];
 
-		habit.dataPoints.unshift({ 
+		monitor.dataPoints.unshift({ 
 			createdAt: Date.now(),
 			value: dataPointValue
 		});

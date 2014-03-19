@@ -1,7 +1,66 @@
 <div>
     <ul class="L-vbox-15">
-        <li class="Monitor Box-ali" ng-repeat="monitor in MonitorModel.monitors">
+        <li class="ListItem Box-ali" ng-class="{'ListItem_selected': monitor.selected}" ng-repeat="monitor in MonitorModel.monitors">
             
+            <div class="ListItem-head L-hbox L-hbox-vcenter">
+            	<button class="Btn-reg Btn_icon Btn_medium ListItem-edit" 
+            			ng-click="toggleEditMode( monitor )" 
+            			ng-if="monitor.selected">
+        			<i class="Icon edit" ng-class="{ edit: !monitor.isEditable, save: monitor.isEditable }"></i>
+                </button>
+                <div class="ListItem-name L-hbox-1" ng-if="!monitor.isEditable" ng-click="selectMonitor(monitor)">{{ monitor.name }}</div>
+                <div class="L-hbox-1 ListItem-name" ng-if="monitor.isEditable" >
+                    <input  placeholder="Habit name" type="text" class="Input-alt T-50 T-alt" ng-model="monitor.name">
+                </div>
+                <div class="Monitor-flag">
+                	<div class="IconText IconText_medium">
+	                	<i class="Icon flag-gray IconText-icon"></i>
+	                	<span class="IconText-text">{{ numDataPoints(monitor) }}</span>
+                	</div>
+                </div>
+            </div>
+            
+            <div class="ListItem-meta" ng-if="monitor.selected">
+                <div class="ListItem-meta-section">
+                	<div class="L-hbox L-hbox-sep10" ng-if="!hasDataPointToday( monitor )">
+	                    <input class="Input-alt Input_centered Input_-medium" placeholder="Value" type="text" ng-model="monitor.newDataValue">
+	                    <button class="Btn-lilly Btn_small L-hbox-1" ng-click="addDataPoint(monitor, monitor.newDataValue)">Add Data Point</button>
+                	</div>
+                	<div ng-if="hasDataPointToday( monitor )">
+                		You've already entered todays data point.
+                	</div>
+                </div>
+				<div class="ListItem-meta-section">
+					<div ng-controller="ChartCtrl" ng-if="monitor.selected" class="Monitor-chart">
+						<div id="chart" style="height: 200px;">
+						  <svg></svg>
+						</div>
+					</div>
+				</div>
+                <div class="ListItem-meta-section">
+                    <div ng-if="!monitor.isEditable">
+                        {{ monitor.description }}	
+                        <span ng-if="!monitor.description" ng-click="toggleEditMode(monitor)">Add description</span>	
+                    </div>
+                    <div ng-if="monitor.isEditable" class="L-hbox">
+                        <input class="Input-alt Input_-medium L-hbox-1" placeholder="Describe it" type="text" ng-model="monitor.description">
+                    </div>
+                </div> 
+                <div class="ListItem-meta-section">
+                	<button ng-click="monitor.confirmDelete = true" ng-if="!monitor.confirmDelete" class="Btn Btn-lilly Btn_small">Delete Monitor</button>
+                    <div ng-if="monitor.confirmDelete" >
+                        <h2 class="Head medium">No turning back</h2>
+                        <div class="L-vbox-15">
+                            <p class="Para small">You take the blue pill - the story ends, you wake up in your bed and believe whatever you want to believe. You take the red pill - you stay in Wonderland and I show you how deep the rabbit-hole goes.</p>
+                            <div class="L-hbox">
+                                <button class="Btn-lilly Btn_small" ng-click="monitor.confirmDelete = false">Cancel</button>
+                                <div class="L-spacer"></div>
+                                <button class="Btn-lilly Btn_small" ng-click="removeMonitor(monitor)">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </li>
     </ul>
     

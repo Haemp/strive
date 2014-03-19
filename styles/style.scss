@@ -1,39 +1,62 @@
 @import 'bower_components/staggolee/Layout';
 @import 'bower_components/staggolee/Effects';
 @import 'bower_components/ah-basement/basement';
+@import '../bower_components/nvd3/nv.d3.css';
 
 /* Reset */
-html,body{ overflow:auto !important; } 
-h1,h2,h3,body, ul, li, input, button, p{ margin:0; padding:0; }
-button, input{ border:none; }
-*{ -webkit-tap-highlight-color: rgba(0,0,0,0); }
-body{ background-color:#eee; font: 16px normal "Open sans" sans-serif; line-height: 1.5em; padding-bottom: 150px;}
-button{ border:none; background:transparent; }
-input{ background-color: transparent; }
+	html,body{ overflow:auto !important; } 
+	h1,h2,h3,body, ul, li, input, button, p{ margin:0; padding:0; }
+	button, input{ border:none; }
+	*{ -webkit-tap-highlight-color: rgba(0,0,0,0); }
+	body{ background-color:#eee; font: 16px normal "Open sans" sans-serif; line-height: 1.5em; padding-bottom: 150px;}
+	button{ border:none; background:transparent; }
+	input{ background-color: transparent; }
+	.L-hbox >*{ display:block; }
 
-
-.L-hbox >*{ display:block; }
 /* Fonts */
-@font-face {
-    font-family: 'RobotoSlab';
-    src: url('../fonts/robotoslab-regular-webfont.eot');
-    src: url('../fonts/robotoslab-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/robotoslab-regular-webfont.woff') format('woff'),
-         url('../fonts/robotoslab-regular-webfont.ttf') format('truetype'),
-         url('../fonts/robotoslab-regular-webfont.svg#roboto_slabregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
+	@font-face {
+	    font-family: 'RobotoSlab';
+	    src: url('../fonts/robotoslab-regular-webfont.eot');
+	    src: url('../fonts/robotoslab-regular-webfont.eot?#iefix') format('embedded-opentype'),
+	         url('../fonts/robotoslab-regular-webfont.woff') format('woff'),
+	         url('../fonts/robotoslab-regular-webfont.ttf') format('truetype'),
+	         url('../fonts/robotoslab-regular-webfont.svg#roboto_slabregular') format('svg');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+	
 /* Typography */
-.T-alt{ font-family: "RobotoSlab" sans-serif; }
-.T-50{ font-size: 16px; }
+	.T-alt{ font-family: "RobotoSlab" sans-serif; }
+	.T-50{ font-size: 16px; }
+	.Head.medium{ font-size: 18px; font-weight: 600; }
+	.Para.small{ font-size: 13px; line-height: 1.5em;}
 
-.Head.medium{ font-size: 18px; font-weight: 600; }
-.Para.small{ font-size: 13px; line-height: 1.5em;}
 /* Icons */ 
-.Icon{ display: inline-block; }
-@import 'sprites.css';
-.Icon-circle-white{ width: 10px; height: 10px; background-color: #ccc; display: inline-block; border-radius: 20px;}
+	.Icon{ display: inline-block; }
+	@import 'sprites.css';
+	.Icon-circle-white{ width: 10px; height: 10px; background-color: #ccc; display: inline-block; border-radius: 20px;}
+
+/* List item is the white box with a meta box underneath it */
+	.ListItem{ display:block; @extend .Box-ali;}
+	.ListItem-head{ height: 50px; }
+	.ListItem-name{ font-family: "RobotoSlab" sans-serif; padding: 15px 30px; }
+	.ListItem_selected .ListItem-name{ padding-left: 0px; }
+	.ListItem-meta{  background-color:#f8f8f8; }
+	.ListItem-meta-section{ padding: 15px 15px; border-top:1px solid #fff; box-shadow: 0px -1px 0px #ddd; -webkit-box-shadow: 0px -1px 0px #ddd; }
+	.ListItem-meta-section:first-child{ border-top:none; border-top:1px solid #fff; box-shadow: none; -webkit-box-shadow: none; }
+	
+	// animations
+	.ListItem-edit{
+		&.ng-enter{ @include trans(0.2s); }
+		&.ng-enter{ -webkit-transform: translateX(-30px); }
+		&.ng-enter.ng-enter-active{ -webkit-transform: translateX(0px); }
+		&.ng-leave{ @include trans(0.1s !important); -webkit-transform: translateX(-30px); }
+	}
+	.ListItem{
+		&.ng-enter{ @include trans(0.3s); -webkit-transform: translateX(-100%); }
+		&.ng-enter.ng-enter-active{ -webkit-transform: translateX(0px); }
+		&.ng-leave{ @include trans(0.13s !important); -webkit-transform: translateX(-100%); }
+	}
 
 /* Button */
 	[class*='Btn-']{ 
@@ -44,15 +67,16 @@ input{ background-color: transparent; }
 	    &:hover{ background-color: #f9f9f9; }
 	    &:active{ background-color: #f0f0f0;}
 	}
+	.Btn-alt{ font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-family: "Open sans" sans-serif;  background:#444; color: #f4f4f4;  }
+	.Btn-reg{ }
+	.Btn-lilly{ @include rounded(30px); border:1px solid #666; color: #333; 
+		&:active{ background-color: #666; color: #eee; }
+	}
 	.Btn_medium{ padding: 5px 10px; font-size: 15px;}
 	.Btn_medium-{ padding: 8px 15px; font-size: 15px;}
 	.Btn_small{ padding: 5px 15px; font-size: 12px;}
-	.Btn-alt{ font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-family: "Open sans" sans-serif;  background:#444; color: #f4f4f4;  }
-	.Btn-reg{ }
-	.Btn-lilly{ @include rounded(30px); border:1px solid #666; color: #333; }
-
-
-
+	.Btn.small{ padding: 5px 15px; font-size: 12px;}
+	
 /* Input */
 	[class*='Input-']{
 	    &:focus{ outline:none; }
@@ -60,6 +84,7 @@ input{ background-color: transparent; }
 	.Input-reg{ font: normal 16px "RobotoSlab" sans-serif; padding: 5px 10px; }
 	.Input-alt{ border-bottom: 1px solid #999; @include rounded(4px); padding: 0 5px; }
 	.Input_-medium{ font-size:16px; }
+	.Input_centered{ text-align: center; }
 
 /* Box */
 	.Box-reg{ background-color:#fff; border-bottom: 1px solid #ccc; }
@@ -80,60 +105,43 @@ input{ background-color: transparent; }
 	.MainInput-input-name{ padding: 15px 10px 15px 30px;}
 
 /* Header */
-.MainHeader{ @extend .L-center; padding: 20px; }
-.MainHeader-logo{ width:125px; }
+	.MainHeader{ @extend .L-center; padding: 20px; }
+	.MainHeader-logo{ width:125px; }
 
-/* Habit */ 
-.Habit{ display:block; @extend .Box-ali;}
-.Habit-head{ height: 50px; }
-.Habit-name{ font-family: "RobotoSlab" sans-serif; padding: 15px 30px; }
-.Habit_selected .Habit-name{ padding-left: 10px; }
-.Habit-tick{ padding: 10px 50px; border-left: 1px solid #ddd; }
-.Habit_selected{  }
-.Habit-meta{ padding: 15px 15px; background-color:#f8f8f8; }
-.Habit-remove{  }
+/* Habits */ 
+	.Habit-tick{ padding: 10px 50px; border-left: 1px solid #ddd; }
 
-/* Add Habit */
-
+/* Monitor */
+	.Monitor-flag{ @extend .Box_medium;}
+	.Monitor-chart{ 
+		#chart{  }
+		svg{ position: relative; left: -20px; }
+		.nv-axis line{ display:none; }
+		.nv-axis{ display:none; }
+		.domain{ display:none; }
+		.nv-series{ display:none; }
+		
+	}
+	.nvd3.nv-line .nvd3.nv-scatter .nv-groups .nv-point {
+	  fill-opacity: 1;
+	  stroke-opacity: 1;
+	  stroke-width: 6px;
+	  fill: #333; stroke: #333;
+	}	
+	.nv-group{ stroke: #999 !important; stroke-width: 4px !important; }
+	
 
 /* Basement */
-.Basement{ padding-top: 0;}
-.Basement-menu{  }
+	.Basement{ padding-top: 0;}
+	.Basement-menu-item_active{ margin-right: 5px; @extend .Icon-circle-white}
+	.Basement-menu-item{ border-bottom: 1px solid #222222; box-shadow: 0px 1px 0px #444; -webkit-box-shadow: 0px 1px 0px #444; padding: 10px; }
 
-.Basement-menu-item_active{ margin-right: 5px; @extend .Icon-circle-white}
-.Basement-menu-item{ border-bottom: 1px solid #222222; box-shadow: 0px 1px 0px #444; -webkit-box-shadow: 0px 1px 0px #444; padding: 10px; }
-.Basement-menu-item-name{  }
-
-/* Animations */
-.Habit-remove{
-	&.ng-enter{ @include trans(0.2s); }
-	&.ng-enter{ -webkit-transform: translateX(-30px); }
-	&.ng-enter.ng-enter-active{ -webkit-transform: translateX(0px); }
-	&.ng-leave{ @include trans(0.1s !important); -webkit-transform: translateX(-30px); }
-}
-.Habit{
-	&.ng-enter{ @include trans(0.3s); -webkit-transform: translateX(-100%); }
-	&.ng-enter.ng-enter-active{ -webkit-transform: translateX(0px); }
-	&.ng-leave{ @include trans(0.13s !important); -webkit-transform: translateX(-100%); }
-}
-
-
-.Flip-inner.switched{
-	-webkit-transform: rotateY(180deg); 
-	.Flip-front{ background-color: #eee; }
-}
-.Flip-container { -webkit-perspective: 1000; }
-.Flip-inner { @include trans(1s); -webkit-transform-style: preserve-3d; }
-
-.Flip-front, .Flip-back { height:50px; box-sizing: border-box; -webkit-backface-visibility: hidden; }
-
-.Flip-front {  z-index: 2; padding: 18px 50px; border-left: 1px solid #eee; }
-
-/* back, initially hidden pane */
-.Flip-back {
-	background-color: #fff;
-	padding-left: 39px;
-	margin-top: -50px;
-	position: relative;
-	-webkit-transform: rotateY(180deg);
-}
+/* Flip card */
+	.Flip-inner.switched{ -webkit-transform: rotateY(180deg); 
+		.Flip-front{ background-color: #eee; }
+	}
+	.Flip-container { -webkit-perspective: 1000; }
+	.Flip-inner { @include trans(1s); -webkit-transform-style: preserve-3d; }
+	.Flip-front, .Flip-back { height:50px; box-sizing: border-box; -webkit-backface-visibility: hidden; }
+	.Flip-front {  z-index: 2; padding: 18px 50px; border-left: 1px solid #eee; }
+	.Flip-back { background-color: #fff; padding-left: 39px; margin-top: -50px; position: relative; -webkit-transform: rotateY(180deg); }
