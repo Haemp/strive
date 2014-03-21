@@ -174,17 +174,21 @@ fileSystem.factory('fileSystem', ['$q', '$timeout', function($q, $timeout) {
 			
 			var def = $q.defer();
 			
+
 			fsDefer.promise.then(function(fs) {
 				
+
 				fs.root.getFile(fileName, {create: true}, function(fileEntry) {
 					
 					fileEntry.createWriter(function(fileWriter) {
+
 						if(append) {
 							fileWriter.seek(fileWriter.length);
 						}
 						
 						var truncated = false;
 						fileWriter.onwriteend = function(e) {
+
 							//truncate all data after current position
 							if (!truncated) {
 								truncated = true;
@@ -195,12 +199,14 @@ fileSystem.factory('fileSystem', ['$q', '$timeout', function($q, $timeout) {
 						};
 						
 						fileWriter.onerror = function(e) {
+							
 							safeReject(def, {text: 'Write failed', obj: e});
 						};
 						
 						fileWriter.write(blob);
 						
 					}, function(e) {
+						
 						safeReject(def, {text: "Error creating file", obj: e});
 					});
 					

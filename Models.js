@@ -150,9 +150,16 @@ Strive.service('MonitorModel', function( JsonStorage, $q ){
 	}
 	
 	self.save = function(){
-		JsonStorage.save('monitors', self.monitors).
-			then(function(){ 
-				console.log('Habits saved!') 
+		
+		// clean the data
+		var cleanMonitorData = angular.copy(self.monitors);
+		for(var i = 0; i < cleanMonitorData.length; i++){
+			delete cleanMonitorData[i].selected;
+		}
+		
+		JsonStorage.save('monitors', cleanMonitorData)
+			.then(function(){ 
+				console.log('Monitors saved!') 
 			}, function( error ){
 				console.log('There was an error saving the habits', error);
 			});

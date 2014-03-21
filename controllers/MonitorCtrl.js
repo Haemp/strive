@@ -18,7 +18,7 @@ Strive.controller('MonitorCtrl', function( $scope, MonitorModel ){
 
 	$scope.addDataPoint = function( monitor, newDataValue ){
 		delete monitor.newDataValue; 
-		MonitorModel.addDataPoint( monitor.id, newDataValue );
+		MonitorModel.addDataPoint( monitor.id, parseInt(newDataValue, 10) );
 		
 	}
 
@@ -33,6 +33,13 @@ Strive.controller('MonitorCtrl', function( $scope, MonitorModel ){
 		return ( typeof monitor.dataPoints != 'undefined' ) ? monitor.dataPoints.length : 0;
 	}
 	
+	/** 
+	 * Show the chart for all monitors that
+	 * have atleast 1 data point
+	 */
+	$scope.showChartForMonitor = function( monitor ){
+		return (typeof monitor.dataPoints != 'undefined' && monitor.dataPoints.length > 0 )
+	}
 	$scope.selectMonitor = function( monitor ){
 		if( $scope.selectedMonitor ){
 			delete $scope.selectedMonitor.selected;
@@ -69,12 +76,24 @@ Strive.controller('MonitorCtrl', function( $scope, MonitorModel ){
 	$scope._init();	
 });
 
-Strive.controller('ChartCtrl', function( $scope ){
+Strive.controller('ChartCtrl', function( $scope, MonitorModel ){
 
 	$scope.monitorChartData;
 
 	$scope._init = function(){
 		
+		$scope.$watch('monitor.dataPoints.length', function(newValue, oldValue){
+			
+			if( newValue && oldValue != undefined && newValue != oldValue){
+				console.log('New data point - refreshing', newValue, oldValue);
+				self.refresh();
+			}
+		}) 
+		
+		self.refresh();
+	}
+	
+	self.refresh = function(){
 		var chartData = self.convertToD3Format($scope.monitor.dataPoints);
 		
 		if( !chartData ) return;
@@ -94,9 +113,6 @@ Strive.controller('ChartCtrl', function( $scope ){
 		
 		  return chart;
 		});
-		
-		
-		
 	}
 	
 	self.convertToD3Format = function( dataPoints ){

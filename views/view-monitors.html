@@ -27,10 +27,10 @@
 	                    <button class="Btn-lilly Btn_small L-hbox-1" ng-click="addDataPoint(monitor, monitor.newDataValue)">Add Data Point</button>
                 	</div>
                 	<div ng-if="hasDataPointToday( monitor )">
-                		You've already entered todays data point.
+                		Great - you're done for today.
                 	</div>
                 </div>
-				<div class="ListItem-meta-section">
+				<div class="ListItem-meta-section" ng-if="showChartForMonitor(monitor)">
 					<div ng-controller="ChartCtrl" ng-if="monitor.selected" class="Monitor-chart">
 						<div id="chart" style="height: 200px;">
 						  <svg></svg>

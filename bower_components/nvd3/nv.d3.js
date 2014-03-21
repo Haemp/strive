@@ -11213,6 +11213,9 @@ nv.models.scatter = function() {
               .on('click', function(d) {
                 mouseEventCallback(d, dispatch.elementClick);
               })
+              .on('touchstart', function(d) {
+                mouseEventCallback(d, dispatch.elementMouseover);
+              })
               .on('mouseover', function(d) {
                 mouseEventCallback(d, dispatch.elementMouseover);
               })
