@@ -1,0 +1,6 @@
+{
+"version": "3",
+"mappings": "AAAA,SAAS,CAAG,IAAI,CAAC,IAAI,CACrB,cAAc,CAAE,IAAI,CAAC,CAAC",
+"sources": ["android.scss"],
+"file": "android.css"
+}

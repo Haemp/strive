@@ -114,7 +114,6 @@
 /* Monitor */
 	.Monitor-flag{ @extend .Box_medium;}
 	.Monitor-chart{ 
-		#chart{  }
 		svg{ position: relative; left: -20px; }
 		.nv-axis line{ display:none; }
 		.nv-axis{ display:none; }

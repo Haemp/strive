@@ -5,6 +5,7 @@ var Strive = angular.module('Strive', [
 	'fileSystem', 
 	'JsonStorage', 
 	'Basement',
+	'AngularSugar'
 ]);
 
 Strive.config(function( $stateProvider ){

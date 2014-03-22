@@ -3,7 +3,8 @@ Strive.controller('StriveCtrl', function(
 	$state,
 	StriveModel, 
 	StriveHelper, 
-	StateModel 
+	StateModel,
+	Browser
 ){
 	var self = this;
 	
@@ -13,6 +14,12 @@ Strive.controller('StriveCtrl', function(
 	$scope.StriveHelper = StriveHelper;
 	
 	$scope._init = function(){
+
+		
+		yepnope([{
+			test: Browser.isAndroid,
+			yep: 'styles/android.css'
+		}]);
 
 		$state.transitionTo('habits');
 
