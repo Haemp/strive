@@ -1,5 +1,10 @@
 {
-  "packageId": "co.ahlgren.App",
-  "versionCode": 3,
-  "CFBundleVersion": '1.1.5',
+	"packageId": "co.ahlgren.App",
+	"versionCode": 5,
+	"CFBundleVersion": '0.2.1',
+	"android": {
+		"oauth2": {
+			"client_id": "679381996523-k072e3icel315dufelcutoid1s681s8j.apps.googleusercontent.com"
+		}
+	}
 }

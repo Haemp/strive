@@ -38,6 +38,7 @@
 
 /* List item is the white box with a meta box underneath it */
 	.ListItem{ display:block; @extend .Box-ali;}
+	.ListItem.active{ background-color: #ddd; @include transition(0.1s); }
 	.ListItem-head{ height: 50px; }
 	.ListItem-name{ font-family: "RobotoSlab" sans-serif; padding: 15px 30px; }
 	.ListItem_selected .ListItem-name{ padding-left: 0px; }
@@ -74,8 +75,8 @@
 	}
 	.Btn_medium{ padding: 5px 10px; font-size: 15px;}
 	.Btn_medium-{ padding: 8px 15px; font-size: 15px;}
-	.Btn_small{ padding: 5px 15px; font-size: 12px;}
-	.Btn.small{ padding: 5px 15px; font-size: 12px;}
+	.Btn_small{ padding: 8px 15px; font-size: 12px;}
+	.Btn.small{ padding: 8px 15px; font-size: 12px;}
 	
 /* Input */
 	[class*='Input-']{
@@ -134,6 +135,7 @@
 	.Basement{ padding-top: 0;}
 	.Basement-menu-item_active{ margin-right: 5px; @extend .Icon-circle-white}
 	.Basement-menu-item{ border-bottom: 1px solid #222222; box-shadow: 0px 1px 0px #444; -webkit-box-shadow: 0px 1px 0px #444; padding: 10px; }
+	.Basement-menu-item.active{ background-color: #999; @include transition(0.1s); }
 
 /* Flip card */
 	.Flip-inner.switched{ -webkit-transform: rotateY(180deg); 

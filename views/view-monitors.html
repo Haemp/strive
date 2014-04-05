@@ -1,6 +1,6 @@
 <div>
     <ul class="L-vbox-15">
-        <li class="ListItem Box-ali" ng-class="{'ListItem_selected': monitor.selected}" ng-repeat="monitor in MonitorModel.monitors">
+        <li class="ListItem Box-ali" as-touch-active ng-class="{'ListItem_selected': monitor.selected}" ng-repeat="monitor in MonitorModel.monitors">
             
             <div class="ListItem-head L-hbox L-hbox-vcenter">
             	<button class="Btn-reg Btn_icon Btn_medium ListItem-edit" 
@@ -14,7 +14,7 @@
                 </div>
                 <div class="Monitor-flag">
                 	<div class="IconText IconText_medium">
-	                	<i class="Icon flag-gray IconText-icon"></i>
+	                	<i class="Icon flag-{{ StriveHelper.getStreakIcon(numDataPoints(monitor)) }} IconText-icon"></i>
 	                	<span class="IconText-text">{{ numDataPoints(monitor) }}</span>
                 	</div>
                 </div>

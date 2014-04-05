@@ -50,7 +50,9 @@ chrome.alarms.onAlarm.addListener(function( alarm ){
 
 			var links = {};
 			for (var i = 0; i < habits.length; i++) {
+				
 				var habit = habits[i];
+				if( habit.isArchived ) continue;
 				var notificationName = Date.now()+'';
 				
 				// store a reference to the habit in a notifications storage

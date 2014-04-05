@@ -1,7 +1,7 @@
 {
   "name": "Strive",
   "description": "Habit tracking app",
-  "version": "0.1.5",
+  "version": "0.2.1",
   "app": {
     "background": {
       "scripts": [
@@ -13,12 +13,23 @@
       ]
     }
   },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtqUHIMXMI4kELMq0/cB0JIaXEDG8z9Da3snxgth/n5RSAV5OloGalnsf6sCyBodhgaTJaxscOOmAt+NRRM90J8iYna8sNR1yrBY1X3tPuRvB4s93cshTf4YmqmGv8j//04Aw6nyvs72+JF/kwUmuFhA2NVPiLY+/PJoWiJgvFvORMFu/Xn0FZmpupbvq8lpDvm9U5f3quksKRAYPDSb+7NijXyEl5eD5vNkd9wYWYYgslFdGW2M7DQesv1VzPAHphhudgDg7as6Bdr9ADUdZ+K7FehNvyhI3voHHvBopcaU8cbVhpedyy254bf5E+q81UQRPlmfNCgP/15BzbZcnHwIDAQAB",
   "permissions": [
     "storage",
     "fileSystem",
     "notifications",
     "alarms",
-    "unlimitedStorage"
+    "unlimitedStorage",
+    "identity"
   ],
+  "oauth2": {
+    // client_id below is specifc to the application key. Follow the
+    // documentation to obtain one for your app.
+    "client_id": "679381996523-nrcpp1obfd1d00gm2vb2fd832l79737k.apps.googleusercontent.com",
+    "scopes": [
+    	"https://www.googleapis.com/auth/plus.login",
+      	"https://www.googleapis.com/auth/drive"
+    ]
+  },
   "icons": { "16": "/img/strive-32.png", "128": "/img/strive-128.png" }
 }

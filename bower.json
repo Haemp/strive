@@ -1,0 +1,36 @@
+{
+  "name": "Strive",
+  "version": "0.2.2",
+  "authors": [
+    "Hampus Ahlgren wcw106@gmail.com"
+  ],
+  "description": "A habit tracker",
+  "license": "None",
+  "homepage": "ahlgren.co/strive",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AngularSugar": "*",
+    "Datejs": "https://github.com/datejs/Datejs.git",
+    "ah-basement": "*",
+    "angular-animate": "~1.2.11",
+    "angular-filesystem": "https://github.com/maciel310/angular-filesystem.git",
+    "angular-mocks": "~1.2.16",
+    "angular-ui-router": "~0.2.8",
+    "chartjs": "*",
+    "d3": "~3.4.3",
+    "dangle": "*",
+    "fastclick": "~0.6.11",
+    "hammerjs": "~1.0.6",
+    "nvd3": "~1.1.15-beta",
+    "jquery": "~2.1.0",
+    "staggolee": "*",
+    "yepnope": "~1.5.4"
+  }
+}
