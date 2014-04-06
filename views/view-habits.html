@@ -1,8 +1,8 @@
 <div>
      <ul class="L-vbox-15">
-        <li class="ListItem" as-touch-active ng-class="{'ListItem_selected': habit.selected}" ng-repeat="habit in StriveModel.habits | filter:filterArchived">
+        <li class="ListItem" ng-class="{'ListItem_selected': habit.selected}" ng-repeat="habit in StriveModel.habits | filter:filterArchived">
     
-            <div class="ListItem-head L-hbox">					
+            <div as-touch-active class="ListItem-head L-hbox">					
                 <button class="Btn-reg Btn_icon Btn_medium ListItem-edit" ng-click="toggleEditMode( habit )" ng-if="habit.selected">
                     <i class="Icon edit" ng-class="{ edit: !habit.isEditable, save: habit.isEditable }"></i>
                 </button>
@@ -40,10 +40,21 @@
             
             <div class="ListItem-meta" ng-if="habit.selected">
                 <div class="ListItem-meta-section">
-                    <div ng-if="!habit.isEditable">
-                        {{ habit.description }}	
-                        <span ng-if="!habit.description" ng-click="toggleEditMode(habit)">Add description</span>	
-                    </div>
+                    <div class="L-hbox L-hbox-sep15">
+                        <div ng-if="!habit.isEditable" class="L-hbox-1">
+                            {{ habit.description }}	
+                            <span ng-if="!habit.description" ng-click="toggleEditMode(habit)">Add description</span>	
+                        </div>
+                        <div ng-if="habit.ticks.length > 0 && !habit.isEditable">
+                            <div class="HabitRecord">
+                                <div class="HabitRecord-record IconText IconText_medium">
+                                    <i class="Icon flame-{{ StriveHelper.getStreakIcon( StriveHelper.calculateStreakRecord(habit) ); }} IconText-icon"></i>
+                                    <div class="IconText-text">{{ StriveHelper.calculateStreakRecord(habit) }}</div>
+                                </div>
+                                <div class="HabitRecord-label">Record</div>
+                            </div>                            
+                        </div>
+                    </div >
                     <div ng-if="habit.isEditable" class="L-hbox">
                         <input class="Input-alt Input_-medium L-hbox-1" placeholder="Describe it" type="text" ng-model="habit.description">
                     </div>
@@ -53,18 +64,20 @@
                         <button ng-click="habit.confirmDelete = true" ng-if="!habit.confirmDelete" class="Btn Btn-lilly Btn_small">Delete Habit</button>
                         <button ng-click="archive(habit)" class="Btn Btn-lilly Btn_small">Archive Habit</button>
                     </div>
-                    <div ng-if="habit.confirmDelete" >
-                        <h2 class="Head medium">Whoa there cowboy!</h2>
-                        <div class="L-vbox-15">
-                            <p class="Para small">Deleting this habit will erase all the streaks you've earned. Really dude?</p>
-                            <div class="L-hbox">
-                                <button class="Btn-lilly Btn_small" ng-click="habit.confirmDelete = false">Cancel</button>
-                                <div class="L-spacer"></div>
-                                <button class="Btn-lilly Btn_small" ng-click="removeHabit(habit)">Got it - Delete</button>
-                            </div>
+                </div>
+            
+                <div ng-if="habit.confirmDelete" class="ListItem-meta-section" >
+                    <h2 class="Head medium">Whoa there cowboy!</h2>
+                    <div class="L-vbox-15">
+                        <p class="Para small">Deleting this habit will erase all the streaks you've earned. Really dude?</p>
+                        <div class="L-hbox">
+                            <button class="Btn-lilly Btn_small" ng-click="habit.confirmDelete = false">Cancel</button>
+                            <div class="L-spacer"></div>
+                            <button class="Btn-lilly Btn_small" ng-click="removeHabit(habit)">Got it - Delete</button>
                         </div>
                     </div>
                 </div>
+            
             </div>
         </li>
     </ul>

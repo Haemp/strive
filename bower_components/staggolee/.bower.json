@@ -12,11 +12,11 @@
   "dependencies": {},
   "devDependencies": {},
   "homepage": "https://github.com/Haemp/Staggolee",
-  "_release": "08fbf31558",
+  "_release": "cfc37b32ec",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "08fbf31558b1586b2b0650b6358ae7b7faee4878"
+    "commit": "cfc37b32ec7a5f712a2dc46845a4aebc8ff11bec"
   },
   "_source": "git://github.com/Haemp/Staggolee.git",
   "_target": "*",

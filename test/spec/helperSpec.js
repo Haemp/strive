@@ -84,4 +84,32 @@ describe('StriveHelper test', function(){
     var recordStreak = StriveHelper.calculateStreakRecord( habit );
     expect(recordStreak).toBe(2);
   });
+  
+  it('should count streak record with only one tick', function(){
+    habit = { ticks: [
+      { createdAt: new Date().getTime() }
+    ]};
+
+    var recordStreak = StriveHelper.calculateStreakRecord( habit );
+    expect(recordStreak).toBe(1);
+  });
+  
+  
+  it('should count streak record with an old single streak', function(){
+    habit = { ticks: [
+      { createdAt: new Date().add(-3).day().getTime() }
+    ]};
+
+    var recordStreak = StriveHelper.calculateStreakRecord( habit );
+    expect(recordStreak).toBe(1);
+  });
+  
+  it('should count streak record without any ticks', function(){
+    habit = { ticks: [
+      
+    ]};
+
+    var recordStreak = StriveHelper.calculateStreakRecord( habit );
+    expect(recordStreak).toBe(0);
+  });
 });

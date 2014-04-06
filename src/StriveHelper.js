@@ -29,6 +29,7 @@ Strive.service('StriveHelper', function(){
 
 		// get the last added tick
 		var ticks = habit.ticks;
+		if( ticks < 1 ) return 0;
 		var recordStreak = 0;
 		var lastTickDate = new Date(ticks[0].createdAt);
 		var streak = 0;
@@ -42,7 +43,6 @@ Strive.service('StriveHelper', function(){
 		// each day.
 		for (var i = 0; i < ticks.length; i++) {
 			tick = ticks[i];
-			console.log('Checking', new Date(tick.createdAt), ' Streak is ', streak);
 
 			// do we have a tick for this day
 			if( new Date(tick.createdAt).getDate() == lastTickDate.getDate() ){

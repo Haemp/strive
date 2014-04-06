@@ -21,7 +21,7 @@
   -webkit-border-radius: $radius;
   -moz-border-radius: $radius;
   border-radius: $radius;
-  -moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box; 
+  -moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
 }
 @mixin opacity($opacity: 0.5) {
   -moz-opacity: $opacity;
@@ -55,11 +55,6 @@
   -moz-transition: all $duration $ease;
   transition: all $duration $ease;
 }
-@mixin trans($param){
-	-webkit-transition: $param;
-	-moz-transition: $param;
-	transition: $param;
-}
 @mixin inner-shadow($horizontal:0, $vertical:1px, $blur:2px, $alpha: 0.4) {
   -webkit-box-shadow: inset $horizontal $vertical $blur rgba(0, 0, 0, $alpha);
   -moz-box-shadow: inset $horizontal $vertical $blur rgba(0, 0, 0, $alpha);
@@ -84,20 +79,6 @@
   -o-transform: translate($x, $y);
   -ms-transform: translate($x, $y);
   transform: translate($x, $y);
-}
-@mixin transform($param){
-	-moz-transform: $param;
-	-webkit-transform: $param;
-	-o-transform: $param;
-	-ms-transform: $param;
-	transform: $param;
-}
-@mixin translateX($x, $important:'') {
-  -moz-transform: translateX($x) $important;
-  -webkit-transform: translateX($x) $important;
-  -o-transform: translateX($x) $important;
-  -ms-transform: translateX($x) $important;
-  transform: translateX($x) $important;
 }
 @mixin animation($name, $duration: 300ms, $delay: 0, $ease: ease){
   -webkit-animation: $name $duration $delay $ease;
@@ -141,3 +122,23 @@
 }
 @mixin appearance($appearance){ -webkit-appearance: $appearance; -moz-appearance: $appearance; -ms-appearance: $appearance; -o-appearance: $appearance; appearance: $appearance; }
 @mixin truncate($width){ max-width:$width; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@mixin trans($param){
+	-webkit-transition: $param;
+	-moz-transition: $param;
+	transition: $param;
+}
+
+@mixin transform($param){
+	-moz-transform: $param;
+	-webkit-transform: $param;
+	-o-transform: $param;
+	-ms-transform: $param;
+	transform: $param;
+}
+@mixin translateX($x, $important:'') {
+  -moz-transform: translateX($x) $important;
+  -webkit-transform: translateX($x) $important;
+  -o-transform: translateX($x) $important;
+  -ms-transform: translateX($x) $important;
+  transform: translateX($x) $important;
+}

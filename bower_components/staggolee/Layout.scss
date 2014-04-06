@@ -42,6 +42,21 @@
 	-webkit-order: $val;  
 	order: $val;
 }
+@mixin pack($val){
+	-webkit-box-pack: $val;
+	-moz-box-pack: $val;
+	-o-box-pack: $val;
+	-ms-box-pack: $val;
+	box-pack: $val;
+}
+@mixin justify($val){
+	-webkit-justify-content: $val;
+	-moz-justify-content: $val;
+	-o-justify-content: $val;
+	-ms-justify-content: $val;
+	justify-content: $val;
+}
+
 
 /**
  * Adjustment classes. Solves exceptions.
@@ -84,6 +99,7 @@
  */
  .L-hbox{ @include flexbox(); }
  .L-hbox-constrained{ &>[class*='L-hbox-']{ width:0; } }
+ .L-hbox-centered{ @include pack(center); @include justify(center); }
  .L-hbox-1{ @include flex(1);  display:block;}
  .L-hbox-2{ @include flex(2); display:block;}
  .L-hbox-3{ @include flex(3); display:block;}
@@ -100,7 +116,6 @@
  .L-hbox-sep10{ &>*{ margin-left: 10px; } &>*:first-child{ margin-left:0;}}
  .L-hbox-sep15{ &>*{ margin-left: 15px; } &>*:first-child{ margin-left:0;}}
  .L-hbox-sep20{ &>*{ margin-left: 20px; } &>*:first-child{ margin-left:0;}}
-
  .L-spacer{ @extend .L-hbox-1; }
 
  /* ---------------------------------- *

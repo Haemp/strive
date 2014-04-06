@@ -1,8 +1,8 @@
 <div>
     <ul class="L-vbox-15">
-        <li class="ListItem Box-ali" as-touch-active ng-class="{'ListItem_selected': monitor.selected}" ng-repeat="monitor in MonitorModel.monitors">
+        <li class="ListItem Box-ali"  ng-class="{'ListItem_selected': monitor.selected}" ng-repeat="monitor in MonitorModel.monitors">
             
-            <div class="ListItem-head L-hbox L-hbox-vcenter">
+            <div as-touch-active class="ListItem-head L-hbox L-hbox-vcenter">
             	<button class="Btn-reg Btn_icon Btn_medium ListItem-edit" 
             			ng-click="toggleEditMode( monitor )" 
             			ng-if="monitor.selected">

@@ -1,6 +1,6 @@
-@import 'bower_components/staggolee/Layout';
-@import 'bower_components/staggolee/Effects';
-@import 'bower_components/ah-basement/basement';
+@import '../bower_components/staggolee/Layout';
+@import '../bower_components/staggolee/Effects';
+@import '../bower_components/ah-basement/basement';
 @import '../bower_components/nvd3/nv.d3.css';
 
 /* Reset */
@@ -12,6 +12,7 @@
 	button{ border:none; background:transparent; }
 	input{ background-color: transparent; }
 	.L-hbox >*{ display:block; }
+
 
 /* Fonts */
 	@font-face {
@@ -38,11 +39,12 @@
 
 /* List item is the white box with a meta box underneath it */
 	.ListItem{ display:block; @extend .Box-ali;}
-	.ListItem.active{ background-color: #ddd; @include transition(0.1s); }
+	
 	.ListItem-head{ height: 50px; }
+	.ListItem-head.active{ background-color: #ddd; @include transition(0.1s); }
 	.ListItem-name{ font-family: "RobotoSlab" sans-serif; padding: 15px 30px; }
 	.ListItem_selected .ListItem-name{ padding-left: 0px; }
-	.ListItem-meta{  background-color:#f8f8f8; }
+	.ListItem-meta{ background-color:#f5f5f5; }
 	.ListItem-meta-section{ padding: 15px 15px; border-top:1px solid #fff; box-shadow: 0px -1px 0px #ddd; -webkit-box-shadow: 0px -1px 0px #ddd; }
 	.ListItem-meta-section:first-child{ border-top:none; border-top:1px solid #fff; box-shadow: none; -webkit-box-shadow: none; }
 	
@@ -111,6 +113,12 @@
 
 /* Habits */ 
 	.Habit-tick{ padding: 10px 50px; border-left: 1px solid #ddd; }
+
+/* Habit record component */
+	.HabitRecord{ padding: 8px 20px; border:1px solid #ccc; @include rounded(4px); background-color:#fff;  }
+	.HabitRecord-label{ font-size:11px; text-transform:uppercase; line-height:1; margin-top:7px; font-weight: 600; text-align:center; }
+	.HabitRecord-record{ @extend .L-hbox-centered;   }
+
 
 /* Monitor */
 	.Monitor-flag{ @extend .Box_medium;}
