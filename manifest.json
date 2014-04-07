@@ -1,13 +1,13 @@
 {
   "name": "Strive",
   "description": "Habit tracking app",
-  "version": "0.2.1",
+  "version": "0.3.1",
   "app": {
     "background": {
       "scripts": [
-      	"bower_components/angular/angular.js", 
-      	"bower_components/angular-filesystem/src/filesystem.js", 
-      	"bower_components/Datejs/build/date.js", 
+      	"bower_components/angular/angular.js",
+      	"bower_components/angular-filesystem/src/filesystem.js",
+      	"bower_components/Datejs/build/date.js",
       	"libs/JsonStorage.js",
       	"background.js"
       ]

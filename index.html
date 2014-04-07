@@ -36,12 +36,16 @@
 		<script src="src/controllers/ArchiveCtrl.js"></script>
 
 	</head>
-	<body ng-app="Strive" ng-csp ng-controller="StriveCtrl" >
+	<body ng-app="Strive" auto-top ng-csp ng-controller="StriveCtrl" >
 		<div class="MainHeader">
+			<div class="MainHeader-hamburger" ng-click="StateModel.basementOpen = !StateModel.basementOpen">
+				<i class="Icon hamburger"></i>
+			</div>
+			<div class="MainHeader-title" ng-click="StateModel.basementOpen = !StateModel.basementOpen">{{ $state.current.name }}</div>
 			<img class="MainHeader-logo" src="img/logo-strive-2x.png" alt="">
 		</div>
 
-		<div ui-view="main">
+		<div ui-view="main" class="MainContent">
 
 		</div>
 
@@ -61,6 +65,9 @@
 				</li>
 				<li as-touch-active class="Basement-menu-item" ng-click="login()">
 					<span class="Basement-menu-item-name">Login</span>
+				</li>
+				<li >
+					<span style="font-size: 12px; color: #999; margin: 10px; float: right;">v0.3.2</span>
 				</li>
 			</ul>
 		</basement>

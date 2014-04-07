@@ -26,6 +26,8 @@ Strive.controller('StriveCtrl', function(
 
 		// handling backwards button
 		$rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+			
+			
 			// if the state change is a change backwards
 			// we just shift the top state
 			if( StateModel.states.length < 1 ){
@@ -35,8 +37,9 @@ Strive.controller('StriveCtrl', function(
 			}else{
 				StateModel.states.unshift(from);
 			}
-
 		});
+		
+		
 
 		document.addEventListener("touchstart", function(){}, true);
 		document.addEventListener("mouseover", function(){}, true);
@@ -84,4 +87,21 @@ Strive.controller('StriveCtrl', function(
 		$state.go(StateModel.states[0].name);
 	}
 	$scope._init();
+});
+
+
+Strive.directive('autoTop', function( $rootScope, $timeout ){
+
+	return{
+		link: function( $scope, element, attr ){
+                                
+			$rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+				$timeout(function(){
+					$('body').scrollTop(0);	
+					console.log('Setting scroll');
+				}, 100);
+				
+			});
+		}
+	}
 });

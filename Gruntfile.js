@@ -15,13 +15,39 @@ module.exports = function(grunt) {
 		    tempateUrl: "styles/template.mustache"
   		}
 	},
-	
+	sass: {                              // Task
+		dist: {                            // Target
+			options: {                       // Target options
+				style: 'expanded'
+		  	},
+		  	files: [{
+				expand: true,
+				cwd: 'styles',
+				src: ['*.scss'],
+				dest: 'styles',
+				ext: '.css'
+			}]
+		}
+	},
+	'sass-watch':{
+		options:{
+			path: 'styles'
+		}
+	}
+
 });
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-spritesheet');
+  grunt.loadNpmTasks('grunt-contrib-sass');
+
+	// Assumes the styles (css and scss) directory is located at 'app/styles'.
+	grunt.loadNpmTasks('grunt-sass-watch');
+
+	grunt.registerTask('watch', ['sass-watch']);
 
   // Default task.
   grunt.registerTask('default', ['spritesheet:generate']);
+
 
 };
