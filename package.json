@@ -9,7 +9,7 @@
     "grunt-contrib-sass": "^0.7.3",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-karma": "^0.8.2",
-    "grunt-sass-watch": "0.0.1",
+    "grunt-sass-watch": "git://github.com/Haemp/sassWatch",
     "grunt-spritesheet": "~0.1.2",
     "karma": "^0.12.3",
     "karma-chrome-launcher": "^0.1.3",
