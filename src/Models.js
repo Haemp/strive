@@ -204,7 +204,6 @@ Strive.service('MonitorModel', function( JsonStorage, $q ){
 	self._init();
 });
 
-
 Strive.service('UserModel', function( $http ){
 	var self = this;
 	self.endPoint = 'http://striveapi-ahlgren.rhcloud.com';
@@ -218,3 +217,4 @@ Strive.service('UserModel', function( $http ){
 		});
 	}
 });
+

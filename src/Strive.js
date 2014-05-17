@@ -43,5 +43,14 @@ Strive.config(function( $stateProvider, $httpProvider ){
 	      }
       }
     });
+    // .state('login', {
+    //   url: "/login",
+    //   views: {
+	   //    main: {
+	   //    	templateUrl: "src/user/login-signup.html",
+	   //    	controller: 'LoginCtrl'
+	   //    }
+    //   }
+    // });
 
 });
