@@ -1,4 +1,4 @@
-describe('StriveHelper test', function(){
+describe('StriveHelper', function(){
   var StriveHelper;
   beforeEach(module('Strive'));
   beforeEach(inject(function( _StriveHelper_ ){
@@ -84,7 +84,7 @@ describe('StriveHelper test', function(){
     var recordStreak = StriveHelper.calculateStreakRecord( habit );
     expect(recordStreak).toBe(2);
   });
-  
+
   it('should count streak record with only one tick', function(){
     habit = { ticks: [
       { createdAt: new Date().getTime() }
@@ -93,8 +93,8 @@ describe('StriveHelper test', function(){
     var recordStreak = StriveHelper.calculateStreakRecord( habit );
     expect(recordStreak).toBe(1);
   });
-  
-  
+
+
   it('should count streak record with an old single streak', function(){
     habit = { ticks: [
       { createdAt: new Date().add(-3).day().getTime() }
@@ -103,10 +103,10 @@ describe('StriveHelper test', function(){
     var recordStreak = StriveHelper.calculateStreakRecord( habit );
     expect(recordStreak).toBe(1);
   });
-  
+
   it('should count streak record without any ticks', function(){
     habit = { ticks: [
-      
+
     ]};
 
     var recordStreak = StriveHelper.calculateStreakRecord( habit );

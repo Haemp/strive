@@ -33,7 +33,7 @@ AngularSugar.service('Browser', function(){
 	self.isAndroidBrowser = ((navigator.userAgent.indexOf('Mozilla/5.0') > -1 && navigator.userAgent.indexOf('Android ') > -1 && navigator.userAgent.indexOf('AppleWebKit') > -1) && !(navigator.userAgent.indexOf('Chrome') > -1));
 });
 
-AngularSugar.service('asUtility', function(){
+AngularSugar.service('asUtility', function($timeout){
 	var self = this;
 
 	self.pollFunction = function( callFunction, interval, initial ){

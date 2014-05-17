@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jslint>
+<file name="src/Strive.js">
+  
+</file>
+<file name="src/Models.js">
+  
+  <issue
+    line="34"
+    char="self.remove"
+    evidence="self.remove is too complicated"
+    reason="Cyclomatic: 3,
+    Halstead: 9.9000
+    | Effort: 2970.0
+    | Volume: 300.00
+    | Vocabulary: 32" />
+  
+  <issue
+    line="44"
+    char="self.getHabit"
+    evidence="self.getHabit is too complicated"
+    reason="Cyclomatic: 3,
+    Halstead: 12.143
+    | Effort: 1637.9
+    | Volume: 134.89
+    | Vocabulary: 17" />
+  
+  <issue
+    line="70"
+    char="self.recalculateAllStreaks"
+    evidence="self.recalculateAllStreaks is too complicated"
+    reason="Cyclomatic: 5,
+    Halstead: 18.750
+    | Effort: 6831.5
+    | Volume: 364.35
+    | Vocabulary: 29" />
+  
+  <issue
+    line="105"
+    char="&lt;anonymous&gt;"
+    evidence="&lt;anonymous&gt; is too complicated"
+    reason="Cyclomatic: 1,
+    Halstead: 10.421
+    | Effort: 4508.8
+    | Volume: 432.66
+    | Vocabulary: 28" />
+  
+  <issue
+    line="164"
+    char="self.remove"
+    evidence="self.remove is too complicated"
+    reason="Cyclomatic: 3,
+    Halstead: 11.000
+    | Effort: 1949.2
+    | Volume: 177.20
+    | Vocabulary: 20" />
+  
+  <issue
+    line="173"
+    char="self.hasDataPointToday"
+    evidence="self.hasDataPointToday is too complicated"
+    reason="Cyclomatic: 2,
+    Halstead: 8.0385
+    | Effort: 1437.4
+    | Volume: 178.81
+    | Vocabulary: 24" />
+  
+  <issue
+    line="182"
+    char="self.getMonitor"
+    evidence="self.getMonitor is too complicated"
+    reason="Cyclomatic: 3,
+    Halstead: 12.143
+    | Effort: 1637.9
+    | Volume: 134.89
+    | Vocabulary: 17" />
+  
+</file>
+</jslint>

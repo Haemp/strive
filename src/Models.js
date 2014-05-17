@@ -1,4 +1,4 @@
-Strive.service('StriveModel', function( JsonStorage, $q, StriveHelper ){
+Strive.service('StriveModel', function( JsonStorage, $q, StriveHelper  ){
 	var self = this;
 
 	self.habits = [];
@@ -27,6 +27,7 @@ Strive.service('StriveModel', function( JsonStorage, $q, StriveHelper ){
 		if( !self.habits ) self.habits = [];
 		self.habits.push( angular.copy(newHabit) );
 
+		
 		self.save();
 	}
 
@@ -36,6 +37,7 @@ Strive.service('StriveModel', function( JsonStorage, $q, StriveHelper ){
 				self.habits.splice(i, 1);
 		}
 
+		
 		self.save();
 	}
 
@@ -59,6 +61,7 @@ Strive.service('StriveModel', function( JsonStorage, $q, StriveHelper ){
 		// calculate the streak
 		habit.streak = StriveHelper.calculateStreak(habit.ticks);
 
+	
 		self.save();
 	}
 
@@ -67,7 +70,7 @@ Strive.service('StriveModel', function( JsonStorage, $q, StriveHelper ){
 	self.recalculateAllStreaks = function(){
 
 		// check if we've already calculated for today
-		if( self.lastCalculation &&	 self.lastCalculation.today() ) return;
+		if( self.lastCalculation && self.lastCalculation.today() ) return;
 
 		if( !self.habits || self.habits.length == 0 ) return;
 
@@ -199,4 +202,19 @@ Strive.service('MonitorModel', function( JsonStorage, $q ){
 	}
 
 	self._init();
+});
+
+
+Strive.service('UserModel', function( $http ){
+	var self = this;
+	self.endPoint = 'http://striveapi-ahlgren.rhcloud.com';
+	self.login = function( username, passwerd /* Oh I know! */){
+		//return $http.post(self.endPoint+'/login', {username: username, password: passwerd});
+		return $http({
+			withCredentials: true,
+			url: self.endPoint+'/login',
+			method: 'post',
+			data: {username: username, password: passwerd}
+		});
+	}
 });

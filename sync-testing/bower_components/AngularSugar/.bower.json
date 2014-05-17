@@ -1,0 +1,31 @@
+{
+  "name": "Angular Sugar",
+  "authors": [
+    "Hampus Ahlgren <wcw106@gmail.com>"
+  ],
+  "description": "Not something you really need, but something that makes your life feel a bit better.",
+  "main": "AngularSugar.js",
+  "keywords": [
+    "angular",
+    "utility"
+  ],
+  "license": "MIT",
+  "homepage": "ahlgren.co",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "829987e8d1",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "829987e8d19a19a84bf4a65fbd18a2f4b6f46ed5"
+  },
+  "_source": "git://github.com/Haemp/angular-sugar.git",
+  "_target": "*",
+  "_originalSource": "AngularSugar",
+  "_direct": true
+}

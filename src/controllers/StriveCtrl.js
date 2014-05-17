@@ -1,4 +1,4 @@
-Strive.controller('StriveCtrl', function( 
+Strive.controller('StriveCtrl', function(
 	$scope,
 	$state,
 	$rootScope,
@@ -26,8 +26,8 @@ Strive.controller('StriveCtrl', function(
 
 		// handling backwards button
 		$rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
-			
-			
+
+
 			// if the state change is a change backwards
 			// we just shift the top state
 			if( StateModel.states.length < 1 ){
@@ -38,8 +38,8 @@ Strive.controller('StriveCtrl', function(
 				StateModel.states.unshift(from);
 			}
 		});
-		
-		
+
+
 
 		document.addEventListener("touchstart", function(){}, true);
 		document.addEventListener("mouseover", function(){}, true);
@@ -70,10 +70,14 @@ Strive.controller('StriveCtrl', function(
 			});
 	}
 
+	/**
+	 * Brings up the login view in a separate panel
+	 */
 	$scope.login = function(){
-		chrome.identity.getAuthToken({interactive:true}, function(e){
+		
+		/*chrome.identity.getAuthToken({interactive:true}, function(e){
 			console.log('auth token', e);
-		});
+		});*/
 	}
 
 	$scope.switch = function( state ){
@@ -94,13 +98,13 @@ Strive.directive('autoTop', function( $rootScope, $timeout ){
 
 	return{
 		link: function( $scope, element, attr ){
-                                
+
 			$rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
 				$timeout(function(){
-					$('body').scrollTop(0);	
+					$('body').scrollTop(0);
 					console.log('Setting scroll');
 				}, 100);
-				
+
 			});
 		}
 	}

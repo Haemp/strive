@@ -1,0 +1,15 @@
+<div class="Login" ng-controller="LoginCtrl">
+	
+	<div ng-if="error" class="Notification">Error, must enter email and password</div>
+
+	<div class="L-center">
+		<i class="Icon-strive"></i>
+	</div>
+	
+	<div class="Login-inputs">
+		<input type="text" ng-model="loginUser.email">
+		<input type="text" ng-model="loginUser.password">
+		<button class="Btn-lilly" ng-click="login(loginUser)">Login</button>
+		<button class="Btn-lilly" ng-click="signup(loginUser)">Signup</button>
+	</div>
+</div>

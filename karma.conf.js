@@ -17,6 +17,7 @@ module.exports = function(config) {
     files: [
       // libs
       'bower_components/angular/angular.js',
+      'bower_components/jquery/jquery.js',
       'bower_components/Datejs/build/date.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-ui-router/angular-ui-router.min.js',
@@ -32,7 +33,8 @@ module.exports = function(config) {
 
       // src
       'src/Strive.js',
-      'src/**/*.js'
+      'src/**/*.js',
+      'src/**/*.html'
     ],
 
 
@@ -45,14 +47,18 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-
+    	'src/**/*.html': ['ng-html2js']
     },
 
+    ngHtml2JsPreprocessor: {
+	    // the name of the Angular module to create
+	    moduleName: "strive.templates"
+	},
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['spec'],
 
 
     // web server port

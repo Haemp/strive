@@ -59,7 +59,7 @@
                         <input class="Input-alt Input_-medium L-hbox-1" placeholder="Describe it" type="text" ng-model="habit.description">
                     </div>
                 </div> 
-                <div class="ListItem-meta-section">
+                <div class="ListItem-meta-section" ng-if="!habit.isEditable">
                     <div class="L-hbox L-hbox-sep10">
                         <button ng-click="habit.confirmDelete = true" ng-if="!habit.confirmDelete" class="Btn Btn-lilly Btn_small">Delete Habit</button>
                         <button ng-click="archive(habit)" class="Btn Btn-lilly Btn_small">Archive Habit</button>

@@ -33,6 +33,7 @@
 		<script src="src/StriveHelper.js"></script>
 		<script src="src/controllers/MonitorCtrl.js"></script>
 		<script src="src/controllers/HabitCtrl.js"></script>
+		<script src="src/controllers/LoginCtrl.js"></script>
 		<script src="src/controllers/ArchiveCtrl.js"></script>
 
 	</head>
@@ -63,7 +64,7 @@
 					<i class="Basement-menu-item_active" ng-if="$state.includes('archived')"></i>
 					<span class="Basement-menu-item-name">Archived</span>
 				</li>
-				<li as-touch-active class="Basement-menu-item" ng-click="login()">
+				<li as-touch-active class="Basement-menu-item" ng-click="StateModel.loginActive = true">
 					<span class="Basement-menu-item-name">Login</span>
 				</li>
 				<li >
@@ -71,5 +72,9 @@
 				</li>
 			</ul>
 		</basement>
+
+		<div ng-include="'views/view-login.html'" ng-if="StateModel.loginActive" ng-controller="LoginCtrl">
+
+		</div>
 	</body>
 </html>
