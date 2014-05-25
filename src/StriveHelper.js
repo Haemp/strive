@@ -82,7 +82,7 @@ Strive.service('StriveHelper', function(){
 	}
 
 	self.calculateStreak = function( ticks ){
-
+		if(!ticks || ticks.length == 0) return 0;
 		// is the lastest tick from today or yesterday
 		// then start counting streaks
 		var firstTick = ticks[0];

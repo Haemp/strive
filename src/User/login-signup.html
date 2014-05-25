@@ -1,18 +1,26 @@
 <div class="Login">
-
-	<div ng-if="noti" class="Noti" 
-		 ng-class="{'Noti_error': noti.type == 'error', 'Noti_success': noti.type == 'success', 'Noti_progress': noti.type == 'progress'}">
-		 	{{ noti.text }}
+	<div class="Login-close" ng-click="UserModel.showUserLogin = false">
+		<i class="Icon cross-thin-gray"></i>
 	</div>
-
-	<div class="L-center">
-		<i class="Icon-strive"></i>
+	<div class="L-center Login-logo">
+		<img src="img/logo-strive-dark.png" alt="Tremble mortal!" />
 	</div>
 	
-	<div class="Login-inputs">
-		<input type="text" class="Input-alt Input_-medium" placeholder="Email" ng-model="loginUser.email">
-		<input type="text" class="Input-alt Input_-medium" placeholder="Password" ng-model="loginUser.password">
-		<button class="Btn-reg" ng-click="login(loginUser)">Login</button>
-		<button class="Btn-lilly" ng-click="signup(loginUser)">Signup</button>
+	<div class="L-vbox-20">
+		<div ng-if="noti" class="Noti" 
+			 ng-class="{'Noti_error': noti.type == 'error', 'Noti_success': noti.type == 'success', 'Noti_progress': noti.type == 'progress'}">
+			 	<span class="Noti-marker"></span><span>{{ noti.text }}</span>
+		</div>
+		<div class="Login-inputs L-vbox-20">
+			<div class="L-hbox L-hbox-centered L-hbox-sep15">
+				<input type="text" class="Input-lilly medium" placeholder="Email" ng-model="loginUser.email">
+				<input type="password" class="Input-lilly medium" placeholder="Password" ng-model="loginUser.password">
+			</div>
+			<div class="L-vbox-15 L-center">
+				<div>
+					<button class="Btn-login" ng-click="login(loginUser)">Login / Signup</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

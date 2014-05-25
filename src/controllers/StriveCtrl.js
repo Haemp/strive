@@ -2,22 +2,45 @@ Strive.controller('StriveCtrl', function(
 	$scope,
 	$state,
 	$rootScope,
-	StriveModel,
+	HabitModel,
 	StriveHelper,
 	StateModel,
-	Browser
+	MonitorModel,
+	Browser,
+	UserModel,
+	Sync,
+	SyncOptions,
+	API_DOMAIN
 ){
 	var self = this;
 
 	$scope.$state = $state;
-	$scope.StriveModel = StriveModel;
+	$scope.HabitModel = HabitModel;	
 	$scope.StateModel = StateModel;
 	$scope.StriveHelper = StriveHelper;
+	$scope.UserModel = UserModel;
 
 	$scope._init = function(){
+		
+		SyncOptions.downSync = {
+			url:API_DOMAIN+'/api/user/down-sync',
+			method: 'GET',
+			withCredentials: true
+		}	
+		
+		SyncOptions.onDownSyncComplete = function(data){
+			var habitChanges = HabitModel.merge(data.habits);
+			var monitorChanges = MonitorModel.merge(data.monitors);
 
-
-
+			console.log('Habit Changes: ', habitChanges);
+			console.log('Monitor Changes: ', monitorChanges);
+		}
+		
+		Sync.syncAuto();
+		
+		// make sure we clear the Sync buffer when
+		// there is a new user
+		$rootScope.$on('User.SIGNUP_SUCCESS', self.newUserRoutine)
 		// load in separate stylesheet for
 		// the pre-kitkat android browser.
 		yepnope([{ test: Browser.isAndroid, yep: 'styles/android.css' }]);
@@ -60,24 +83,14 @@ Strive.controller('StriveCtrl', function(
 		// checkmarks to tick
 		if( typeof chrome != 'undefined' && chrome.runtime && chrome.runtime.onSuspendCanceled ){
 			chrome.runtime.onSuspendCanceled.addListener(function(){
-				StriveModel.recalculateAllStreaks();
+				HabitModel.recalculateAllStreaks();
 			});
 		}
 
-		StriveModel.loadHabits()
+		HabitModel.loadHabits()
 			.then(function(){
-				StriveModel.recalculateAllStreaks();
+				HabitModel.recalculateAllStreaks();
 			});
-	}
-
-	/**
-	 * Brings up the login view in a separate panel
-	 */
-	$scope.login = function(){
-		
-		/*chrome.identity.getAuthToken({interactive:true}, function(e){
-			console.log('auth token', e);
-		});*/
 	}
 
 	$scope.switch = function( state ){
@@ -89,6 +102,23 @@ Strive.controller('StriveCtrl', function(
 
 		console.log('Going back', StateModel.states[0].name);
 		$state.go(StateModel.states[0].name);
+	}
+
+	self.newUserRoutine = function(e, data){
+
+		// reset the Sync
+		Sync.requests.length = 0;
+		
+		// trigger a data import 
+		$rootScope.$emit('User.EXPORT_PROGRESS', {text: 'Exporting your marklar', type: 'progress'});
+		UserModel.export( HabitModel.habits, MonitorModel.monitors )
+			.then(function(res){
+
+				// TODO activate the sync
+				$rootScope.$emit('User.EXPORT_SUCCESS', {text: 'All your marklars was successfully markared!', type: 'success'});
+			}, function(res){
+				$rootScope.$emit('User.EXPORT_SUCCESS', {text: 'We\'re sorry, your marklars could not be fully marklared :(', type: 'error'});
+			});
 	}
 	$scope._init();
 });

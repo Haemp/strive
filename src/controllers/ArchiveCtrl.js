@@ -1,4 +1,4 @@
-Strive.controller('ArchiveCtrl', function( $scope, StriveModel ){
+Strive.controller('ArchiveCtrl', function( $scope, HabitModel ){
 
 	$scope._init = function(){
 			
@@ -17,16 +17,16 @@ Strive.controller('ArchiveCtrl', function( $scope, StriveModel ){
 		}
 	}
 	$scope.isTickedToday = function( habit ){
-		if( !habit.ticks ) return;
+		if( !habit.ticks || habit.ticks.length < 1 ) return;
 		
 		return new Date(habit.ticks[0].createdAt).isToday();
 	}
 	$scope.removeHabit = function( habit ){
-		StriveModel.remove(habit);
+		HabitModel.remove(habit);
 	}
 	
 	$scope.saveAll = function(){
-		StriveModel.save()
+		HabitModel.save()
 	}
 	$scope.selectHabit = function( habit ){
 		if( $scope.selectedHabit ){
@@ -46,6 +46,7 @@ Strive.controller('ArchiveCtrl', function( $scope, StriveModel ){
 	$scope.unArchive = function( habit ){
 		habit.isArchived = false;
 		$scope.saveAll();
+		HabitModel.edit(habit);
 	}
 	$scope.showArchived = function(habit){
 		return habit.isArchived;

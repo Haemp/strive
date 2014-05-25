@@ -8,7 +8,7 @@
 	h1,h2,h3,body, ul, li, input, button, p{ margin:0; padding:0; }
 	button, input{ border:none; }
 	*{ -webkit-tap-highlight-color: rgba(0,0,0,0); }
-	body{ background-color:#eee; font: 16px normal "Open sans" sans-serif; line-height: 1.5em; padding-bottom: 150px;}
+	body{ background-color:#eee; font: 16px normal "Open sans" sans-serif; letter-spacing:0.8; line-height: 1.5em; padding-bottom: 150px;}
 	button{ border:none; background:transparent; }
 	input{ background-color: transparent; }
 	.L-hbox >*{ display:block; }
@@ -77,6 +77,30 @@
 	.Btn-lilly{ @include rounded(30px); border:1px solid #666; color: #333;
 		&:active{ background-color: #666; color: #eee; }
 	}
+	.Btn-login{ 
+		font-family: "Open sans" sans-serif;
+		cursor: pointer;
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(5%,#aeaeae), color-stop(5%,#aeaeae), color-stop(5%,#7e7e7e)); 
+		@include rounded(30px); 
+		@include drop-shadow(0, 1px, 1px, 0.8);
+		@include text-shadow(0 1px 1px rgba(255, 255, 255, 0.5));
+		font-weight: 700; 
+		text-transform: uppercase;
+		font-size: 15px;
+		color: #444; 
+		padding: 15px 40px;
+		background-color: #7e7e7e;
+		
+		&:hover{
+			background: #aaa;
+		}
+		&:active, .active{
+			background: #666;
+			color: #333;
+			@include text-shadow(0 1px 1px rgba(255, 255, 255, 0));
+			@include drop-shadow(0, 1px, 1px, 0);
+		}
+	}
 	.Btn_medium{ padding: 5px 10px; font-size: 15px;}
 	.Btn_medium-{ padding: 8px 15px; font-size: 15px;}
 	.Btn_small{ padding: 8px 15px; font-size: 12px;}
@@ -88,6 +112,16 @@
 	}
 	.Input-reg{ font: normal 16px "RobotoSlab" sans-serif; padding: 5px 10px; }
 	.Input-alt{ border-bottom: 1px solid #999; @include rounded(4px); padding: 0 5px; }
+	.Input-lilly{ border-bottom: 1px solid #999; color:#aaa;
+		&::-webkit-input-placeholder {
+		   color: #666;
+		}
+		text-align:center;
+	}
+	
+	.Input-lilly.medium{ padding: 0 7px 7px 7px; font: normal 18px "RobotoSlab" sans-serif; }
+	
+	
 	.Input_-medium{ font-size:16px; }
 	.Input_centered{ text-align: center; }
 
@@ -126,7 +160,13 @@
 	.HabitRecord-label{ font-size:11px; text-transform:uppercase; line-height:1; margin-top:7px; font-weight: 600; text-align:center; }
 	.HabitRecord-record{ @extend .L-hbox-centered;   }
 
-
+/* Notifications */
+	.Noti{ text-align:center }
+	.Noti-marker{ display:inline-block; width:10px; height:10px; @include rounded(10px); background-color: #ccc; margin-right:10px}
+	.Noti_error .Noti-marker{ background-color: #cc3c3d; }
+	.Noti_success .Noti-marker{ background-color: #54d03f; }
+	.Noti_progress .Noti-marker{ background-color: #d0bd49; }
+	
 /* Monitor */
 	.Monitor-flag{ @extend .Box_medium;}
 	.Monitor-chart{
@@ -146,8 +186,12 @@
 	.nv-group{ stroke: #999 !important; stroke-width: 4px !important; }
 
 /* Login */
-
-	.Login{ position:fixed; background-color: #333; top:0; left:0; right:0; bottom:0; z-index:10; }
+	.Login{ font-weight:300; color: #ccc; position:fixed; background-color: #333; top:0; left:0; right:0; bottom:0; z-index:10; padding: 20px; background: -webkit-radial-gradient(top, circle cover, #545454 0%,#333333 30%);
+		.Noti{ margin: 30px 0 50px; }
+	}
+	.Login-close{ float:right; }
+	.Login-logo{ margin: 80px 0;}
+	.Login-inputs{ padding:0 30px;}
 
 /* Basement */
 	.Basement{ padding-top: 0; top:50px; }

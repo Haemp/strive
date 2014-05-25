@@ -1,4 +1,4 @@
-Strive.controller('HabitCtrl', function( $scope, StriveModel ){
+Strive.controller('HabitCtrl', function( $scope, HabitModel ){
 
 	$scope._init = function(){
 			
@@ -12,25 +12,25 @@ Strive.controller('HabitCtrl', function( $scope, StriveModel ){
 		habit.isEditable = !habit.isEditable;	
 		if( !habit.isEditable ){
 			habit.selected = false;	
+			HabitModel.edit(habit);
 			$scope.selectedHabit = undefined;
 			$scope.saveAll();
 		}
 	}
 	$scope.isTickedToday = function( habit ){
-		if( !habit.ticks ) return;
-		
+		if( !habit.ticks || habit.ticks.length == 0 ) return;
 		return new Date(habit.ticks[0].createdAt).isToday();
 	}
 	$scope.removeHabit = function( habit ){
-		StriveModel.remove(habit);
+		HabitModel.remove(habit);
 	}
 	$scope.createHabit = function( habit ){
-		StriveModel.create( habit );
+		HabitModel.create( habit );
 		
-		StriveModel.newHabit = undefined;
+		HabitModel.newHabit = undefined;
 	}
 	$scope.saveAll = function(){
-		StriveModel.save()
+		HabitModel.save()
 	}
 	$scope.selectHabit = function( habit ){
 		if( $scope.selectedHabit ){
@@ -50,12 +50,13 @@ Strive.controller('HabitCtrl', function( $scope, StriveModel ){
 	$scope.archive = function( habit ){
 		habit.isArchived = true;
 		$scope.saveAll();
+		HabitModel.edit(habit);
 	}
 	$scope.filterArchived = function(habit){
 		return !habit.isArchived;
 	}
 	$scope.tickHabit = function( habitId ){
-		StriveModel.tick( habitId );
+		HabitModel.tick( habitId );
 	}
 	$scope._init();	
 });

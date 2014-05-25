@@ -1,6 +1,6 @@
 <div>
      <ul class="L-vbox-15">
-        <li class="ListItem"  ng-class="{'ListItem_selected': habit.selected}" ng-repeat="habit in StriveModel.habits | filter:showArchived">
+        <li class="ListItem"  ng-class="{'ListItem_selected': habit.selected}" ng-repeat="habit in HabitModel.habits | filter:showArchived">
     
             <div as-touch-active class="ListItem-head L-hbox">					
                 <button class="Btn-reg Btn_icon Btn_medium ListItem-edit" ng-click="toggleEditMode( habit )" ng-if="habit.selected">

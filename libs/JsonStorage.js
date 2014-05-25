@@ -6,16 +6,19 @@ JsonStorage.service('JsonStorage', function( $q, $timeout, fileSystem ){
 	self.isPackaged = (typeof chrome != 'undefined') ? (!!chrome.storage) : false;
 	
 	self.fileSystem = {
-		perferFs: fileSystem.isSupported(),
+		perferFs: false/* fileSystem.isSupported()*/,
 		quota: 10 // in MB
 	};
 
 	self._init = function(){
 
-
 		// prompt for permissino
-		if( self.fileSystem.perferFs )
+		if( self.fileSystem.perferFs ){
+			console.log('Filesystem supported');
 			fileSystem.requestQuota(self.fileSystem.quota);
+		}else{
+			console.log('Filesystem not supported');
+		}		
 	}
 
 	self.save = function( key, value ){

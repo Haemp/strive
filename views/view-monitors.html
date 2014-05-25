@@ -22,12 +22,9 @@
             
             <div class="ListItem-meta" ng-if="monitor.selected">
                 <div class="ListItem-meta-section">
-                	<div class="L-hbox L-hbox-sep10" ng-if="!hasDataPointToday( monitor )">
+                	<div class="L-hbox L-hbox-sep10">
 	                    <input class="Input-alt Input_centered Input_-medium" placeholder="Value" type="text" ng-model="monitor.newDataValue">
 	                    <button class="Btn-lilly Btn_small L-hbox-1" ng-click="addDataPoint(monitor, monitor.newDataValue)">Add Data Point</button>
-                	</div>
-                	<div ng-if="hasDataPointToday( monitor )">
-                		Great - you're done for today.
                 	</div>
                 </div>
 				<div class="ListItem-meta-section" ng-if="showChartForMonitor(monitor)">

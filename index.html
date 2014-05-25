@@ -9,13 +9,15 @@
 
 		<link rel="stylesheet" href="styles/style.css">
 		<link rel="shortcut icon" href="img/favicon.png" type="image/png">
-		<script src="bower_components/jquery/jquery.js"></script>
+		<script src="bower_components/jquery/dist/jquery.js"></script>
 		<script src="bower_components/fastclick/lib/fastclick.js"></script>
 		<script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/sync/src/Sync.js"></script>
 		<script src="bower_components/angular-animate/angular-animate.js"></script>
 		<script src="bower_components/angular-filesystem/src/filesystem.js"></script>
 		<script src="bower_components/hammerjs/hammer.js"></script>
 		<script src="bower_components/angular-ui-router/angular-ui-router.min.js"></script>
+		<script src="bower_components/angular-cookies/angular-cookies.js"></script>
 		<script src="bower_components/click-hide/ClickHide.js"></script>
 		<script src="bower_components/ah-basement/Basement.js"></script>
 		<script src="bower_components/Datejs/build/date.js"></script>
@@ -32,7 +34,6 @@
 		<script src="src/controllers/StriveCtrl.js"></script>
 		<script src="src/StriveHelper.js"></script>
 		<script src="src/controllers/MonitorCtrl.js"></script>
-		<script src="src/controllers/LoginCtrl.js"></script>
 		<script src="src/controllers/HabitCtrl.js"></script>
 		<script src="src/controllers/ArchiveCtrl.js"></script>
 		<script src="src/user/User.js"></script>
@@ -52,6 +53,9 @@
 		</div>
 
 		<basement open="StateModel.basementOpen">
+			<div ng-if="UserModel.user">
+				{{ UserModel.user.email }}
+			</div>
 			<ul class="Basement-menu">
 				<li as-touch-active class="Basement-menu-item" ng-click="switch('habits')">
 					<i class="Basement-menu-item_active" class="Icon-circle-white" ng-if="$state.includes('habits')"></i>
@@ -65,7 +69,7 @@
 					<i class="Basement-menu-item_active" ng-if="$state.includes('archived')"></i>
 					<span class="Basement-menu-item-name">Archived</span>
 				</li>
-				<li as-touch-active class="Basement-menu-item" ng-click="StateModel.loginActive = true">
+				<li as-touch-active class="Basement-menu-item" ng-click="UserModel.showUserLogin = true">
 					<span class="Basement-menu-item-name">Login</span>
 				</li>
 				<li >
@@ -74,7 +78,7 @@
 			</ul>
 		</basement>
 
-		<div ng-include="'views/view-login.html'" ng-if="StateModel.loginActive" ng-controller="LoginCtrl">
+		<div ng-include="'src/user/login-signup.html'" ng-if="UserModel.showUserLogin" ng-controller="LoginCtrl">
 
 		</div>
 	</body>

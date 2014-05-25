@@ -1,6 +1,6 @@
 <div>
      <ul class="L-vbox-15">
-        <li class="ListItem" ng-class="{'ListItem_selected': habit.selected}" ng-repeat="habit in StriveModel.habits | filter:filterArchived">
+        <li class="ListItem" ng-class="{'ListItem_selected': habit.selected}" ng-repeat="habit in HabitModel.habits | filter:filterArchived">
     
             <div as-touch-active class="ListItem-head L-hbox">					
                 <button class="Btn-reg Btn_icon Btn_medium ListItem-edit" ng-click="toggleEditMode( habit )" ng-if="habit.selected">
@@ -83,8 +83,8 @@
     </ul>
     <div class="MainInput">
         <div class="MainInput-inner Box-reg Box_round L-hbox">
-            <input class="L-hbox-1 Input-reg MainInput-input-name" placeholder="Habit" type="text" ng-model="StriveModel.newHabit.name">
-            <button class="Btn-alt Btn_medium MainInput-btn" ng-click="createHabit(StriveModel.newHabit)">Add</button>
+            <input class="L-hbox-1 Input-reg MainInput-input-name" placeholder="Habit" type="text" ng-model="HabitModel.newHabit.name">
+            <button class="Btn-alt Btn_medium MainInput-btn" ng-click="createHabit(HabitModel.newHabit)">Add</button>
         </div>
     </div>
 </div>

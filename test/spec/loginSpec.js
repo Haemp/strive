@@ -101,7 +101,7 @@ describe('User login', function() {
 		$scope.$digest();
 
 		expect().expectEvent('User.SIGNUP_SUCCESS');
-		expect(loginScreen.find('.Notification_success').length).toBe(1);
+		expect(loginScreen.find('.Noti_success').length).toBe(1);
 	})
 
 	it('Should notify the user if the login was successful', function(){
