@@ -18,8 +18,7 @@ Strive.controller('HabitCtrl', function( $scope, HabitModel ){
 		}
 	}
 	$scope.isTickedToday = function( habit ){
-		if( !habit.ticks || habit.ticks.length == 0 ) return;
-		return new Date(habit.ticks[0].createdAt).isToday();
+		return HabitModel.tickedToday(habit);
 	}
 	$scope.removeHabit = function( habit ){
 		HabitModel.remove(habit);

@@ -10,7 +10,9 @@ Strive.controller('StriveCtrl', function(
 	UserModel,
 	Sync,
 	SyncOptions,
-	API_DOMAIN
+	API_DOMAIN,
+	asUtility,
+	TransactionModel
 ){
 	var self = this;
 
@@ -21,22 +23,36 @@ Strive.controller('StriveCtrl', function(
 	$scope.UserModel = UserModel;
 
 	$scope._init = function(){
-		
-		SyncOptions.downSync = {
-			url:API_DOMAIN+'/api/user/down-sync',
-			method: 'GET',
-			withCredentials: true
-		}	
-		
-		SyncOptions.onDownSyncComplete = function(data){
-			var habitChanges = HabitModel.merge(data.habits);
-			var monitorChanges = MonitorModel.merge(data.monitors);
-
-			console.log('Habit Changes: ', habitChanges);
-			console.log('Monitor Changes: ', monitorChanges);
+		SyncOptions.onSyncSuccess = function(){
+			TransactionModel.clear();
 		}
+		// SyncOptions.downSync = {
+		// 	url:API_DOMAIN+'/api/user/down-sync',
+		// 	method: 'GET',
+		// 	withCredentials: true
+		// }	
+		
+		// SyncOptions.onDownSyncComplete = function(data){
+		// 	var habitChanges = HabitModel.merge(data.habits);
+		// 	var monitorChanges = MonitorModel.merge(data.monitors);
+
+		// 	console.log('Habit Changes: ', habitChanges);
+		// 	console.log('Monitor Changes: ', monitorChanges);
+		// }
+		// 
+		asUtility.pollFunction(function(){
+
+			var transactions = TransactionModel.transactions;
+			Sync.batch({
+				url: API_DOMAIN+'/api/commands',
+				method: 'POST',
+				data: transactions
+			});
+		}, 10000)
 		
 		Sync.syncAuto();
+
+
 		
 		// make sure we clear the Sync buffer when
 		// there is a new user
