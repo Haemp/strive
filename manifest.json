@@ -20,7 +20,8 @@
     "notifications",
     "alarms",
     "unlimitedStorage",
-    "identity"
+    "identity",
+    "<all_urls>"
   ],
   "oauth2": {
     // client_id below is specifc to the application key. Follow the

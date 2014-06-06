@@ -3,7 +3,7 @@ Strive.service('StriveHelper', function(){
 
 	self.getStreakIcon = function( streak ){
 
-		if( streak >= 125 ){
+		if( streak >= 100 ){
 			return 'gold';
 		}else if( streak >= 50 ){
 			return 'orange';

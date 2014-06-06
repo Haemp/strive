@@ -46,7 +46,7 @@ Strive.controller('ArchiveCtrl', function( $scope, HabitModel ){
 	$scope.unArchive = function( habit ){
 		habit.isArchived = false;
 		$scope.saveAll();
-		HabitModel.edit(habit);
+		HabitModel.editHabit(habit);
 	}
 	$scope.showArchived = function(habit){
 		return habit.isArchived;

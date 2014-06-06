@@ -2,12 +2,12 @@ Strive.service('HabitModel', function(
 	JsonStorage, 
 	$q, 
 	StriveHelper, 
-	Sync, 
 	API_DOMAIN, 
 	Utils,
 	HabitModelInterface,
 	SyncAdapter,
-	TransactionModel
+	TransactionModel,
+	SyncModel
 ) {
 	var self = this;
 
@@ -16,52 +16,7 @@ Strive.service('HabitModel', function(
 	self.syncAdapter;
 
 	self._init = function(){
-
-		self.syncAdapter = SyncAdapter.createAdapter(HabitModelInterface, [
-			{name: 'createHabit', func: function(newHabit){
-
-				newHabit.createdAt = newHabit.id = Date.now();
-
-				if (!self.habits) self.habits = [];
-				self.habits.push(angular.copy(newHabit));
-
-				return true;
-			}},
-			{name: 'removeHabit', func: function(params){
-
-				for (var i = self.habits.length - 1; i >= 0; i--) {
-					if (self.habits[i].id == params.id){
-						self.habits.splice(i, 1);
-						return true;
-					}
-				}
-
-				return false;
-			}},
-			{name: 'updateHabit', func: function(params){
-				return true;
-				// edits are made directly on the datasource
-				// and we don't need any logic here.
-			}},
-			{name: 'tickHabit', func: function(params){
-				var habit = self.getHabit(params.habitId);
-
-				if (!habit.ticks)
-					habit.ticks = [];
-
-				if( self.tickedToday(habit) ) return false;
-
-				habit.ticks.unshift({
-					createdAt: Date.now(),
-				});
-				return true;
-			}},
-		], {
-			add: function(transaction){
-				console.log('adding transaction');
-				TransactionModel.push(transaction);
-			}
-		});
+		SyncModel.record(this, ['removeHabit', 'editHabit', 'createHabit', 'tickHabit', 'addExistingHabit']);
 	}
 
 	self.loadHabits = function() {
@@ -80,105 +35,57 @@ Strive.service('HabitModel', function(
 		return def.promise;
 	}
 
-	self.merge = function(habits) {
-		if (!habits) return 0;
-		var changes = 0;
-		for (var i = habits.length - 1; i >= 0; i--) {
-			var newHabit = habits[i];
-			var habit = self.getHabit(newHabit.id);
+	self.addExistingHabit = function(habit, done){
+		var h = self.getHabit(habit.id);
+		if( h ){ // this habit already exists
+			return done(false);
+		}
+		self.habits.push(habit);
+		self.save();
+		done(true);
+	}
+	self.editHabit = function(habit, done){
 
-			if (habit) {
-				if (!self.isEqual(newHabit, habit)) {
+		// play back needs an implementation here
+		var targetHabit = self.getHabit(habit.id);
+		if( habit === targetHabit ){
+			return done(true);
+		}
 
-					// this is a changed habit
-					// we need to make it override
-					// it's older version
-					habit.name = newHabit.name;
-					habit.description = newHabit.description;
-					habit.ticks = newHabit.ticks;
-					habit.isArchived = newHabit.isArchived;
-					habit.streak = StriveHelper.calculateStreak(habit.ticks);
-					changes++;
-				}
-			} else {
-				// this habit does not exist in the habit array
-				// so we add it.
-				self.habits.push(newHabit);
-				newHabit.streak = StriveHelper.calculateStreak(newHabit.ticks);
-				changes++;
-			}
-		};
+		targetHabit.description = habit.description;
+		targetHabit.name = habit.name;
+		targetHabit.isArchived = habit.isArchived;
+		done(true);
+		
+		self.save();
+	}
 
-		// loop through local habits and match 
-		// them up against the new batch - if
-		// they are not in the new batch remove them
-		// This is the way we handle sync deletes
+
+	self.createHabit = function(newHabit, done) {
+
+		if(!newHabit.createAt && !newHabit.id)
+			newHabit.createdAt = newHabit.id = Date.now();
+
+		if (!self.habits) self.habits = [];
+		self.habits.push(angular.copy(newHabit));
+		
+		self.save();
+		
+		done(true);
+	}
+
+	self.removeHabit = function(habit, done) {
+		var found = false;
 		for (var i = self.habits.length - 1; i >= 0; i--) {
-			var habit = self.getHabitFrom(self.habits[i].id, habits);
-			if( !habit ){
-				self.remove(self.habits[i]);
+			if (self.habits[i].id == habit.id){
+				self.habits.splice(i, 1);
+				found = true;
+				
 			}
-		};
-		if (changes > 0) {
-			self.save();
 		}
-		return changes;
-	}
-
-	self.edit = function(habit){
-
-		self.syncAdapter.updateHabit(habit);
-
-		// Sync.batch({ 
-	 //   	  	url:API_DOMAIN+'/api/habit', 
-	 //   	  	method: 'PUT', 
-	 //   	  	data: editedHabit,
-	 //   	  	withCredentials:true
-	 //   	});
-	}
-
-	self.isEqual = function(habit1, habit2) {
-		if (
-			habit1.name == habit2.name &&
-			habit1.id == habit2.id &&
-			habit1.isArchived == habit2.isArchived &&
-			Utils.arrayEquals(habit1.ticks, habit2.ticks) &&
-			Utils.stringEquals(habit1.description, habit2.description)
-		) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	self.create = function(newHabit) {
-
-		self.syncAdapter.createHabit(newHabit);
-
-		// Sync.batch({
-		// 	url: API_DOMAIN + '/api/habit',
-		// 	method: 'POST',
-		// 	withCredentials: true,
-		// 	data: newHabit
-		// });
 
 		self.save();
-	}
-
-	self.remove = function(habit) {
-
-		self.syncAdapter.removeHabit(habit);
-
-		// Sync.batch({
-		// 	url: API_DOMAIN + '/api/habit',
-		// 	method: 'DELETE',
-		// 	params: {
-		// 		"id": habit.id
-		// 	},
-		// 	withCredentials: true
-		// });
-
-		self.save();
+		done(found);
 	}
 
 	self.getHabit = function(id) {
@@ -198,35 +105,43 @@ Strive.service('HabitModel', function(
 				return habits[i];
 		}
 	}
-
-	self.tick = function(habitId) {
-
-		self.syncAdapter.tickHabit({habitId:habitId});
-		
-
-		// if (!habit.ticks)
-		// 	habit.ticks = [];
-
-		// habit.ticks.unshift({
-		// 	createdAt: Date.now(),
-		// });
-
-		// calculate the streak
-		var habit = self.getHabit(habitId);
-		habit.streak = StriveHelper.calculateStreak(habit.ticks);
-
-		// Sync.batch({ 
-	 //   	  	url:API_DOMAIN+'/api/habit/tick', 
-	 //   	  	method: 'POST', 
-	 //   	  	data: {
-	 //   	  		"habitId": habit.id,
-		//    	  	"id": Date.now(),
-		//    	  	"createdAt": Date.now()
-	 //   	  	},
-	 //   	  	withCredentials:true
-	 //   	});
+	self.sort = function(){
+		self.habits.sort(function(a, b){
+			return b.streak - a.streak;
+		});
 
 		self.save();
+	};
+
+	self.tickHabit = function(params, done) {
+
+		var habit = self.getHabit(params.habitId);
+
+		// for play back
+		if(!params.createdAt)
+			params.createdAt = Date.now();
+
+		if( !habit ){
+			done(false);
+			return;
+		}
+
+		if (!habit.ticks)
+			habit.ticks = [];
+
+		if( self.tickedToday(habit) ){
+
+			done(false);
+			return false;	
+		} 
+		habit.ticks.unshift(params);
+
+		// calculate the streak
+		habit.streak = StriveHelper.calculateStreak(habit.ticks);
+
+		self.save();
+
+		done(true);
 	}
 
 	self.tickedToday = function(habit){
@@ -266,6 +181,11 @@ Strive.service('HabitModel', function(
 		}, function(error) {
 			console.log('There was an error saving the habits', error);
 		});
+	}
+	
+	self.clear = function(){
+		self.habits.length = 0;
+		self.save();
 	}
 
 	self._init();
@@ -312,33 +232,4 @@ Strive.service('Utils', function() {
 		}
 		return false;
 	}
-})
-
-
-Strive.service('TransactionModel', function(){
-	var self = this;
-	self.transactions = [];
-
-	self._init = function(){
-		var t = localStorage.getItem('transactions');
-		if(t){
-			self.transactions = JSON.parse(t);
-		}
-	}
-
-	self.push = function(t){
-		self.transactions.push(t);
-		self._save();
-	}
-
-	self.clear = function(){
-		self.transactions.length = 0;
-		self._save();
-	}
-
-	self._save = function(){
-		localStorage.setItem('transactions', JSON.stringify(self.transactions));
-	}
-
-	self._init();
 })

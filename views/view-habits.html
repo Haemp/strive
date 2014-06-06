@@ -1,9 +1,10 @@
 <div>
      <ul class="L-vbox-15">
+     	
         <li class="ListItem" ng-class="{'ListItem_selected': habit.selected}" ng-repeat="habit in HabitModel.habits | filter:filterArchived">
     
             <div as-touch-active class="ListItem-head L-hbox">					
-                <button class="Btn-reg Btn_icon Btn_medium ListItem-edit" ng-click="toggleEditMode( habit )" ng-if="habit.selected">
+                <button class="Btn_icon Btn_medium ListItem-edit" ng-click="toggleEditMode( habit )" ng-if="habit.selected">
                     <i class="Icon edit" ng-class="{ edit: !habit.isEditable, save: habit.isEditable }"></i>
                 </button>
                 <div class="L-hbox-1 ListItem-name" ng-if="!habit.isEditable" ng-click="selectHabit(habit)">

@@ -8,11 +8,10 @@ Strive.controller('StriveCtrl', function(
 	MonitorModel,
 	Browser,
 	UserModel,
-	Sync,
-	SyncOptions,
 	API_DOMAIN,
 	asUtility,
-	TransactionModel
+	TransactionModel,
+	SyncModel
 ){
 	var self = this;
 
@@ -20,43 +19,37 @@ Strive.controller('StriveCtrl', function(
 	$scope.HabitModel = HabitModel;	
 	$scope.StateModel = StateModel;
 	$scope.StriveHelper = StriveHelper;
+	$scope.TransactionModel = TransactionModel;
 	$scope.UserModel = UserModel;
+	$scope.sync = function(){
+		SyncModel.sync();
+	}
 
 	$scope._init = function(){
-		SyncOptions.onSyncSuccess = function(){
-			TransactionModel.clear();
-		}
-		// SyncOptions.downSync = {
-		// 	url:API_DOMAIN+'/api/user/down-sync',
-		// 	method: 'GET',
-		// 	withCredentials: true
-		// }	
 		
-		// SyncOptions.onDownSyncComplete = function(data){
-		// 	var habitChanges = HabitModel.merge(data.habits);
-		// 	var monitorChanges = MonitorModel.merge(data.monitors);
-
-		// 	console.log('Habit Changes: ', habitChanges);
-		// 	console.log('Monitor Changes: ', monitorChanges);
-		// }
-		// 
-		asUtility.pollFunction(function(){
-
-			var transactions = TransactionModel.transactions;
-			Sync.batch({
-				url: API_DOMAIN+'/api/commands',
-				method: 'POST',
-				data: transactions
+		// initialize data from localStorage
+		HabitModel.loadHabits()
+			.then(function(){
+				HabitModel.recalculateAllStreaks();
 			});
-		}, 10000)
-		
-		Sync.syncAuto();
+		MonitorModel.loadMonitors();
 
-
+		// on sync - every 30s
+		$rootScope.$on('SyncModel.SYNC_COMPLETE', function(e, data){
+			
+			// check played transactions
+			if( data.transactions && data.transactions.length > 0 ){
+				// update habits, monitors and data points.
+				MonitorModel.sort();
+				HabitModel.sort();
+				HabitModel.recalculateAllStreaks();
+			}
+		})
 		
 		// make sure we clear the Sync buffer when
 		// there is a new user
 		$rootScope.$on('User.SIGNUP_SUCCESS', self.newUserRoutine)
+		
 		// load in separate stylesheet for
 		// the pre-kitkat android browser.
 		yepnope([{ test: Browser.isAndroid, yep: 'styles/android.css' }]);
@@ -65,7 +58,6 @@ Strive.controller('StriveCtrl', function(
 
 		// handling backwards button
 		$rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
-
 
 			// if the state change is a change backwards
 			// we just shift the top state
@@ -77,11 +69,6 @@ Strive.controller('StriveCtrl', function(
 				StateModel.states.unshift(from);
 			}
 		});
-
-
-
-		document.addEventListener("touchstart", function(){}, true);
-		document.addEventListener("mouseover", function(){}, true);
 
 		document.addEventListener("backbutton", function(){
 			console.log('Backbutton was pressed');
@@ -103,15 +90,23 @@ Strive.controller('StriveCtrl', function(
 			});
 		}
 
-		HabitModel.loadHabits()
-			.then(function(){
-				HabitModel.recalculateAllStreaks();
-			});
+
+		
+		
+		// start the sync loop on 30s
+		asUtility.pollFunction(function(){
+			SyncModel.sync();
+		}, 30*1000)
 	}
 
 	$scope.switch = function( state ){
 		$state.transitionTo(state);
 		StateModel.basementOpen = false;
+	}
+	
+	$scope.clear = function(){
+		HabitModel.clear();
+		MonitorModel.clear();
 	}
 	$scope.back = function(){
 		if( StateModel.states.length < 2 ) return; // if there is just one state we stop
@@ -119,22 +114,41 @@ Strive.controller('StriveCtrl', function(
 		console.log('Going back', StateModel.states[0].name);
 		$state.go(StateModel.states[0].name);
 	}
-
+	$scope.logout = function(){
+		TransactionModel.clear();
+		UserModel.logout();
+	}
 	self.newUserRoutine = function(e, data){
 
-		// reset the Sync
-		Sync.requests.length = 0;
+		// A new user has been created,
+		// we check if the user has any transaction data
+		if( TransactionModel.isEmpty() ){
+
+			// if there is no transaction data we have this for the
+			// case that the user is a legacy user that has not
+			// activated the transactions. In which case we need to push
+			// the data up in to the imported instead of just relying on
+			// the transactions.
+			if(HabitModel.habits.length > 0 || MonitorModel.monitors.length > 0){
+
+				$rootScope.$emit('User.EXPORT_PROGRESS', {text: 'Exporting your marklar', type: 'progress'});
+				UserModel.export( HabitModel.habits, MonitorModel.monitors )
+					.then(function(res){
+
+						// set the transaction version
+						TransactionModel.setVersion(res.data.syncVersion);
+
+						// TODO activate the sync
+						$rootScope.$emit('User.EXPORT_SUCCESS', {text: 'All your marklars was successfully markared!', type: 'success'});
+					}, function(res){
+						$rootScope.$emit('User.EXPORT_SUCCESS', {text: 'We\'re sorry, your marklars could not be fully marklared :(', type: 'error'});
+					});
+			}
+		}else{
+			SyncModel.sync();
+		}
 		
 		// trigger a data import 
-		$rootScope.$emit('User.EXPORT_PROGRESS', {text: 'Exporting your marklar', type: 'progress'});
-		UserModel.export( HabitModel.habits, MonitorModel.monitors )
-			.then(function(res){
-
-				// TODO activate the sync
-				$rootScope.$emit('User.EXPORT_SUCCESS', {text: 'All your marklars was successfully markared!', type: 'success'});
-			}, function(res){
-				$rootScope.$emit('User.EXPORT_SUCCESS', {text: 'We\'re sorry, your marklars could not be fully marklared :(', type: 'error'});
-			});
 	}
 	$scope._init();
 });

@@ -81,7 +81,12 @@ JsonStorage.service('JsonStorage', function( $q, $timeout, fileSystem ){
 			
 			}else{
 				$timeout( function(){
-					deferred.resolve( JSON.parse(localStorage.getItem(key)) );	
+					var stringObj = localStorage.getItem(key);
+					if(stringObj){ 
+						deferred.resolve( JSON.parse(stringObj) );	
+					}else{
+						deferred.resolve();	
+					}
 				}, 10);
 			}
 		}

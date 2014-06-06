@@ -28,6 +28,7 @@
 		<script src="libs/JsonStorage.js"></script>
 		<script src="libs/syncmodels/HabitModelInterface.js"></script>
 		<script src="libs/syncmodels/SyncAdapter.js"></script>
+		<script src="libs/sync-model/SyncModel.js"></script>
 
 
 		<!-- Strive -->
@@ -56,10 +57,13 @@
 		</div>
 
 		<basement open="StateModel.basementOpen">
-			<div ng-if="UserModel.user">
-				{{ UserModel.user.email }}
-			</div>
 			<ul class="Basement-menu">
+				<li class="Basement-menu-item L-hbox L-hbox-vcenter" ng-if="UserModel.user">
+					<i class="Icon-circle-green" style="margin-right:10px"></i>
+					<div class="Basement-menu-item-name">{{ UserModel.user.email }}</div>
+					<div class="L-spacer"></div>	
+					<i class="Icon" ng-class="{unsynced: TransactionModel.transactions.length > 0, synced: !(TransactionModel.transactions.length > 0)}"></i>
+				</li>
 				<li as-touch-active class="Basement-menu-item" ng-click="switch('habits')">
 					<i class="Basement-menu-item_active" class="Icon-circle-white" ng-if="$state.includes('habits')"></i>
 					<span class="Basement-menu-item-name">Habits</span>
@@ -75,13 +79,22 @@
 				<li as-touch-active class="Basement-menu-item" ng-click="UserModel.showUserLogin = true">
 					<span class="Basement-menu-item-name">Login</span>
 				</li>
+				<li as-touch-active class="Basement-menu-item" ng-click="sync()">
+					<span class="Basement-menu-item-name">Sync</span>
+				</li>
+				<li as-touch-active class="Basement-menu-item" ng-click="logout()">
+					<span class="Basement-menu-item-name">Logout</span>
+				</li>
+				<li as-touch-active class="Basement-menu-item" ng-click="clear()">
+					<span class="Basement-menu-item-name" style="color:red">Clear</span>
+				</li>
 				<li >
 					<span style="font-size: 12px; color: #999; margin: 10px; float: right;">v0.3.2</span>
 				</li>
 			</ul>
 		</basement>
 
-		<div ng-include="'src/user/login-signup.html'" ng-if="UserModel.showUserLogin" ng-controller="LoginCtrl">
+		<div ng-include="'src/user/login-signup.html'" class="LoginContainer" ng-controller="LoginCtrl">
 
 		</div>
 	</body>

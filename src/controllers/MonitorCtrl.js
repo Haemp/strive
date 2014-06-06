@@ -7,18 +7,25 @@ Strive.controller('MonitorCtrl', function( $scope, MonitorModel ){
 	$scope._init = function(){
 		
 		// load models
-		MonitorModel.loadMonitors();
+		
 	}
 	
 	$scope.createMonitor = function( newMonitor ){
-		MonitorModel.create( newMonitor );
+		MonitorModel.createMonitor(newMonitor );
 		
 		$scope.newMonitor = undefined;
 	}
 
 	$scope.addDataPoint = function( monitor, newDataValue ){
 		delete monitor.newDataValue; 
-		MonitorModel.addDataPoint( monitor.id, parseFloat(newDataValue, 10) );
+
+		var dataPoint = {
+			createdAt: Date.now(),
+			value: parseFloat(newDataValue, 10),
+			monitorId: monitor.id
+		}
+
+		MonitorModel.addDataPoint( dataPoint );
 		
 	}
 
@@ -27,7 +34,7 @@ Strive.controller('MonitorCtrl', function( $scope, MonitorModel ){
 	}
 
 	$scope.removeMonitor = function( habit ){
-		MonitorModel.remove(habit);
+		MonitorModel.removeMonitor(habit);
 	}
 	$scope.numDataPoints = function( monitor ){
 		return ( typeof monitor.dataPoints != 'undefined' ) ? monitor.dataPoints.length : 0;
@@ -64,6 +71,7 @@ Strive.controller('MonitorCtrl', function( $scope, MonitorModel ){
 		monitor.isEditable = !monitor.isEditable;	
 		if( !monitor.isEditable ){
 			monitor.selected = false;	
+			MonitorModel.editMonitor(self._edit(monitor));
 			$scope.selectedMonitor = undefined;
 			self.saveAll();
 		}
@@ -73,6 +81,12 @@ Strive.controller('MonitorCtrl', function( $scope, MonitorModel ){
 		MonitorModel.save()
 	}
 	
+	self._edit = function(monitor){
+		var edited = angular.copy(monitor);
+		delete edited.dataPoints;
+		return edited;
+	}
+
 	$scope._init();	
 });
 

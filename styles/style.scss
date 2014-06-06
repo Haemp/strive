@@ -38,6 +38,7 @@
 	.Icon{ display: inline-block; }
 	@import 'sprites.css';
 	.Icon-circle-white{ width: 10px; height: 10px; background-color: #ccc; display: inline-block; border-radius: 20px;}
+	.Icon-circle-green{ width: 10px; height: 10px; background-color: #2db200; display: inline-block; border-radius: 20px;}
 
 /* List item is the white box with a meta box underneath it */
 	.ListItem{ display:block; @extend .Box-ali;}
@@ -186,8 +187,11 @@
 	.nv-group{ stroke: #999 !important; stroke-width: 4px !important; }
 
 /* Login */
-	.Login{ font-weight:300; color: #ccc; position:fixed; background-color: #333; top:0; left:0; right:0; bottom:0; z-index:10; padding: 20px; background: -webkit-radial-gradient(top, circle cover, #545454 0%,#333333 30%);
+	.Login{ font-weight:300; color: #ccc; position:fixed; background-color: #333; top:0; left:0; right:0; bottom:0; z-index:10; padding: 20px; background: -webkit-radial-gradient(top, circle cover, #545454 0%,#333333 30%);	
 		.Noti{ margin: 30px 0 50px; }
+		&.ng-enter{ @include trans(0.7s); -webkit-transform: translateY(-100%); }
+		&.ng-enter.ng-enter-active{ -webkit-transform: translateY(0%); }
+		&.ng-leave{ @include trans(1s !important); -webkit-transform: translateY(-100%); }
 	}
 	.Login-close{ float:right; }
 	.Login-logo{ margin: 80px 0;}
@@ -195,8 +199,8 @@
 
 /* Basement */
 	.Basement{ padding-top: 0; top:50px; }
-	.Basement-menu-item_active{ margin-right: 5px; @extend .Icon-circle-white}
-	.Basement-menu-item{ border-bottom: 1px solid #222222; box-shadow: 0px 1px 0px #444; -webkit-box-shadow: 0px 1px 0px #444; padding: 10px; }
+	.Basement-menu-item_active{ margin-right: 5px; @extend .Icon-circle-white; }
+	.Basement-menu-item{ border-bottom: 1px solid #222222; box-shadow: 0px 1px 0px #444; -webkit-box-shadow: 0px 1px 0px #444; padding: 10px; text-transform: uppercase; font-size: 14px; font-weight: bold;}
 	.Basement-menu-item.active{ background-color: #999; @include transition(0.1s); }
 
 /* Flip card */

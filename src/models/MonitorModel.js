@@ -1,9 +1,9 @@
-Strive.service('MonitorModel', function(JsonStorage, $q, Utils, Sync, API_DOMAIN) {
+Strive.service('MonitorModel', function(JsonStorage, $q, Utils, API_DOMAIN, SyncModel) {
 	var self = this;
 	self.monitors;
 
 	self._init = function() {
-
+		SyncModel.record(this, ['removeMonitor', 'editMonitor', 'createMonitor', 'addDataPoint', 'addExistingMonitor']);
 	}
 
 
@@ -43,6 +43,17 @@ Strive.service('MonitorModel', function(JsonStorage, $q, Utils, Sync, API_DOMAIN
 		return changes;
 	}
 
+	self.addExistingMonitor = function(monitor, done){
+		var m = self.getMonitor(monitor.id);
+		if(m){
+			// monitor already exists
+			return done(false);
+		}
+		self.monitors.push(monitor);
+		self.save();
+		done(true);
+	}
+
 	self.loadMonitors = function() {
 		var def = $q.defer();
 		JsonStorage.get('monitors')
@@ -72,6 +83,29 @@ Strive.service('MonitorModel', function(JsonStorage, $q, Utils, Sync, API_DOMAIN
 		}
 	}
 
+	self.sort = function(){
+		
+		if(self.monitors && self.monitors.length > 1 ){
+			self.monitors.sort(function(a, b){
+				return b.dataPoints.length - a.dataPoints.length;
+			});	
+		}else{
+			return;
+		}
+		
+		
+		
+		for (var i = 0; i < self.monitors.length; i++) {
+			if( self.monitors[i].dataPoints && self.monitors[i].dataPoints.length > 1 ){
+				self.monitors[i].dataPoints.sort(function(a,b){
+					return b.createdAt - a.createdAt;
+				})
+			}
+		}
+
+		self.save();
+	}
+
 	self.save = function() {
 
 		// clean the data
@@ -88,49 +122,46 @@ Strive.service('MonitorModel', function(JsonStorage, $q, Utils, Sync, API_DOMAIN
 			});
 	}
 
-	self.create = function(newMonitor) {
+	self.createMonitor = function(newMonitor, done) {
 
-		newMonitor.createdAt = newMonitor.id = Date.now();
+		if(!newMonitor.createdAt && !newMonitor.id){
+			newMonitor.createdAt = newMonitor.id = Date.now();
+		}
 
 		if (!self.monitors) self.monitors = [];
 		self.monitors.push(angular.copy(newMonitor));
 
-		Sync.batch({
-			url: API_DOMAIN + '/api/monitor',
-			method: 'POST',
-			withCredentials: true,
-			data: newMonitor
-		});
-
 		self.save();
+
+		done(true);
 	}
 
-	self.edit = function(monitor){
-		var editedMonitor = angular.copy(monitor);
-		Sync.batch({ 
-	   	  	url:API_DOMAIN+'/api/monitor', 
-	   	  	method: 'PUT', 
-	   	  	data: editedMonitor,
-	   	  	withCredentials:true
-	   	});
-	}
+	self.editMonitor = function(monitor, done){
+		var editedMonitor = self.getMonitor(monitor.id);
 
-	self.remove = function(monitor) {
-		for (var i = self.monitors.length - 1; i >= 0; i--) {
-			if (self.monitors[i].id == monitor.id)
-				self.monitors.splice(i, 1);
+		if( editedMonitor === monitor ){
+			return done(true);
 		}
 
-		Sync.batch({
-			url: API_DOMAIN + '/api/monitor',
-			method: 'DELETE',
-			params: {
-				"id": monitor.id
-			},
-			withCredentials: true
-		});
+		editedMonitor.description = monitor.description;
+		editedMonitor.name = monitor.name;
+		editedMonitor.isArchived = monitor.isArchived;
+		
+		self.save()
+		done(true);
+	}
+
+	self.removeMonitor = function(monitor, done) {
+		var found = false;
+		for (var i = self.monitors.length - 1; i >= 0; i--) {
+			if (self.monitors[i].id == monitor.id){
+				self.monitors.splice(i, 1);
+				found = true;
+			}
+		}
 
 		self.save();
+		done(found);
 	}
 
 	self.hasDataPointToday = function(monitorId) {
@@ -150,30 +181,25 @@ Strive.service('MonitorModel', function(JsonStorage, $q, Utils, Sync, API_DOMAIN
 		}
 	}
 
-	self.addDataPoint = function(monitorId, dataPointValue) {
-		console.log('Creating data point', monitorId, dataPointValue);
-		var monitor = self.getMonitor(monitorId);
+	self.addDataPoint = function(dataPoint, done) {
+		console.log('Creating data point', dataPoint);
+		var monitor = self.getMonitor(dataPoint.monitorId);
+
+		if(!monitor){
+			return done(false);
+		}
 
 		if (!monitor.dataPoints)
 			monitor.dataPoints = [];
 		
-		var dataPoint = {
-			createdAt: Date.now(),
-			value: dataPointValue
-		};
 		monitor.dataPoints.unshift(dataPoint);
 
-		Sync.batch({
-			url: API_DOMAIN + '/api/monitor/data-point',
-			method: 'POST',
-			data: {
-				monitorId: monitor.id,
-				value: dataPoint.value,
-				createdAt: dataPoint.createdAt
-			},
-			withCredentials: true
-		});
-
+		self.save();
+		done(true);
+	}
+	
+	self.clear = function(){
+		self.monitors.length = 0;
 		self.save();
 	}
 

@@ -1,4 +1,4 @@
-angular.module('User', [])
+angular.module('User', ['JsonStorage'])
 
 .service('UserOptions', function() {
 	var self = this;
@@ -11,32 +11,35 @@ angular.module('User', [])
 	return {
 		'responseError': function(response) {
 			console.log(response);
-			if (response.status == 401) {
+			if (response.status == 403) {
 				UserModel = $injector.get('UserModel');
 				console.log('User was invalidated by the server');
-				UserModel.user = undefined;
+				UserModel.loggedIn = false;
 			}
 			return $q.reject(response);
 		}
 	};
 })
 
-.service('UserModel', function(UserOptions, $http) {
+.service('UserModel', function(UserOptions, $http, JsonStorage, TransactionModel) {
 	var self = this;
 	self.user;
 	self.showUserLogin;
 
 	self._init = function() {
-		self.user = self.loadUser();
+		self.loadUser();
 	}
 	self.saveUser = function() {
-		localStorage.user = JSON.stringify(angular.copy(self.user));
+		JsonStorage.save('user', angular.copy(self.user));
 	}
 	self.loadUser = function() {
-		if (localStorage.user) {
-			return JSON.parse(localStorage.user);
-		}
-		return undefined
+		JsonStorage.get('user')
+			.then(function(user){
+				
+				self.user = user;
+				
+			});
+		
 	}
 	self.login = function(email, password) {
 		var p = $http({
@@ -50,6 +53,7 @@ angular.module('User', [])
 		}).then(function(res) {
 
 			self.user = res.data.user;
+			self.user.loggedIn = true;
 			self.saveUser();
 			
 			return res;
@@ -74,6 +78,9 @@ angular.module('User', [])
 			withCredentials: true
 		}).then(function(res) {
 			self.user = undefined;
+			
+			// clear transactions
+			TransactionModel.clear();
 			self.saveUser();
 		});
 
@@ -83,7 +90,7 @@ angular.module('User', [])
 	self._init();
 })
 
-.controller('LoginCtrl', function($scope, $rootScope, UserModel) {
+.controller('LoginCtrl', function($scope, $rootScope, UserModel, $timeout) {
 
 	var self = this;
 	$scope.noti;
@@ -94,6 +101,7 @@ angular.module('User', [])
 		$rootScope.$on('User.LOGIN_SUCCESS', self.notification);
 		$rootScope.$on('User.LOGIN_ERROR', self.notification);
 		$rootScope.$on('User.LOGIN_PROGRESS', self.notification);
+		$rootScope.$on('User.SIGNUP_SUCCESS', self.notification);
 
 		$rootScope.$on('User.VALIDATION_ERROR', self.notification);
 	}
@@ -122,17 +130,25 @@ angular.module('User', [])
 			.then(function(res) {
 
 				if (res.data.isNew) {
+					
 					$rootScope.$emit('User.SIGNUP_SUCCESS', {
 						text: 'You have the power!',
 						type: 'success',
 						data: res.user
 					});
 				}else{
+					
 					$rootScope.$emit('User.LOGIN_SUCCESS', {
 						text: 'Welcome sir',
 						type: 'success'
 					});
 				}
+				
+				// wait a bit after the notification displays
+				// then roll up the login screen
+				$timeout(function(){
+					UserModel.showUserLogin = false;
+				},700);
 
 			}, function() {
 				$rootScope.$emit('User.LOGIN_ERROR', {
