@@ -21,6 +21,8 @@ Strive.controller('StriveCtrl', function(
 	$scope.StriveHelper = StriveHelper;
 	$scope.TransactionModel = TransactionModel;
 	$scope.UserModel = UserModel;
+	
+	$scope.basementState = { logoutPopup: false };
 	$scope.sync = function(){
 		SyncModel.sync();
 	}
@@ -39,6 +41,8 @@ Strive.controller('StriveCtrl', function(
 			
 			// check played transactions
 			if( data.transactions && data.transactions.length > 0 ){
+				
+				console.log('Updating data after new incomming transactions');
 				// update habits, monitors and data points.
 				MonitorModel.sort();
 				HabitModel.sort();
@@ -48,7 +52,9 @@ Strive.controller('StriveCtrl', function(
 		
 		// make sure we clear the Sync buffer when
 		// there is a new user
-		$rootScope.$on('User.SIGNUP_SUCCESS', self.newUserRoutine)
+		$rootScope.$on('User.LOGIN_SUCCESS', function(){
+			SyncModel.sync();
+		})
 		
 		// load in separate stylesheet for
 		// the pre-kitkat android browser.
@@ -114,27 +120,45 @@ Strive.controller('StriveCtrl', function(
 		console.log('Going back', StateModel.states[0].name);
 		$state.go(StateModel.states[0].name);
 	}
+	
 	$scope.logout = function(){
+		
+		HabitModel.clear();
+		MonitorModel.clear();
 		TransactionModel.clear();
-		UserModel.logout();
+		UserModel.logout()
+			.then(function(){
+				$scope.basementState.logoutPopup = false;
+			});
+	}
+	
+	$scope.logoutConfirm = function($event, status){
+		console.log('logoutPopup is: ',$scope.basementState.logoutPopup);
+		$event.stopImmediatePropagation();
+		$scope.basementState.logoutPopup = status;
+		console.log('logoutPopup is: ',$scope.basementState.logoutPopup);
 	}
 	self.newUserRoutine = function(e, data){
 
 		// A new user has been created,
 		// we check if the user has any transaction data
+		console.log('New user routine');
 		if( TransactionModel.isEmpty() ){
 
+			console.log('Transmodel is empty');
 			// if there is no transaction data we have this for the
 			// case that the user is a legacy user that has not
 			// activated the transactions. In which case we need to push
 			// the data up in to the imported instead of just relying on
 			// the transactions.
 			if(HabitModel.habits.length > 0 || MonitorModel.monitors.length > 0){
-
+				
+				console.log('There are habits and or monitors');
 				$rootScope.$emit('User.EXPORT_PROGRESS', {text: 'Exporting your marklar', type: 'progress'});
+				console.log('Export in progress');
 				UserModel.export( HabitModel.habits, MonitorModel.monitors )
 					.then(function(res){
-
+						console.log('Export succeeded');
 						// set the transaction version
 						TransactionModel.setVersion(res.data.syncVersion);
 

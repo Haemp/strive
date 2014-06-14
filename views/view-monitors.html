@@ -43,7 +43,7 @@
                         <input class="Input-alt Input_-medium L-hbox-1" placeholder="Describe it" type="text" ng-model="monitor.description">
                     </div>
                 </div> 
-                <div class="ListItem-meta-section">
+                <div class="ListItem-meta-section" ng-if="!monitor.isEditable">
                 	<button ng-click="monitor.confirmDelete = true" ng-if="!monitor.confirmDelete" class="Btn Btn-lilly Btn_small">Delete Monitor</button>
                     <div ng-if="monitor.confirmDelete" >
                         <h2 class="Head medium">No turning back</h2>

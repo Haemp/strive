@@ -4,6 +4,7 @@
 		<title>Strive</title>
 
 		<meta http-equiv="content-type" content="text/html; charset=UTF8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 		<meta name="viewport" content="width=device-width" />
 
@@ -59,7 +60,7 @@
 		<basement open="StateModel.basementOpen">
 			<ul class="Basement-menu">
 				<li class="Basement-menu-item L-hbox L-hbox-vcenter" ng-if="UserModel.user">
-					<i class="Icon-circle-green" style="margin-right:10px"></i>
+					<i ng-class="{'Icon-circle-green': UserModel.user.authorized, 'Icon-circle-red':!UserModel.user.authorized  }" style="margin-right:10px"></i>
 					<div class="Basement-menu-item-name">{{ UserModel.user.email }}</div>
 					<div class="L-spacer"></div>	
 					<i class="Icon" ng-class="{unsynced: TransactionModel.transactions.length > 0, synced: !(TransactionModel.transactions.length > 0)}"></i>
@@ -76,20 +77,24 @@
 					<i class="Basement-menu-item_active" ng-if="$state.includes('archived')"></i>
 					<span class="Basement-menu-item-name">Archived</span>
 				</li>
-				<li as-touch-active class="Basement-menu-item" ng-click="UserModel.showUserLogin = true">
+				<li as-touch-active class="Basement-menu-item" ng-if="!UserModel.user || !UserModel.user.authorized" ng-click="UserModel.showUserLogin = true">
 					<span class="Basement-menu-item-name">Login</span>
 				</li>
-				<li as-touch-active class="Basement-menu-item" ng-click="sync()">
+				<li as-touch-active class="Basement-menu-item" ng-if="UserModel.user" ng-click="sync()">
 					<span class="Basement-menu-item-name">Sync</span>
 				</li>
-				<li as-touch-active class="Basement-menu-item" ng-click="logout()">
-					<span class="Basement-menu-item-name">Logout</span>
+				<li as-touch-active class="Basement-menu-item" ng-if="UserModel.user" >
+					<span class="Basement-menu-item-name" ng-click="basementState.logoutPopup = true">Logout</span>
+					{{ logoutPopup }}
+					<div class="Basement-confirm" ng-if="basementState.logoutPopup">
+						<div>Orly? Unsynced data will be lost.</div>
+						<button	class="L-center Btn Btn-lilly Btn_small dark" ng-click="logoutConfirm($event, false)">Cancel</button>
+						
+						<button	class="L-center Btn Btn-lilly Btn_small dark" ng-click="logout()">Yrly, log me out.</button>
+					</div>
 				</li>
-				<li as-touch-active class="Basement-menu-item" ng-click="clear()">
-					<span class="Basement-menu-item-name" style="color:red">Clear</span>
-				</li>
-				<li >
-					<span style="font-size: 12px; color: #999; margin: 10px; float: right;">v0.3.2</span>
+				<li>
+					<span style="font-size: 12px; color: #999; margin: 10px; float: right;">v0.4.0</span>
 				</li>
 			</ul>
 		</basement>

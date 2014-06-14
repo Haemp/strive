@@ -22,9 +22,11 @@ Strive.service('HabitModel', function(
 	self.loadHabits = function() {
 
 		// load habits
+		console.log('Loading habits...');
 		var def = $q.defer();
 		JsonStorage.get('habits')
 			.then(function(habits) {
+				console.log('Habits loaded...', habits);
 				self.habits = habits || [];
 				def.resolve();
 			}, function(error) {
@@ -45,7 +47,7 @@ Strive.service('HabitModel', function(
 		done(true);
 	}
 	self.editHabit = function(habit, done){
-
+		
 		// play back needs an implementation here
 		var targetHabit = self.getHabit(habit.id);
 		if( habit === targetHabit ){

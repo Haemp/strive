@@ -10,8 +10,8 @@ var Strive = angular.module('Strive', [
 	'User',
 	'SyncModel'
 ]);
-var domain = 'http://146.148.22.101:3000';
-//var domain = 'http://localhost:3000';
+//var domain = 'http://146.148.22.101:3000';
+var domain = 'http://localhost:3000';
 
 // switch to remote API for production.
 Strive.constant('API_DOMAIN', domain);
@@ -63,4 +63,5 @@ Strive.constant('URL_SYNC', domain+'/api/commands');
 Strive.run(function(UserOptions) {
 	UserOptions.URL_LOGIN = domain+'/api/login';
 	UserOptions.URL_EXPORT = domain+'/api/user/import';
+	UserOptions.URL_LOGOUT = domain+'/api/logout';
 })

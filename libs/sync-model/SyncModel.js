@@ -52,7 +52,7 @@ angular.module('SyncModel', ['JsonStorage'])
 		 * @return {[type]} [description]
 		 */
 		self.sync = function(){
-			console.log('Syncing Up...', TransactionModel.get());
+			console.log('Syncing Up...', TransactionModel.transactions, 'with syncVersion', TransactionModel.syncVersion);
 			$http({
 				method: 'POST',
 				url: URL_SYNC, 
@@ -68,11 +68,23 @@ angular.module('SyncModel', ['JsonStorage'])
 					// TODO: if an actino is performed
 					// in the middle of a sync it will be
 					// lost
-					TransactionModel.clear();
-
-					self.play(res.data.transactions);
-					TransactionModel.setVersion(res.data.syncVersion);
-
+					if( TransactionModel.transactions && TransactionModel.transactions.length > 0){
+						console.log('Clearing transaction Model, all should now be synced');
+						TransactionModel.clearTransactions();
+					}
+						
+					
+					if( res.data.transactions && res.data.transactions.length > 0 ){
+						console.log('Playing ', res.data.transactions);
+						self.play(res.data.transactions);
+					}
+						
+					
+					if( res.data.syncVersion != TransactionModel.syncVersion ){
+						console.log('Playing updating syncVersion');
+						TransactionModel.setVersion(res.data.syncVersion);
+					}
+						
 					$rootScope.$emit('SyncModel.SYNC_COMPLETE', {transactions: res.data.transactions, version: res.data.syncVersion});
 				})
 		}
@@ -90,7 +102,7 @@ angular.module('SyncModel', ['JsonStorage'])
 		 * @return {[type]}              [description]
 		 */
 		self.play = function( transactions ){
-			console.log('Syncing Down...', transactions);
+			console.log('Playing transactions', transactions);
 			if(!transactions) return;
 
 			for (var i = 0; i < transactions.length; i++) {
@@ -108,9 +120,12 @@ angular.module('SyncModel', ['JsonStorage'])
 
 .service('TransactionModel', function(JsonStorage){
 	var self = this;
+	
+	
 	self.transactions = [];
 	self.syncVersion = 0;
-
+	console.log('TransactionModel instantiated transactions and version are now [] and 0');
+	
 	self._init = function(){
 		self._load();
 	}
@@ -122,7 +137,10 @@ angular.module('SyncModel', ['JsonStorage'])
 		self.transactions.push(t);
 		self._save();
 	}
-
+	self.clearTransactions = function(){
+		self.transactions.length = 0;
+		JsonStorage.save('transactions', angular.copy(self.transactions));
+	}
 	self.clear = function(){
 		self.transactions.length = 0;
 		self.syncVersion = 0;
@@ -146,17 +164,18 @@ angular.module('SyncModel', ['JsonStorage'])
 		console.log('Loading SyncModel data...');
 		JsonStorage.get('transactions')
 			.then(function(t){
-				console.log('Transactions loaded!');
 				if( typeof t == 'string') t = [];
 				self.transactions = t || [];
+				
+				console.log('Transactions loaded!', self.transactions);
 			});
 
 		JsonStorage.get('syncVersion')
 			.then(function(v){
 				
-				console.log('Sync Version loaded!');
-				self.syncVersion = parseInt(v || 0);
 				
+				self.syncVersion = parseInt(v || 0);
+				console.log('Sync Version loaded!', self.syncVersion);
 			});
 	}
 

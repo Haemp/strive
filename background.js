@@ -58,19 +58,20 @@ chrome.alarms.onAlarm.addListener(function( alarm ){
 				if( habit.isArchived ) continue;
 				
 				// Create list of habit reminders
-				hList.push({title: habit.name});
+				hList.push({title: habit.name, message: habit.name});
 			};
 			
+			console.log('Creating notification ', notificationName, 'From list', hList);
 			chrome.notifications.create(notificationName, {
 				type: 'list',
 				title: 'Reminder',
+				message: 'Your daily habits today:',
 				iconUrl: 'img/strive-128.png',
 				items: hList
 			}, function(){
 				console.log('Notification created for', habit);
 			});
 			
-			JsonStorage.save('notifications', links);
 		}, function(e){
 			console.log('Error, could not get habits',e);
 		});

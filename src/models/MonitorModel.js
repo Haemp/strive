@@ -55,9 +55,11 @@ Strive.service('MonitorModel', function(JsonStorage, $q, Utils, API_DOMAIN, Sync
 	}
 
 	self.loadMonitors = function() {
+		console.log('Loading monitors...');
 		var def = $q.defer();
 		JsonStorage.get('monitors')
 			.then(function(monitors) {
+				console.log('Monitors loaded...', monitors);
 				self.monitors = monitors || [];
 				def.resolve();
 			}, function(error) {

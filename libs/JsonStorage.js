@@ -39,7 +39,11 @@ JsonStorage.service('JsonStorage', function( $q, $timeout, fileSystem ){
 			if( self.isPackaged ){
 
 				chrome.storage.local.set(saveObj, function( data ){
-					console.log('Saving customer...', data);
+					
+					if( chrome.runtime.lastError )
+						console.log('Local Storage Error: ', chrome.runtime.lastError);
+					
+					console.log('Saving data...', data);
 					deferred.resolve();
 				});
 		
@@ -75,14 +79,18 @@ JsonStorage.service('JsonStorage', function( $q, $timeout, fileSystem ){
 			if( self.isPackaged ){
 
 				chrome.storage.local.get(key, function(value){
-					console.log('Getting customers...', value);
+					
+					if( chrome.runtime.lastError )
+						console.log('Local Storage Error: ', chrome.runtime.lastError);
+						
+					console.log('Getting data...', value);
 					deferred.resolve(value[key]);
 				});
 			
 			}else{
 				$timeout( function(){
 					var stringObj = localStorage.getItem(key);
-					if(stringObj){ 
+					if(stringObj && stringObj !== 'undefined' && stringObj !== '' ){ 
 						deferred.resolve( JSON.parse(stringObj) );	
 					}else{
 						deferred.resolve();	
@@ -100,6 +108,11 @@ JsonStorage.service('JsonStorage', function( $q, $timeout, fileSystem ){
 
 		if( self.isPackaged ){
 			chrome.storage.local.remove(key, function(){
+				
+				if( chrome.runtime.lastError )
+						console.log('Local Storage Error: ', chrome.runtime.lastError);
+				
+				console.log('Removing data', key);
 				deferred.resolve();
 			});
 		}else{
@@ -118,6 +131,11 @@ JsonStorage.service('JsonStorage', function( $q, $timeout, fileSystem ){
 
 		if( self.isPackaged ){
 			chrome.storage.local.clear(function(){
+				
+				if( chrome.runtime.lastError )
+						console.log('Local Storage Error: ', chrome.runtime.lastError);
+				
+				console.log('Clearing data');
 				deferred.resolve();
 			});
 		}else{

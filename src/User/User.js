@@ -4,17 +4,21 @@ angular.module('User', ['JsonStorage'])
 	var self = this;
 	self.URL_LOGIN = '/api/login';
 	self.URL_LOGOUT = '/api/logout';
-	self.URL_LOGOUT = '/api/export';
+	self.URL_EXPORT = '/api/export';
 })
 
 .factory('userInterceptor', function($injector, $q) {
 	return {
 		'responseError': function(response) {
 			console.log(response);
-			if (response.status == 403) {
+			if (response.status == 401) {
 				UserModel = $injector.get('UserModel');
-				console.log('User was invalidated by the server');
-				UserModel.loggedIn = false;
+				
+				if( UserModel.user && UserModel.user.authorized ){
+					console.log('User was invalidated by the server and now set as unauthorized');
+					UserModel.user.authorized = false;	
+					UserModel.saveUser();
+				}
 			}
 			return $q.reject(response);
 		}
@@ -30,17 +34,20 @@ angular.module('User', ['JsonStorage'])
 		self.loadUser();
 	}
 	self.saveUser = function() {
+		
+		console.log('Saving user', self.user);
 		JsonStorage.save('user', angular.copy(self.user));
 	}
 	self.loadUser = function() {
 		JsonStorage.get('user')
 			.then(function(user){
-				
+				 
+				console.log('Loading user', user);
 				self.user = user;
-				
 			});
 		
 	}
+	
 	self.login = function(email, password) {
 		var p = $http({
 			url: UserOptions.URL_LOGIN,
@@ -53,7 +60,8 @@ angular.module('User', ['JsonStorage'])
 		}).then(function(res) {
 
 			self.user = res.data.user;
-			self.user.loggedIn = true;
+			self.user.authorized = true;
+			delete self.user['transactions'];
 			self.saveUser();
 			
 			return res;
@@ -77,9 +85,12 @@ angular.module('User', ['JsonStorage'])
 			method: 'GET',
 			withCredentials: true
 		}).then(function(res) {
+			
+			// clears user
 			self.user = undefined;
 			
-			// clear transactions
+			// resets the sync model - all non
+			// synced changes will be lost
 			TransactionModel.clear();
 			self.saveUser();
 		});
@@ -126,28 +137,20 @@ angular.module('User', ['JsonStorage'])
 			text: 'Figuring out if thou art worthy...',
 			type: 'progress'
 		});
+		
 		UserModel.login(user.email, user.password)
 			.then(function(res) {
-
-				if (res.data.isNew) {
-					
-					$rootScope.$emit('User.SIGNUP_SUCCESS', {
-						text: 'You have the power!',
-						type: 'success',
-						data: res.user
-					});
-				}else{
-					
-					$rootScope.$emit('User.LOGIN_SUCCESS', {
-						text: 'Welcome sir',
-						type: 'success'
-					});
-				}
+	
+				$rootScope.$emit('User.LOGIN_SUCCESS', {
+					text: 'Welcome sir',
+					type: 'success'
+				});
 				
 				// wait a bit after the notification displays
 				// then roll up the login screen
 				$timeout(function(){
 					UserModel.showUserLogin = false;
+					$scope.noti = undefined;
 				},700);
 
 			}, function() {

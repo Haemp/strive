@@ -6,19 +6,24 @@
 		<div class="Icon strive-dark"></div>	
 	</div>
 	
+	<div class="TabList" style="margin-bottom: 20px; padding: 0 20px">
+		<div class="TabList-tab" ng-class="{selected : selectedTab != 'signup'}" ng-click="selectedTab = 'login'">Login</div>
+		<div class="TabList-tab" ng-class="{selected : selectedTab == 'signup'}" ng-click="selectedTab = 'signup'">Signup</div>
+	</div>
 	<div class="L-vbox-20">
 		<div ng-if="noti" class="Noti" 
 			 ng-class="{'Noti_error': noti.type == 'error', 'Noti_success': noti.type == 'success', 'Noti_progress': noti.type == 'progress'}">
 			 	<span class="Noti-marker"></span><span>{{ noti.text }}</span>
 		</div>
 		<div class="Login-inputs L-vbox-20">
-			<div class="L-hbox L-hbox-centered L-hbox-sep15">
+			<div class="L-center L-vbox-20">
 				<input type="text" class="Input-lilly medium" placeholder="Email" ng-model="loginUser.email">
 				<input type="password" class="Input-lilly medium" placeholder="Password" ng-model="loginUser.password">
 			</div>
 			<div class="L-vbox-15 L-center">
 				<div>
-					<button class="Btn-login" ng-click="login(loginUser)">Login / Signup</button>
+					<button ng-if="selectedTab != 'signup'" class="Btn-login" ng-click="login(loginUser)">Login</button>
+					<button ng-if="selectedTab == 'signup'" class="Btn-login" ng-click="login(loginUser)">Signup</button>
 				</div>
 			</div>
 		</div>

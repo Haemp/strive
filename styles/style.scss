@@ -39,6 +39,7 @@
 	@import 'sprites.css';
 	.Icon-circle-white{ width: 10px; height: 10px; background-color: #ccc; display: inline-block; border-radius: 20px;}
 	.Icon-circle-green{ width: 10px; height: 10px; background-color: #2db200; display: inline-block; border-radius: 20px;}
+	.Icon-circle-red{ width: 10px; height: 10px; background-color: #dd1919; display: inline-block; border-radius: 20px;}
 
 /* List item is the white box with a meta box underneath it */
 	.ListItem{ display:block; @extend .Box-ali;}
@@ -64,6 +65,8 @@
 		&.ng-leave{ @include trans(0.13s !important); -webkit-transform: translateX(-100%); }
 	}
 
+	.T-stout{ text-transform: uppercase; font-size: 14px; font-weight: bold; }
+	.T-medium-{ font-size: 16px}
 /* Button */
 	[class*='Btn-']{
 	    &:active{ outline:none;}
@@ -77,6 +80,8 @@
 	.Btn-reg{ }
 	.Btn-lilly{ @include rounded(30px); border:1px solid #666; color: #333;
 		&:active{ background-color: #666; color: #eee; }
+		&.dark{ border:1px solid #aaa; color: #999; 
+		}
 	}
 	.Btn-login{ 
 		font-family: "Open sans" sans-serif;
@@ -117,7 +122,6 @@
 		&::-webkit-input-placeholder {
 		   color: #666;
 		}
-		text-align:center;
 	}
 	
 	.Input-lilly.medium{ padding: 0 7px 7px 7px; font: normal 18px "RobotoSlab" sans-serif; }
@@ -144,6 +148,11 @@
 	.MainInput-btn{ padding: 15px 30px; }
 	.MainInput-input-name{ padding: 15px 10px 15px 30px;}
 
+/* TabList */
+	.TabList{ @extend .L-hbox; @extend .T-stout; @extend .T-medium-; letter-spacing:0px;}
+	.TabList-tab{ padding-bottom:5px; @extend .L-hbox-1; text-align:center; border-bottom:3px solid #666; color: #666; 
+		&.selected{ border-bottom:3px solid #999; color: #999;  }
+	}
 
 /* Header */
 	.MainHeader{ font-size:20px; z-index:9; position:fixed; left:0; right:0; height:50px; padding: 15px 10px; box-sizing:border-box; background-color:#333; overflow: hidden; margin-bottom: 20px; }
@@ -187,21 +196,22 @@
 	.nv-group{ stroke: #999 !important; stroke-width: 4px !important; }
 
 /* Login */
-	.Login{ font-weight:300; color: #ccc; position:fixed; background-color: #333; top:0; left:0; right:0; bottom:0; z-index:10; padding: 20px; background: -webkit-radial-gradient(top, circle cover, #545454 0%,#333333 30%);	
+	.Login{ overflow-y:auto; font-weight:300; color: #ccc; position:fixed; background-color: #333; top:0; left:0; right:0; bottom:0; z-index:10; padding: 20px; background: -webkit-radial-gradient(top, circle cover, #545454 0%,#333333 30%);	
 		.Noti{ margin: 30px 0 50px; }
 		&.ng-enter{ @include trans(0.7s); -webkit-transform: translateY(-100%); }
 		&.ng-enter.ng-enter-active{ -webkit-transform: translateY(0%); }
 		&.ng-leave{ @include trans(1s !important); -webkit-transform: translateY(-100%); }
 	}
 	.Login-close{ float:right; }
-	.Login-logo{ margin: 80px 0;}
+	.Login-logo{ margin: 50px 0;}
 	.Login-inputs{ padding:0 30px;}
 
 /* Basement */
 	.Basement{ padding-top: 0; top:50px; }
 	.Basement-menu-item_active{ margin-right: 5px; @extend .Icon-circle-white; }
-	.Basement-menu-item{ border-bottom: 1px solid #222222; box-shadow: 0px 1px 0px #444; -webkit-box-shadow: 0px 1px 0px #444; padding: 10px; text-transform: uppercase; font-size: 14px; font-weight: bold;}
+	.Basement-menu-item{ border-bottom: 1px solid #222222; box-shadow: 0px 1px 0px #444; -webkit-box-shadow: 0px 1px 0px #444; padding: 10px; @extend .T-stout}
 	.Basement-menu-item.active{ background-color: #999; @include transition(0.1s); }
+	.Basement-confirm{ @extend .L-center; @extend .L-vbox-10; font-weight: normal; text-transform: initial; }
 
 /* Flip card */
 	.Flip-inner.switched{ -webkit-transform: rotateY(180deg);
