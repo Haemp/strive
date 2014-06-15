@@ -43,6 +43,7 @@ JsonStorage.service('JsonStorage', function( $q, $timeout, fileSystem ){
 					if( chrome.runtime.lastError )
 						console.log('Local Storage Error: ', chrome.runtime.lastError);
 					
+					console.log(JSON.stringify(data));
 					console.log('Saving data...', data);
 					deferred.resolve();
 				});
@@ -84,6 +85,7 @@ JsonStorage.service('JsonStorage', function( $q, $timeout, fileSystem ){
 						console.log('Local Storage Error: ', chrome.runtime.lastError);
 						
 					console.log('Getting data...', value);
+					console.log(JSON.stringify(value));
 					deferred.resolve(value[key]);
 				});
 			
@@ -91,7 +93,7 @@ JsonStorage.service('JsonStorage', function( $q, $timeout, fileSystem ){
 				$timeout( function(){
 					var stringObj = localStorage.getItem(key);
 					if(stringObj && stringObj !== 'undefined' && stringObj !== '' ){ 
-						deferred.resolve( JSON.parse(stringObj) );	
+						deferred.resolve( JSON.parse(stringObj) );	 
 					}else{
 						deferred.resolve();	
 					}

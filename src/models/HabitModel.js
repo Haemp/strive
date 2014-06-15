@@ -14,6 +14,7 @@ Strive.service('HabitModel', function(
 	self.habits = [];
 	self.newHabit = {};
 	self.syncAdapter;
+	self.initiated = false;
 
 	self._init = function(){
 		SyncModel.record(this, ['removeHabit', 'editHabit', 'createHabit', 'tickHabit', 'addExistingHabit']);
@@ -29,12 +30,29 @@ Strive.service('HabitModel', function(
 				console.log('Habits loaded...', habits);
 				self.habits = habits || [];
 				def.resolve();
+
+				self.initiated = true;
 			}, function(error) {
 				console.log('There was an error getting the habits', error);
 				def.reject();
+				self.initiated = false;
 			});
 
 		return def.promise;
+	}
+	
+	self.getArchived = function(){
+		var a = []
+		var habit;
+		
+		for(var i = 0; i < self.habits.length; i++){
+			habit = self.habits[i];
+			if(habit.isArchived){
+				a.push(habit);
+			}
+		}
+		
+		return a;
 	}
 
 	self.addExistingHabit = function(habit, done){

@@ -1,6 +1,7 @@
 Strive.service('MonitorModel', function(JsonStorage, $q, Utils, API_DOMAIN, SyncModel) {
 	var self = this;
 	self.monitors;
+	self.initiated = false;
 
 	self._init = function() {
 		SyncModel.record(this, ['removeMonitor', 'editMonitor', 'createMonitor', 'addDataPoint', 'addExistingMonitor']);
@@ -62,9 +63,13 @@ Strive.service('MonitorModel', function(JsonStorage, $q, Utils, API_DOMAIN, Sync
 				console.log('Monitors loaded...', monitors);
 				self.monitors = monitors || [];
 				def.resolve();
+				self.initiated = true;
+
 			}, function(error) {
 				console.log('There was an error getting the monitors', error);
 				def.reject();
+
+				self.initiated = false;
 			});
 
 		return def.promise;

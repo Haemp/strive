@@ -11,7 +11,8 @@ Strive.controller('StriveCtrl', function(
 	API_DOMAIN,
 	asUtility,
 	TransactionModel,
-	SyncModel
+	SyncModel,
+	TipModel
 ){
 	var self = this;
 
@@ -21,6 +22,7 @@ Strive.controller('StriveCtrl', function(
 	$scope.StriveHelper = StriveHelper;
 	$scope.TransactionModel = TransactionModel;
 	$scope.UserModel = UserModel;
+	$scope.TipModel = TipModel;
 	
 	$scope.basementState = { logoutPopup: false };
 	$scope.sync = function(){
@@ -28,7 +30,7 @@ Strive.controller('StriveCtrl', function(
 	}
 
 	$scope._init = function(){
-		
+
 		// initialize data from localStorage
 		HabitModel.loadHabits()
 			.then(function(){

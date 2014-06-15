@@ -43,6 +43,7 @@ angular.module('User', ['JsonStorage'])
 			.then(function(user){
 				 
 				console.log('Loading user', user);
+				console.log(JSON.stringify(user));
 				self.user = user;
 			});
 		
