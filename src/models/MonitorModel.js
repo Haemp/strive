@@ -58,7 +58,7 @@ Strive.service('MonitorModel', function(JsonStorage, $q, Utils, API_DOMAIN, Sync
 	self.loadMonitors = function() {
 		console.log('Loading monitors...');
 		var def = $q.defer();
-		JsonStorage.get('monitors')
+		JsonStorage.serial_get('monitors')
 			.then(function(monitors) {
 				console.log('Monitors loaded...', monitors);
 				self.monitors = monitors || [];
@@ -121,7 +121,7 @@ Strive.service('MonitorModel', function(JsonStorage, $q, Utils, API_DOMAIN, Sync
 			delete cleanMonitorData[i].selected;
 		}
 
-		JsonStorage.save('monitors', cleanMonitorData)
+		JsonStorage.serial_save('monitors', cleanMonitorData)
 			.then(function() {
 				console.log('Monitors saved!')
 			}, function(error) {

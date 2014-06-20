@@ -18,11 +18,11 @@
     "test",
     "tests"
   ],
-  "_release": "58bb25186b",
+  "_release": "6d9e3cd420",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "58bb25186b084952e5e52098fad7a63913d9a6bf"
+    "commit": "6d9e3cd4203ecb771df3feb1c4d3803a671a764b"
   },
   "_source": "git://github.com/Haemp/angular-sugar.git",
   "_target": "*",

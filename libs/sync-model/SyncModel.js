@@ -5,8 +5,8 @@ angular.module('SyncModel', ['JsonStorage'])
  *
  * @return {[type]} [description]
  */
-.service('SyncModel', ['$http','TransactionModel', 'URL_SYNC', '$rootScope',
-	function($http, TransactionModel, URL_SYNC, $rootScope) {
+.service('SyncModel', ['$http','TransactionModel', 'URL_SYNC', '$rootScope', '$timeout',
+	function($http, TransactionModel, URL_SYNC, $rootScope, $timeout) {
 		var self = this;
 		self.models = {};
 
@@ -105,11 +105,21 @@ angular.module('SyncModel', ['JsonStorage'])
 			console.log('Playing transactions', transactions);
 			if(!transactions) return;
 
-			for (var i = 0; i < transactions.length; i++) {
+			// Wrap this loop in 60 fps recursive func
+			var i = 0;
+			(function runrunrunrun(){
+
+				
+				
 				var t = transactions[i]
 				var model = self.models[t.name];
-				model['_'+t.name](JSON.parse(t.data), function(){});
-			};
+				model['_'+t.name](JSON.parse(t.data), function(){});	
+				
+				if(i < transactions.length-1){
+					i++;
+					$timeout( runrunrunrun, 1000/30);
+				}
+			})()
 		}
 	}
 ])
@@ -139,9 +149,11 @@ angular.module('SyncModel', ['JsonStorage'])
 	}
 	self.clearTransactions = function(){
 		self.transactions.length = 0;
-		JsonStorage.save('transactions', angular.copy(self.transactions));
+		console.log('Clearing transactions...');
+		JsonStorage.serial_save('transactions', angular.copy(self.transactions));
 	}
 	self.clear = function(){
+		console.log('Clearing trans and version...');
 		self.transactions.length = 0;
 		self.syncVersion = 0;
 		self._save();
@@ -162,7 +174,7 @@ angular.module('SyncModel', ['JsonStorage'])
 
 	self._load = function(){
 		console.log('Loading SyncModel data...');
-		JsonStorage.get('transactions')
+		JsonStorage.serial_get('transactions')
 			.then(function(t){
 				if( typeof t == 'string') t = [];
 				self.transactions = t || [];
@@ -170,7 +182,7 @@ angular.module('SyncModel', ['JsonStorage'])
 				console.log('Transactions loaded!', self.transactions);
 			});
 
-		JsonStorage.get('syncVersion')
+		JsonStorage.serial_get('syncVersion')
 			.then(function(v){
 				
 				
@@ -180,8 +192,8 @@ angular.module('SyncModel', ['JsonStorage'])
 	}
 
 	self._save = function(){
-		JsonStorage.save('transactions', angular.copy(self.transactions));
-		JsonStorage.save('syncVersion', self.syncVersion);
+		JsonStorage.serial_save('transactions', angular.copy(self.transactions));
+		JsonStorage.serial_save('syncVersion', self.syncVersion);
 	}
 
 	self._init();

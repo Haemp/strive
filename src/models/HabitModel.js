@@ -25,7 +25,7 @@ Strive.service('HabitModel', function(
 		// load habits
 		console.log('Loading habits...');
 		var def = $q.defer();
-		JsonStorage.get('habits')
+		JsonStorage.serial_get('habits')
 			.then(function(habits) {
 				console.log('Habits loaded...', habits);
 				self.habits = habits || [];

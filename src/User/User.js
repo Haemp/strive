@@ -36,10 +36,10 @@ angular.module('User', ['JsonStorage'])
 	self.saveUser = function() {
 		
 		console.log('Saving user', self.user);
-		JsonStorage.save('user', angular.copy(self.user));
+		JsonStorage.serial_save('user', angular.copy(self.user));
 	}
 	self.loadUser = function() {
-		JsonStorage.get('user')
+		JsonStorage.serial_get('user')
 			.then(function(user){
 				 
 				console.log('Loading user', user);
@@ -88,6 +88,7 @@ angular.module('User', ['JsonStorage'])
 		}).then(function(res) {
 			
 			// clears user
+			console.log('Clear the user');
 			self.user = undefined;
 			
 			// resets the sync model - all non

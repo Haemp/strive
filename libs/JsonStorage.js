@@ -1,9 +1,9 @@
-var JsonStorage = angular.module('JsonStorage', ['fileSystem']);
+var JsonStorage = angular.module('JsonStorage', ['fileSystem', 'AngularSugar']);
 
-JsonStorage.service('JsonStorage', function( $q, $timeout, fileSystem ){
+JsonStorage.service('JsonStorage', function( $q, $timeout, fileSystem, PromiseSerializer ){
 	var self = this;
 
-	self.isPackaged = (typeof chrome != 'undefined') ? (!!chrome.storage) : false;
+	self.isPackaged = (typeof chrome != 'undefined') ? (!!chrome.storage) : false;	
 	
 	self.fileSystem = {
 		perferFs: false/* fileSystem.isSupported()*/,
@@ -19,6 +19,9 @@ JsonStorage.service('JsonStorage', function( $q, $timeout, fileSystem ){
 		}else{
 			console.log('Filesystem not supported');
 		}		
+		
+		// serialize execution of the following methods
+		PromiseSerializer.decorate(this, ['save', 'get', 'remove']);
 	}
 
 	self.save = function( key, value ){
@@ -38,13 +41,14 @@ JsonStorage.service('JsonStorage', function( $q, $timeout, fileSystem ){
 		}else{
 			if( self.isPackaged ){
 
-				chrome.storage.local.set(saveObj, function( data ){
+				console.log('chrome.storage.local Saving...', saveObj);
+				chrome.storage.local.set(saveObj, function(){
 					
 					if( chrome.runtime.lastError )
 						console.log('Local Storage Error: ', chrome.runtime.lastError);
 					
-					console.log(JSON.stringify(data));
-					console.log('Saving data...', data);
+					//console.log(JSON.stringify(saveObj));
+					console.log('chrome.storage.local Data saved!', saveObj);
 					deferred.resolve();
 				});
 		

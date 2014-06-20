@@ -1,7 +1,7 @@
 {
   "name": "Strive",
   "description": "Habit tracking app",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "app": {
     "background": {
       "scripts": [

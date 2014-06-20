@@ -103,7 +103,13 @@ Strive.controller('StriveCtrl', function(
 		
 		// start the sync loop on 30s
 		asUtility.pollFunction(function(){
-			SyncModel.sync();
+			
+			// sync only if the user is logged in
+			// otherwise this causes issues if the
+			// user wassnt fully logged out
+			if( UserModel.user ){
+				SyncModel.sync();	
+			}
 		}, 30*1000)
 	}
 
@@ -124,7 +130,7 @@ Strive.controller('StriveCtrl', function(
 	}
 	
 	$scope.logout = function(){
-		
+		console.log('Logging user out...');
 		HabitModel.clear();
 		MonitorModel.clear();
 		TransactionModel.clear();
