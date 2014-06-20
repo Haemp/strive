@@ -23,14 +23,14 @@
     "click-hide": "*",
     "hammerjs": "~1.0.6"
   },
-  "_release": "5dfa28f927",
+  "_release": "f9ce53c673",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "5dfa28f92785efee6ccd1fac1d5ebbd5a6edc027"
+    "commit": "f9ce53c67320ef281076b3df8d5c55b385ce82e7"
   },
   "_source": "git://github.com/Haemp/ah-basement.git",
   "_target": "*",
-  "_originalSource": "ah-basement",
+  "_originalSource": "Haemp/ah-basement",
   "_direct": true
 }

@@ -4,6 +4,8 @@ fileSystem.factory('fileSystem', ['$q', '$timeout', function($q, $timeout) {
 	var fsDefer = $q.defer();
 	
 	var DEFAULT_QUOTA_MB = 0;
+
+	window.resolveLocalFileSystemURL  = window.resolveLocalFileSystemURL || window.webkitResolveLocalFileSystemURL;
 	
 	//wrap resolve/reject in an empty $timeout so it happens within the Angular call stack
 	//easier than .apply() since no scope is needed and doesn't error if already within an apply
@@ -18,11 +20,8 @@ fileSystem.factory('fileSystem', ['$q', '$timeout', function($q, $timeout) {
 		});
 	}
 
-	// chrome mobile apps does not prefix
-	window.webkitRequestFileSystem = (typeof window.webkitRequestFileSystem == 'undefined') ? window.requestFileSystem : window.webkitRequestFileSystem;
-
-	if (angular.isDefined(navigator.webkitPersistentStorage)) {
-		navigator.webkitPersistentStorage.requestQuota(DEFAULT_QUOTA_MB*1024*1024, function(grantedBytes) {
+	if (angular.isDefined(window.webkitStorageInfo)) {
+		window.webkitStorageInfo.requestQuota(window.PERSISTENT, DEFAULT_QUOTA_MB*1024*1024, function(grantedBytes) {
 			window.webkitRequestFileSystem(window.PERSISTENT, grantedBytes, function(fs) {
 				safeResolve(fsDefer, fs);
 			}, function(e){
@@ -35,7 +34,7 @@ fileSystem.factory('fileSystem', ['$q', '$timeout', function($q, $timeout) {
 	
 	var fileSystem = {
 		isSupported: function() {
-			return angular.isDefined(navigator.webkitPersistentStorage);
+			return angular.isDefined(window.webkitStorageInfo);
 		},
 		getCurrentUsage: function() {
 			var def = $q.defer();
@@ -51,7 +50,7 @@ fileSystem.factory('fileSystem', ['$q', '$timeout', function($q, $timeout) {
 		requestQuota: function(newQuotaMB) {
 			var def = $q.defer();
 			
-			navigator.webkitPersistentStorage.requestQuota(newQuotaMB*1024*1024, function(grantedBytes) {
+			window.webkitStorageInfo.requestQuota(window.PERSISTENT, newQuotaMB*1024*1024, function(grantedBytes) {
 				safeResolve(def, grantedBytes);
 			}, function(e) {
 				safeReject(def, {text: "Error requesting quota increase", obj: e});
@@ -174,21 +173,17 @@ fileSystem.factory('fileSystem', ['$q', '$timeout', function($q, $timeout) {
 			
 			var def = $q.defer();
 			
-
 			fsDefer.promise.then(function(fs) {
 				
-
 				fs.root.getFile(fileName, {create: true}, function(fileEntry) {
 					
 					fileEntry.createWriter(function(fileWriter) {
-
 						if(append) {
 							fileWriter.seek(fileWriter.length);
 						}
 						
 						var truncated = false;
 						fileWriter.onwriteend = function(e) {
-
 							//truncate all data after current position
 							if (!truncated) {
 								truncated = true;
@@ -199,14 +194,12 @@ fileSystem.factory('fileSystem', ['$q', '$timeout', function($q, $timeout) {
 						};
 						
 						fileWriter.onerror = function(e) {
-							
 							safeReject(def, {text: 'Write failed', obj: e});
 						};
 						
 						fileWriter.write(blob);
 						
 					}, function(e) {
-						
 						safeReject(def, {text: "Error creating file", obj: e});
 					});
 					
@@ -223,20 +216,55 @@ fileSystem.factory('fileSystem', ['$q', '$timeout', function($q, $timeout) {
 		getFile: function(fileName) {
 			var def = $q.defer();
 
-			fsDefer.promise.then(function(fs) {
-				fs.root.getFile(fileName, {}, function(fileEntry) {
-					// Get a File object representing the file,
-					fileEntry.file(function(file) {
-						safeResolve(def, file);
-					}, function(e) {
-						safeReject(def, {text: "Error getting file object", obj: e});
-					});
+			this.getFileEntry(fileName).then(function(fileEntry) {
+				// Get a File object representing the file,
+				fileEntry.file(function(file) {
+					safeResolve(def, file);
 				}, function(e) {
-					safeReject(def, {text: "Error getting file", obj: e});
-                                });
+					safeReject(def, {text: "Error getting file object", obj: e});
+				});
 			}, function(err) {
 				def.reject(err);
 			});
+			
+			return def.promise;
+		},
+		getFileEntry: function(fileName) {
+			var def = $q.defer();
+
+			fsDefer.promise.then(function(fs) {
+				fs.root.getFile(fileName, {}, function(fileEntry) {
+					safeResolve(def, fileEntry);
+				}, function(e) {
+					safeReject(def, {text: "Error getting file", obj: e});
+				});
+			}, function(err) {
+				def.reject(err);
+			});
+
+			return def.promise;
+		},
+		/**
+		 * @param  String Local filesystem URL.
+		 * @return Object Promise with a File argument.
+		 */
+		getFileFromLocalFileSystemURL: function(url) {
+			var def = $q.defer();
+			window.resolveLocalFileSystemURL(
+				url,
+				function(fileEntry) {
+					fileEntry.file(
+						function(file) {
+							safeResolve(def, file);
+						}, function(e) {
+							safeReject(def, {text: "Error getting file object", obj: e});
+						}
+					);
+				},
+				function(e) {
+					safeReject(def, {text: "Error resolving FileSystem URL", obj: e});
+				}
+			);
 
 			return def.promise;
 		},
@@ -246,7 +274,7 @@ fileSystem.factory('fileSystem', ['$q', '$timeout', function($q, $timeout) {
 			returnType = returnType || "text";
 			
 			fsDefer.promise.then(function(fs) {
-				fs.root.getFile(fileName, {create:true}, function(fileEntry) {
+				fs.root.getFile(fileName, {}, function(fileEntry) {
 					// Get a File object representing the file,
 					// then use FileReader to read its contents.
 					fileEntry.file(function(file) {

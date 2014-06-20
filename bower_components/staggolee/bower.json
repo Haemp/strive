@@ -5,15 +5,18 @@
   "ignore": [
     ".jshintrc",
     "**/*.txt",
-    "/facebook",
+    "facebook",
+    "bower_components",
+    "test",
+    "node_modules",
     "*.md",
     "*.css",
     "**/*.css"
   ],
   "dependencies": {
-   
+
   },
   "devDependencies": {
-    
+
   }
 }

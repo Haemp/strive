@@ -4,7 +4,10 @@
   "ignore": [
     ".jshintrc",
     "**/*.txt",
-    "/facebook",
+    "facebook",
+    "bower_components",
+    "test",
+    "node_modules",
     "*.md",
     "*.css",
     "**/*.css"
@@ -12,13 +15,14 @@
   "dependencies": {},
   "devDependencies": {},
   "homepage": "https://github.com/Haemp/Staggolee",
-  "_release": "cfc37b32ec",
+  "_release": "b60bbcc39c",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "cfc37b32ec7a5f712a2dc46845a4aebc8ff11bec"
+    "commit": "b60bbcc39ce52c33e3644f4d05ffee8219e8f2ff"
   },
   "_source": "git://github.com/Haemp/Staggolee.git",
   "_target": "*",
-  "_originalSource": "staggolee"
+  "_originalSource": "staggolee",
+  "_direct": true
 }
