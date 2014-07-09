@@ -38,6 +38,16 @@ angular.module('User', ['JsonStorage'])
 		console.log('Saving user', self.user);
 		JsonStorage.serial_save('user', angular.copy(self.user));
 	}
+
+	self.clearUser = function(){
+
+		console.log('Removing user...');
+		JsonStorage.serial_remove('user')
+			.then(function(e){
+				console.log('User removed', e);
+			})
+	}
+
 	self.loadUser = function() {
 		JsonStorage.serial_get('user')
 			.then(function(user){
@@ -90,11 +100,11 @@ angular.module('User', ['JsonStorage'])
 			// clears user
 			console.log('Clear the user');
 			self.user = undefined;
+			self.clearUser();
 			
 			// resets the sync model - all non
 			// synced changes will be lost
 			TransactionModel.clear();
-			self.saveUser();
 		});
 
 		return p;

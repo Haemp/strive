@@ -1,8 +1,8 @@
 Strive.service('HabitModel', function(
-	JsonStorage, 
-	$q, 
-	StriveHelper, 
-	API_DOMAIN, 
+	JsonStorage,
+	$q,
+	StriveHelper,
+	API_DOMAIN,
 	Utils,
 	HabitModelInterface,
 	SyncAdapter,
@@ -40,18 +40,18 @@ Strive.service('HabitModel', function(
 
 		return def.promise;
 	}
-	
+
 	self.getArchived = function(){
 		var a = []
 		var habit;
-		
+
 		for(var i = 0; i < self.habits.length; i++){
 			habit = self.habits[i];
 			if(habit.isArchived){
 				a.push(habit);
 			}
 		}
-		
+
 		return a;
 	}
 
@@ -65,7 +65,7 @@ Strive.service('HabitModel', function(
 		done(true);
 	}
 	self.editHabit = function(habit, done){
-		
+
 		// play back needs an implementation here
 		var targetHabit = self.getHabit(habit.id);
 		if( habit === targetHabit ){
@@ -76,21 +76,21 @@ Strive.service('HabitModel', function(
 		targetHabit.name = habit.name;
 		targetHabit.isArchived = habit.isArchived;
 		done(true);
-		
+
 		self.save();
 	}
 
 
 	self.createHabit = function(newHabit, done) {
 
-		if(!newHabit.createAt && !newHabit.id)
+		if(!newHabit.createdAt && !newHabit.id)
 			newHabit.createdAt = newHabit.id = Date.now();
 
 		if (!self.habits) self.habits = [];
 		self.habits.push(angular.copy(newHabit));
-		
+
 		self.save();
-		
+
 		done(true);
 	}
 
@@ -100,7 +100,7 @@ Strive.service('HabitModel', function(
 			if (self.habits[i].id == habit.id){
 				self.habits.splice(i, 1);
 				found = true;
-				
+
 			}
 		}
 
@@ -109,7 +109,7 @@ Strive.service('HabitModel', function(
 	}
 
 	self.getHabit = function(id) {
-		
+
 		if( !self.habits ) return;
 		for (var i = self.habits.length - 1; i >= 0; i--) {
 			if (self.habits[i].id == id)
@@ -118,7 +118,7 @@ Strive.service('HabitModel', function(
 	}
 
 	self.getHabitFrom = function(id, habits) {
-		
+
 		if( !habits ) return;
 		for (var i = habits.length - 1; i >= 0; i--) {
 			if (habits[i].id == id)
@@ -152,8 +152,8 @@ Strive.service('HabitModel', function(
 		if( self.tickedToday(habit) ){
 
 			done(false);
-			return false;	
-		} 
+			return false;
+		}
 		habit.ticks.unshift(params);
 
 		// calculate the streak
@@ -195,14 +195,14 @@ Strive.service('HabitModel', function(
 			delete cleanHabitData[i].selected;
 		}
 
-		JsonStorage.save('habits', cleanHabitData).
+		JsonStorage.serial_save('habits', cleanHabitData).
 		then(function() {
 			console.log('Habits saved!')
 		}, function(error) {
 			console.log('There was an error saving the habits', error);
 		});
 	}
-	
+
 	self.clear = function(){
 		self.habits.length = 0;
 		self.save();

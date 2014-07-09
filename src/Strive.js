@@ -45,6 +45,15 @@ Strive.config(function($stateProvider, $httpProvider) {
 				}
 			}
 		})
+		.state('recipe', {
+			url: "/recipes",
+			views: {
+				main: {
+					templateUrl: "views/view-recipes.html",
+					controller: 'RecipeCtrl'
+				}
+			}
+		})
 		.state('archived', {
 			url: "/archived",
 			views: {

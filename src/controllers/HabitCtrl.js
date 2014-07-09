@@ -3,7 +3,7 @@ Strive.controller('HabitCtrl', function( $scope, HabitModel ){
 	$scope._init = function(){
 			
 	}
-
+	
 	$scope.toggleEditMode = function( habit ){
 		
 		// if we go from editable to 

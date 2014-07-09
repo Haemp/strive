@@ -16,13 +16,13 @@ angular.module('SyncModel', ['JsonStorage'])
 		self.record = function(model, methods) {
 
 			for (var i = methods.length - 1; i >= 0; i--) {
-				self.models[methods[i]] = model; // save in hashmap for play retreival	
-				
+				self.models[methods[i]] = model; // save in hashmap for play retreival
+
 				// create a scope to save
 				// the method name to be
 				// available for the given
 				// method running.
-				(function(){ 
+				(function(){
 					// add a wrapper to the original function
 					var method = methods[i];
 
@@ -32,7 +32,7 @@ angular.module('SyncModel', ['JsonStorage'])
 
 						// if the method is successfull
 						// we record the transaction.
-						
+
 						model['_' + method](data, function(valid) {
 							if (valid) {
 								TransactionModel.push({
@@ -48,16 +48,16 @@ angular.module('SyncModel', ['JsonStorage'])
 		}
 
 		/**
-		 * Sends all the transactions to server 
+		 * Sends all the transactions to server
 		 * @return {[type]} [description]
 		 */
 		self.sync = function(){
 			console.log('Syncing Up...', TransactionModel.transactions, 'with syncVersion', TransactionModel.syncVersion);
 			$http({
 				method: 'POST',
-				url: URL_SYNC, 
+				url: URL_SYNC,
 				data: {
-					transactions: TransactionModel.get(), 
+					transactions: TransactionModel.get(),
 					version: TransactionModel.syncVersion
 				},
 				withCredentials: true
@@ -72,32 +72,32 @@ angular.module('SyncModel', ['JsonStorage'])
 						console.log('Clearing transaction Model, all should now be synced');
 						TransactionModel.clearTransactions();
 					}
-						
+
 					
 					if( res.data.transactions && res.data.transactions.length > 0 ){
 						console.log('Playing ', res.data.transactions);
 						self.play(res.data.transactions);
 					}
-						
-					
+
+
 					if( res.data.syncVersion != TransactionModel.syncVersion ){
-						console.log('Playing updating syncVersion');
+						console.log('Playing updating syncVersion', res.data.syncVersion);
 						TransactionModel.setVersion(res.data.syncVersion);
 					}
-						
+
 					$rootScope.$emit('SyncModel.SYNC_COMPLETE', {transactions: res.data.transactions, version: res.data.syncVersion});
 				})
 		}
 
 		/**
 		 * Used for translating received transactions into
-		 * model data. This way around we don't want to 
+		 * model data. This way around we don't want to
 		 * update the transactions - since it's not something
 		 * we want to push back to the server.
 		 *
-		 * We use the private (non recorded) version of the 
+		 * We use the private (non recorded) version of the
 		 * method by prefixing the method with '_';
-		 * 
+		 *
 		 * @param  {[type]} transactions [description]
 		 * @return {[type]}              [description]
 		 */
@@ -109,12 +109,12 @@ angular.module('SyncModel', ['JsonStorage'])
 			var i = 0;
 			(function runrunrunrun(){
 
-				
-				
-				var t = transactions[i]
+				var t = transactions[i];
+
+				console.log('Playing back', t);
 				var model = self.models[t.name];
-				model['_'+t.name](JSON.parse(t.data), function(){});	
-				
+				model['_'+t.name](JSON.parse(t.data), function(){});
+
 				if(i < transactions.length-1){
 					i++;
 					$timeout( runrunrunrun, 1000/30);
@@ -130,12 +130,12 @@ angular.module('SyncModel', ['JsonStorage'])
 
 .service('TransactionModel', function(JsonStorage){
 	var self = this;
-	
-	
+
+
 	self.transactions = [];
 	self.syncVersion = 0;
 	console.log('TransactionModel instantiated transactions and version are now [] and 0');
-	
+
 	self._init = function(){
 		self._load();
 	}
@@ -167,7 +167,7 @@ angular.module('SyncModel', ['JsonStorage'])
 		self.syncVersion = v;
 		self._save();
 	}
-	
+
 	self.getVersion = function(){
 		return self.syncVersion;
 	}
@@ -178,14 +178,14 @@ angular.module('SyncModel', ['JsonStorage'])
 			.then(function(t){
 				if( typeof t == 'string') t = [];
 				self.transactions = t || [];
-				
+
 				console.log('Transactions loaded!', self.transactions);
 			});
 
 		JsonStorage.serial_get('syncVersion')
 			.then(function(v){
-				
-				
+
+
 				self.syncVersion = parseInt(v || 0);
 				console.log('Sync Version loaded!', self.syncVersion);
 			});

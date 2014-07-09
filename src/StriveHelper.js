@@ -85,13 +85,13 @@ Strive.service('StriveHelper', function(){
 		if(!ticks || ticks.length == 0) return 0;
 		// is the lastest tick from today or yesterday
 		// then start counting streaks
-		var firstTick = ticks[0];
-		var firstTickTime = new Date(firstTick.createdAt);
+		var latestTick = ticks[0];
+		var latestTickTime = new Date(latestTick.createdAt);
 		var today = new Date();
 		var yesterday = new Date().add(-1).days();
 		yesterday.set({hour:0, minute:0, second:0, millisecond:0});
 
-		if( !firstTickTime.isAfter(yesterday) )
+		if( !latestTickTime.isAfter(yesterday) )
 			return 0;
 
 		// how many days in a row have this habit

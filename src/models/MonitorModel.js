@@ -94,6 +94,7 @@ Strive.service('MonitorModel', function(JsonStorage, $q, Utils, API_DOMAIN, Sync
 		
 		if(self.monitors && self.monitors.length > 1 ){
 			self.monitors.sort(function(a, b){
+				if( !b.dataPoints || !a.dataPoints) return -999;
 				return b.dataPoints.length - a.dataPoints.length;
 			});	
 		}else{

@@ -34,33 +34,33 @@ chrome.alarms.get('dailyAlarm', function( alarm ){
 	}
 });
 
-var JsonStorage = angular.bootstrap(undefined, ['fileSystem', 'JsonStorage']).get('JsonStorage');
+var JsonStorage = angular.bootstrap(undefined, ['fileSystem', 'AngularSugar', 'JsonStorage']).get('JsonStorage');
 console.log('Json initiated', JsonStorage);
 
 
 chrome.alarms.onAlarm.addListener(function( alarm ){
 
-	// this alarm is set to trigger every day at 08:00 
+	// this alarm is set to trigger every day at 08:00
 	// it runs through all the habits and creates notifications
 	// for each one.
 	JsonStorage.get('habits')
 		.then(function(habits){
 			console.log(habits);
 			if( !habits ) return;
-	
+
 			var links = {};
 			// store a reference to the habit in a notifications storage
 			var notificationName = Date.now()+'';
 			var hList = [];
 			for (var i = 0; i < habits.length; i++) {
-				
+
 				var habit = habits[i];
 				if( habit.isArchived ) continue;
-				
+
 				// Create list of habit reminders
 				hList.push({title: habit.name, message: habit.name});
 			};
-			
+
 			console.log('Creating notification ', notificationName, 'From list', hList);
 			chrome.notifications.create(notificationName, {
 				type: 'list',
@@ -71,9 +71,8 @@ chrome.alarms.onAlarm.addListener(function( alarm ){
 			}, function(){
 				console.log('Notification created for', habit);
 			});
-			
+
 		}, function(e){
 			console.log('Error, could not get habits',e);
 		});
 });
-

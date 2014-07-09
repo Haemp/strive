@@ -18,15 +18,18 @@ angular.module('Tip', [])
 	return {
 		scope: true,
 		transclude: true,
-		template: '<div ng-if="enabled" ng-transclude></div>',
+		template: '<div ng-if="enabled" >'+
+						'<div ng-transclude></div>'+
+				  '</div>',
 		link: function($scope, element, attr){
 			$scope.$watch(function(){
 				return TipModel.tips[attr.tip];
 			}, function( newValue ){
 				$scope.enabled = newValue;
 			});
-
-			$scope.close = function(){
+			$scope.testy = 'He hej hej!';
+			console.log('Tip scope', $scope);
+			$scope.closeTip = function(){
 				TipModel.disable(attr.tip);
 			}
 		}
