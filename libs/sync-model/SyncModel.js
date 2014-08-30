@@ -72,7 +72,11 @@ angular.module('SyncModel', ['JsonStorage'])
 						console.log('Clearing transaction Model, all should now be synced');
 						TransactionModel.clearTransactions();
 					}
-
+					
+					if( res.data.resyncData ){
+						// TODO: this is a resync - not based on transactions
+						
+					}
 					
 					if( res.data.transactions && res.data.transactions.length > 0 ){
 						console.log('Playing ', res.data.transactions);

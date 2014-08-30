@@ -29,15 +29,11 @@ ClickHide.directive('clickHide', function( $document, $parse, $timeout ){
 				// we unbind the click listener - otherwise we'll get some
 				// funky behaviour.
 				else if( newValue == false ){
-					
-					console.log('ClickHide: Not listening now');
 					$document.unbind('click', $scope.onClick);
 				} 
 			}
 
 			$scope.listenForClick = function(){
-				
-				console.log('ClickHide: Starting to listen for global click!');
 				
 				$timeout(function(){
 					$document.on('click', $scope.onClick);	
@@ -50,7 +46,6 @@ ClickHide.directive('clickHide', function( $document, $parse, $timeout ){
 			$scope.onClick = function( e ){
 				e.preventDefault();
 				e.stopImmediatePropagation();
-				console.log('ClickHide: Catching click');
 
 				// check if the user has clicked outside of the 
 				// element
@@ -62,7 +57,6 @@ ClickHide.directive('clickHide', function( $document, $parse, $timeout ){
 						$parse(attr.chClick)($scope);	
 					});
 					
-					console.log('ClickHide: Not listening now');
 					$document.unbind('click', $scope.onClick); // now we don't have to listen anymore
 				}
 			}

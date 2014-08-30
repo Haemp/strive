@@ -28,7 +28,6 @@ angular.module('Tip', [])
 				$scope.enabled = newValue;
 			});
 			$scope.testy = 'He hej hej!';
-			console.log('Tip scope', $scope);
 			$scope.closeTip = function(){
 				TipModel.disable(attr.tip);
 			}
