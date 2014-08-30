@@ -67,6 +67,8 @@ Strive.controller('StriveCtrl', function(
 		// handling backwards button
 		$rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
 
+			
+
 			// if the state change is a change backwards
 			// we just shift the top state
 			if( StateModel.states.length < 1 ){

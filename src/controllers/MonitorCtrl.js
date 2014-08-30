@@ -17,6 +17,8 @@ Strive.controller('MonitorCtrl', function( $scope, MonitorModel ){
 	}
 
 	$scope.addDataPoint = function( monitor, newDataValue ){
+		
+		
 		delete monitor.newDataValue; 
 
 		var dataPoint = {
@@ -26,7 +28,7 @@ Strive.controller('MonitorCtrl', function( $scope, MonitorModel ){
 		}
 
 		MonitorModel.addDataPoint( dataPoint );
-		
+
 	}
 
 	$scope.hasDataPointToday = function( monitor ){

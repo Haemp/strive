@@ -55,8 +55,10 @@
 			<div class="MainHeader-title" ng-click="StateModel.basementOpen = !StateModel.basementOpen">{{ $state.current.name }}</div>
 			<img class="MainHeader-logo" src="img/logo-strive-2x.png" alt="">
 		</div>
-		<div ui-view="main" class="MainContent">
-
+		
+		<div class="MainContent">
+			<div ng-show="$state.current.name == 'habits'" ng-include="'views/view-habits.html'"></div>
+			<div ng-show="$state.current.name == 'monitors'" ng-include="'views/view-monitors.html'" ></div>
 		</div>
 
 		<basement open="StateModel.basementOpen">
