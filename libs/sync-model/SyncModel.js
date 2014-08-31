@@ -73,10 +73,7 @@ angular.module('SyncModel', ['JsonStorage'])
 						TransactionModel.clearTransactions();
 					}
 					
-					if( res.data.resyncData ){
-						// TODO: this is a resync - not based on transactions
-						
-					}
+					
 					
 					if( res.data.transactions && res.data.transactions.length > 0 ){
 						console.log('Playing ', res.data.transactions);
@@ -88,8 +85,15 @@ angular.module('SyncModel', ['JsonStorage'])
 						console.log('Playing updating syncVersion', res.data.syncVersion);
 						TransactionModel.setVersion(res.data.syncVersion);
 					}
-
-					$rootScope.$emit('SyncModel.SYNC_COMPLETE', {transactions: res.data.transactions, version: res.data.syncVersion});
+					
+					if( res.data.resyncData ){
+						// TODO: this is a resync - not based on transactions
+						$rootScope.$emit('SyncModel.SYNC_COMPLETE', {version: res.data.syncVersion, resyncData: res.data.resyncData});
+					}else{
+						$rootScope.$emit('SyncModel.SYNC_COMPLETE', {transactions: res.data.transactions, version: res.data.syncVersion});
+					}
+					
+					
 				})
 		}
 

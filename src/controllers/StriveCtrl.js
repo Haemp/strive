@@ -49,6 +49,14 @@ Strive.controller('StriveCtrl', function(
 				MonitorModel.sort();
 				HabitModel.sort();
 				HabitModel.recalculateAllStreaks();
+			}else if(data.resyncData){
+				
+				HabitModel.habits = data.resyncData.habits;
+				HabitModel.monitors = data.resyncData.monitors;
+				
+				MonitorModel.sort();
+				HabitModel.sort();
+				HabitModel.recalculateAllStreaks();
 			}
 		})
 		
@@ -114,8 +122,14 @@ Strive.controller('StriveCtrl', function(
 	}
 
 	$scope.switch = function( state ){
-		$state.transitionTo(state);
-		StateModel.basementOpen = false;
+		requestAnimationFrame(function(){
+			requestAnimationFrame(function(){
+				$state.transitionTo(state);
+				StateModel.basementOpen = false;	
+				$scope.$apply();
+			})
+		})
+		
 	}
 	
 	$scope.clear = function(){
