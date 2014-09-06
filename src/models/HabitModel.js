@@ -68,7 +68,7 @@ Strive.service('HabitModel', function(
 
 		// play back needs an implementation here
 		var targetHabit = self.getHabit(habit.id);
-		if( habit === targetHabit ){
+		if( habit === targetHabit || targetHabit == undefined ){
 			return done(true);
 		}
 
@@ -83,8 +83,11 @@ Strive.service('HabitModel', function(
 
 	self.createHabit = function(newHabit, done) {
 
-		if(!newHabit.createdAt && !newHabit.id)
-			newHabit.createdAt = newHabit.id = Date.now();
+		if(!newHabit.createdAt && !newHabit.id){
+			newHabit.id = Date.now();
+			newHabit.createdAt = new Date();
+		}
+			
 
 		if (!self.habits) self.habits = [];
 		self.habits.push(angular.copy(newHabit));
@@ -139,7 +142,7 @@ Strive.service('HabitModel', function(
 
 		// for play back
 		if(!params.createdAt)
-			params.createdAt = Date.now();
+			params.createdAt = new Date().toString('yyyy-MM-dd hh:mm:ss');
 
 		if( !habit ){
 			done(false);
