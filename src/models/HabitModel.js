@@ -142,7 +142,7 @@ Strive.service('HabitModel', function(
 
 		// for play back
 		if(!params.createdAt)
-			params.createdAt = new Date().toString('yyyy-MM-dd hh:mm:ss');
+			params.createdAt = new Date().toString('yyyy-MM-dd HH:mm:ss');
 
 		if( !habit ){
 			done(false);
