@@ -13,7 +13,7 @@ var Strive = angular.module('Strive', [
 	'OnBoarding'
 ]);
 var domain = 'http://146.148.22.101:3000';
-//domain = 'http://localhost:3001';
+//domain = 'http://localhost:3000';
 
 // switch to remote API for production.
 Strive.constant('API_DOMAIN', domain);
