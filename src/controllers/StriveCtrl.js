@@ -52,7 +52,7 @@ Strive.controller('StriveCtrl', function(
 			}else if(data.resyncData){
 				
 				HabitModel.habits = data.resyncData.habits;
-				HabitModel.monitors = data.resyncData.monitors;
+				MonitorModel.monitors = data.resyncData.monitors;
 				
 				MonitorModel.sort();
 				HabitModel.sort();
