@@ -133,7 +133,7 @@ Strive.controller('ChartCtrl', function( $scope, MonitorModel ){
 		var data = [];
 		if( !dataPoints || dataPoints.length < 1 ) return;
 		for (var i = 0; i < dataPoints.length; i++) {
-			data.push( {x: new Date(dataPoints[i].createdAt), y: dataPoints[i].value} );
+			data.push( {x: new Date(dataPoints[i].createdAt), y: parseFloat(dataPoints[i].value)} );
 		}
 		
 		return [

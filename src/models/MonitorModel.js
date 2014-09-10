@@ -106,7 +106,7 @@ Strive.service('MonitorModel', function(JsonStorage, $q, Utils, API_DOMAIN, Sync
 		for (var i = 0; i < self.monitors.length; i++) {
 			if( self.monitors[i].dataPoints && self.monitors[i].dataPoints.length > 1 ){
 				self.monitors[i].dataPoints.sort(function(a,b){
-					return b.createdAt - a.createdAt;
+					return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
 				})
 			}
 		}
