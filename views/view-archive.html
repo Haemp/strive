@@ -1,5 +1,5 @@
 <div>
-    <div tip="archive-tip" class="Tip">
+    <div tip="archive-tip" btn-text="Alrighty then" class="Tip">
         <div>
             <div class="Tip-title">The archives, where habits go to... relax.</div>
             <p class="Tip-text">Sometimes a habit needs to go on a little break, just put them in the archives and re-evaluate them for later.</p>
@@ -8,9 +8,6 @@
         <p class="Tip-fine-text">
             <b>Warning</b> Archived habits will loose their current streak. (Yup that’s pretty logical, but you know how people are)</p>
         </p>
-        <div class="Tip-footer">
-            <button class="Tip-close" ng-click="close()">Alrighty then</button>
-        </div>
     </div>
      <ul class="L-vbox-15">
         <li class="ListItem"  ng-class="{'ListItem_selected': habit.selected}" ng-repeat="habit in HabitModel.habits | filter:showArchived">

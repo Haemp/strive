@@ -1,7 +1,6 @@
 angular.module('OnBoarding', ['Tip'])
 
 .run(function(HabitModel, MonitorModel, $rootScope, TipModel){
-
 	var init = $rootScope.$watch(function(){
 		return HabitModel.initiated && MonitorModel.initiated;
 	}, function(newValue){

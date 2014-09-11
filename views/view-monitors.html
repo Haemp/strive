@@ -1,5 +1,5 @@
 <div>
-    <div tip="monitors-tip" class="Tip">
+    <div tip="monitors-tip" btn-text="Monitors, got it" class="Tip">
         <div>
             <div class="Tip-title">How do I know if a habit works?</div>
             <p class="Tip-text">Why, funny that you should ask. That is what we have monitors for.</p>
@@ -7,14 +7,10 @@
         </div>
         <p class="Tip-fine-text">
             <b>Monitors</b> are used to track a specific measurable data point over a time. For example: a weight loosing habit might be “Run 10 minutes a day” and the corresponding monitor would be “Weigh in” - to track your weight. </p>
-
         </p>
         <p class="Tip-fine-text">
             This way we make sure our habits actually works.
         </p>
-        <div class="Tip-footer">
-            <button class="Tip-close" ng-click="close()">Monitors, got it.</button>
-        </div>
     </div>
     <ul class="L-vbox-15">
         <li class="ListItem Box-ali"  ng-class="{'ListItem_selected': monitor.selected}" ng-repeat="monitor in MonitorModel.monitors">
