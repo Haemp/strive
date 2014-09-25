@@ -66,9 +66,11 @@ Strive.service('StriveHelper', function(){
 				// set the new lastTickDate to
 				// the current ticks date - this
 				// is where it starts again.
-
-				lastTickDate = new Date(ticks[i+1].createdAt);
-				console.log('New streak starts', lastTickDate);
+				if(i < ticks.length-1){
+					lastTickDate = new Date(ticks[i+1].createdAt);
+					console.log('New streak starts', lastTickDate);	
+				}
+				
 			}
 
 		}

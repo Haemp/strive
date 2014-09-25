@@ -13,6 +13,7 @@ Strive.service('HabitModel', function(
 
 	self.habits = [];
 	self.newHabit = {};
+	self.selectedHabit;
 	self.syncAdapter;
 	self.initiated = false;
 
@@ -53,6 +54,20 @@ Strive.service('HabitModel', function(
 		}
 
 		return a;
+	}
+
+	self.toggleEditMode = function(habit){
+
+		// if we go from editable to 
+		// non editable -> we save the 
+		// current state of all habits
+		habit.isEditable = !habit.isEditable;	
+		if( !habit.isEditable ){
+			habit.selected = false;	
+			HabitModel.editHabit(self._edit(habit));
+			$scope.selectedHabit = undefined;
+			$scope.saveAll();
+		}
 	}
 
 	self.addExistingHabit = function(habit, done){
@@ -103,7 +118,6 @@ Strive.service('HabitModel', function(
 			if (self.habits[i].id == habit.id){
 				self.habits.splice(i, 1);
 				found = true;
-
 			}
 		}
 
@@ -204,6 +218,29 @@ Strive.service('HabitModel', function(
 		}, function(error) {
 			console.log('There was an error saving the habits', error);
 		});
+	}
+
+	self.selectHabit = function( habit ){
+		if( self.selectedHabit ){
+			self.selectedHabit.selected = false;
+			self.selectedHabit.isEditable = false;
+			self.selectedHabit.confirmDelete = false;
+		}
+		
+		if( self.selectedHabit != habit ){
+			habit.selected = true;
+			self.selectedHabit = habit;	
+		}else{
+			self.selectedHabit = undefined;
+		}
+	}
+
+	self.archive = function( habit ){
+		
+		habit.isArchived = true;
+		var edited = angular.copy(habit);
+		delete edited.ticks;
+		HabitModel.editHabit(edited);
 	}
 
 	self.clear = function(){

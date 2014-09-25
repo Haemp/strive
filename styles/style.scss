@@ -51,7 +51,7 @@
 	.ListItem-meta{ background-color:#f5f5f5; }
 	.ListItem-meta-section{ padding: 15px 15px; border-top:1px solid #fff; box-shadow: 0px -1px 0px #ddd; -webkit-box-shadow: 0px -1px 0px #ddd; }
 	.ListItem-meta-section:first-child{ border-top:none; border-top:1px solid #fff; box-shadow: none; -webkit-box-shadow: none; }
-
+	
 	// animations
 	.ListItem-edit{
 		&.ng-enter{ @include trans(0.2s); }
@@ -68,7 +68,10 @@
 	.T-stout{ text-transform: uppercase; font-size: 14px; font-weight: bold; }
 	.T-medium-{ font-size: 16px}
 
-
+/* FullCheckbox */
+	.FullCheckbox{ transition:0.1s; transition-timing-function: ease-in; @extend .Box-ali; padding: 10px; width: 50%; border-top-right-radius: 20px; border-bottom-right-radius: 20px; padding-left: 40px;}                 
+	.FullCheckbox-selected{ transition:0.15s; width: 70%; transition-timing-function: ease-out; }
+	
 /* Button */
 	[class*='Btn-']{
 	    &:active{ outline:none;}
@@ -125,9 +128,8 @@
 		   color: #666;
 		}
 	}
-	
+	.Input.kalle{ font-size:16px; font-family: "RobotoSlab" sans-serif; font-weight:300; border-radius: 0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid #bbbbbb; padding-left: 2px; padding-top: 4px; }
 	.Input-lilly.medium{ padding: 0 7px 7px 7px; font: normal 18px "RobotoSlab" sans-serif; }
-	
 	
 	.Input_-medium{ font-size:16px; }
 	.Input_centered{ text-align: center; }
@@ -137,7 +139,8 @@
 	.Box_medium{ padding: 15px 30px; }
 	.Box_round{ border-radius: 30px; -webkit-border-radius:30px; }
 	.Box-ali{ background-color:#fff; border-bottom: 1px solid #ccc; }
-
+	.Box_contained{ max-height: 400px; overflow:auto;}
+	
 /* IconText */
 	.IconText{ @extend .L-hbox; @extend .L-hbox-vcenter; }
 	.IconText-icon{ display:block; margin-right: 8px; }
@@ -233,3 +236,6 @@
 	.Flip-front, .Flip-back { height:50px; box-sizing: border-box; -webkit-backface-visibility: hidden; }
 	.Flip-front {  z-index: 2; padding: 18px 50px; border-left: 1px solid #eee; }
 	.Flip-back { background-color: #fff; padding-left: 39px; margin-top: -50px; position: relative; -webkit-transform: rotateY(180deg); }
+
+/* Indentions */
+	.Indent-10-30{ padding: 10px 30px; }

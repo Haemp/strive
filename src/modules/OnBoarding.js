@@ -23,7 +23,7 @@ angular.module('OnBoarding', ['Tip'])
 
 			if(MonitorModel.monitors.length === 0){
 				console.log('User has no monitors');
-				TipModel.enable('monitor-tip')
+				TipModel.enable('monitors-tip')
 			}
 
 			// we don't need this more now

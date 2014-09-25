@@ -10,7 +10,8 @@ var Strive = angular.module('Strive', [
 	'User',
 	'SyncModel',
 	'Tip',
-	'OnBoarding'
+	'OnBoarding',
+	'uuid'
 ]);
 var domain = 'http://130.211.52.153:3000';
 //domain = 'http://localhost:3000';
@@ -45,13 +46,22 @@ Strive.config(function($stateProvider, $httpProvider) {
 				}
 			}
 		})
-		.state('recipe', {
+		.state('recipes', {
 			url: "/recipes",
 			views: {
 				main: {
 					templateUrl: "views/view-recipes.html",
 					controller: 'RecipeCtrl'
 				}
+			}
+		})
+		.state('recipecreate', {
+			url: "/create-recipe",
+			views: {
+				main:{
+					templateUrl: "views/view-create-recipe.html",
+					controller: "CreateRecipeCtrl"
+				}		
 			}
 		})
 		.state('archived', {
