@@ -203,7 +203,7 @@ Strive.service('HabitModel', function(
 		habit.ticks.unshift(params);
 
 		// calculate the streak
-		habit.streak = StriveHelper.calculateStreak(habit.ticks);
+		habit.streak = StriveHelper.newCalcStreak(habit.ticks);
 
 		self.save();
 
@@ -253,7 +253,7 @@ Strive.service('HabitModel', function(
 			var habit = self.habits[i];
 			if (!habit.ticks) continue;
 
-			habit.streak = StriveHelper.calculateStreak(habit.ticks);
+			habit.streak = StriveHelper.newCalcStreak(habit.ticks);
 		}
 
 		self.lastCalculation = new Date();

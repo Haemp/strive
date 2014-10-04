@@ -1,9 +1,10 @@
 <div>    
-    <div class="ListItem-name Recipe-title" ng-click="showDescription = !showDescription">
+    <div class="ListItem-name Recipe-title" ng-click="toggleDescription()">
         {{ recipe.name }}
         <button class="Btn reg" ng-click="edit(recipe)">Edit</button>
     </div>
-    <div class="ListItem-meta" ng-show="showDescription">
+
+    <div class="ListItem-meta" ng-if="recipe.showDescription">
         <div class="ListItem-meta-section">
             {{ recipe.description }}
         </div>

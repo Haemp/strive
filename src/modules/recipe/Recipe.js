@@ -58,7 +58,7 @@
 		}
 		self.createRecipePlayback = function(recipe, done){
 
-			self.pairRecipe(recipe, HabitModel.habits, MonitorModel.monitors);
+			self.objectPairRecipe(recipe, HabitModel.habits, MonitorModel.monitors);
 			self.recipes.push(recipe);
 			self._save();		
 		}	
@@ -75,7 +75,10 @@
 		}
 
 		self.updateRecipePlayback = function(recipe){
+
 			var localRecipe = self.getLocalRecipe(recipe.id);
+
+			if(!localRecipe) return;
 
 			// Otherwise we go ahead and update the local
 			// version of the recipe - the usecase here is
@@ -84,6 +87,8 @@
 			localRecipe.description = recipe.description;
 			localRecipe.habits = recipe.habits;
 			localRecipe.monitors = recipe.monitors;
+
+			self.objectPairRecipe(localRecipe)
 		}
 
 		/**
@@ -147,23 +152,33 @@
 		self.objectPairRecipes = function(recipes){
 
 			angular.forEach(recipes, function(recipe){
-				var objectHabits = [];
-				var objectMonitors = [];
-
-				angular.forEach(recipe.habits, function(habitId){
-					var habit = HabitModel.getHabit(habitId);
-					if(habit)
-						objectHabits.push(habit);
-				}) 
-				angular.forEach(recipe.monitors, function(monitorId){
-					var monitor = MonitorModel.getMonitor(monitorId);
-					if(monitor)
-						objectMonitors.push(monitor);
-				}) 
-
-				recipe.monitors = objectMonitors;
-				recipe.habits = objectHabits;
+				self.objectPairRecipe(recipe);
 			});
+		}
+
+
+		/**
+		 * Recipes are stores with references to habits and monits
+		 * we need to pair them up when we initiate a recipe
+		 */
+		self.objectPairRecipe = function(recipe){
+
+			var objectHabits = [];
+			var objectMonitors = [];
+
+			angular.forEach(recipe.habits, function(habitId){
+				var habit = HabitModel.getHabit(habitId);
+				if(habit)
+					objectHabits.push(habit);
+			}) 
+			angular.forEach(recipe.monitors, function(monitorId){
+				var monitor = MonitorModel.getMonitor(monitorId);
+				if(monitor)
+					objectMonitors.push(monitor);
+			}) 
+
+			recipe.monitors = objectMonitors;
+			recipe.habits = objectHabits;
 		}
 
 		/**
@@ -264,7 +279,9 @@
 
 				// When initiating a recipe we need to pair the 
 				scope.edit = scope.editRecipe();
-
+				scope.toggleDescription = function(){
+					scope.recipe.showDescription = !scope.recipe.showDescription;
+				}
 				scope.removeRecipe = RecipeModel.removeRecipe;
 			}
 		}

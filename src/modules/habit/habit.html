@@ -47,8 +47,8 @@
                 <div ng-if="habit.ticks.length > 0 && !habit.isEditable">
                     <div class="HabitRecord">
                         <div class="HabitRecord-record IconText IconText_medium">
-                            <i class="Icon flame-{{ StriveHelper.getStreakIcon( StriveHelper.calculateStreakRecord(habit) ); }} IconText-icon"></i>
-                            <div class="IconText-text">{{ StriveHelper.calculateStreakRecord(habit) }}</div>
+                            <i class="Icon flame-{{ StriveHelper.getStreakIcon( StriveHelper.newCalcStreakRecord(habit) ); }} IconText-icon"></i>
+                            <div class="IconText-text">{{ StriveHelper.newCalcStreakRecord(habit) }}</div>
                         </div>
                         <div class="HabitRecord-label">Record</div>
                     </div>
