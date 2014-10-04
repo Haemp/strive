@@ -27,7 +27,7 @@
 		self._init();	
 	})
 
-	.controller('CreateRecipeCtrl', function($scope, HabitModel, MonitorModel){
+	.controller('CreateRecipeCtrl', function($scope, HabitModel, MonitorModel, $state){
 		
 		var self = this;
 		
@@ -37,18 +37,32 @@
 		
 		self._init = function(){
 			
+			$scope.$watch('newRecipe', function(newVal){
+				if(newVal === undefined){
+					$state.transitionTo('recipes')
+				}
+			})
 		}
 		
 		self._init();	
 	})
 
-	.controller('UpdateRecipeCtrl', function($scope, $stateParams, RecipeModel, MonitorModel, HabitModel){
-		
+	.controller('UpdateRecipeCtrl', function($scope, $stateParams, RecipeModel, MonitorModel, HabitModel, $state){
+		var self = this;
 		$scope.HabitModel = HabitModel;
 		$scope.MonitorModel = MonitorModel;
 
 		$scope.recipe = RecipeModel.getLocalRecipe($stateParams.recipeId);
 		
+		self._init = function(){
+			$scope.$watch('recipe', function(newVal){
+				if(newVal === undefined){
+					$state.transitionTo('recipes')
+				}
+			})
+		}
+
+		self._init();
 	})
 	
 	

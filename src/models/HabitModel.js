@@ -1,3 +1,4 @@
+
 Strive.service('HabitModel', function(
 	JsonStorage,
 	$q,
@@ -5,7 +6,8 @@ Strive.service('HabitModel', function(
 	API_DOMAIN,
 	Utils,
 	TransactionModel,
-	SyncModel
+	SyncModel,
+	$rootScope
 ) {
 	var self = this;
 
@@ -38,6 +40,23 @@ Strive.service('HabitModel', function(
 			});
 
 		return def.promise;
+	}
+
+	self.isInitiated = function(){
+		var d = $q.defer();
+
+		var f = $rootScope.$watch(function(){
+			return self.initiated;
+		}, function(newVal){
+			if(newVal == true){
+				d.resolve();
+
+				// no need to watch this more
+				f();
+			}
+		})
+
+		d.promise;
 	}
 
 	self.getArchived = function(){

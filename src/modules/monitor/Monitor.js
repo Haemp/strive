@@ -2,7 +2,7 @@
 
 	angular.module('Strive')
 
-	.service('MonitorModel', function(JsonStorage, $q, Utils, API_DOMAIN, SyncModel) {
+	.service('MonitorModel', function(JsonStorage, $q, Utils, API_DOMAIN, SyncModel, $rootScope) {
 		var self = this;
 		self.monitors;
 		self.initiated = false;
@@ -12,6 +12,22 @@
 			SyncModel.record(this, ['removeMonitor', 'editMonitor', 'createMonitor', 'addDataPoint', 'addExistingMonitor']);
 		}
 
+		self.isInitiated = function(){
+			var d = $q.defer();
+
+			var f = $rootScope.$watch(function(){
+				return self.initiated;
+			}, function(newVal){
+				if(newVal == true){
+					d.resolve();
+
+					// no need to watch this more
+					f();
+				}
+			})
+
+			d.promise;
+		}
 
 		self.merge = function(monitors) {
 			if (!monitors) return 0;

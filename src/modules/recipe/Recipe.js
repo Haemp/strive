@@ -12,10 +12,16 @@
 		self.initiated = false;
 		
 		self._init = function(){
-			self.loadRecipes();
 
-			SyncModel.record(this, ['removeRecipe', 'editRecipe']);
+			// we have to make sure that before we load our recipes
+			// the Habit and Monitor model are both loaded
+			$q.all([HabitModel.isInitiated(), MonitorModel.isInitiated()]).then(function(){
+				self.loadRecipes();
+			})
+
 			SyncModel.registerPlayback('createRecipe', self.createRecipePlayback);
+			SyncModel.registerPlayback('updateRecipe', self.updateRecipePlayback);
+			SyncModel.registerPlayback('removeRecipe', self.removeRecipePlayback);
 		}
 		
 		self.loadRecipes = function(){
@@ -50,7 +56,6 @@
 			// save to localstorage
 			self._save();
 		}
-		
 		self.createRecipePlayback = function(recipe, done){
 
 			self.pairRecipe(recipe, HabitModel.habits, MonitorModel.monitors);
@@ -58,22 +63,19 @@
 			self._save();		
 		}	
 
-		self.updateRecipeTrans = function(recipe){
-
-			done(true);
+		/**
+		 * The local recipe is already updated in memory since we
+		 * edit directly on the active recipe
+		 * So here we just save the localStorage and create a transaction
+		 */
+		self.updateRecipe = function(recipe){
+			var serializedRecipe = self.preSerializeRecipe(recipe);
+			SyncModel.recordManual('updateRecipe', serializedRecipe);
+			self._save();
 		}
 
-		self.updateRecipe = function(recipe, done){
-			
+		self.updateRecipePlayback = function(recipe){
 			var localRecipe = self.getLocalRecipe(recipe.id);
-
-
-			// if the target recipe exists and is equivalent
-			// to the one we've been updated with we go ahead
-			// and ignore the changes - the came from that recipe
-			if( localRecipe === recipe || localRecipe == undefined ){
-				return done(true);
-			}
 
 			// Otherwise we go ahead and update the local
 			// version of the recipe - the usecase here is
@@ -82,25 +84,31 @@
 			localRecipe.description = recipe.description;
 			localRecipe.habits = recipe.habits;
 			localRecipe.monitors = recipe.monitors;
+		}
+
+		/**
+		 * Removing a recipe
+		 */
+		self.removeRecipe = function(recipe){
+			
+			self._removeLocalRecipe(recipe);
+
+			var serializedRecipe = self.preSerializeRecipe(recipe);
+			SyncModel.recordManual('removeRecipe', serializedRecipe);
 
 			self._save();
 		}
+		self.removeRecipePlayback = function(recipe){
 
-
-
-		self.removeRecipe = function(recipe, done){
-			var found = false;
-
+			self._removeLocalRecipe(recipe);
+			self._save();
+		}
+		self._removeLocalRecipe = function(recipe){
 			for (var i = 0; i < self.recipes.length; i++) {
 				if( self.recipes[i].id == recipe.id ){
-
 					self.recipes.splice(i, 1);
-					found = true;
 				}
-			};
-
-			self.save();
-			done(found);
+			}
 		}
 
 		self.getLocalRecipe = function(id){
@@ -231,6 +239,11 @@
 			})
 		}
 
+		self.clear = function(){
+			self.recipes.length = 0;
+			self._save();
+		}
+
 		self._init();
 	})
 
@@ -239,7 +252,7 @@
 	 * Render and edit a recipe
 	 * tag: <recipe source="Recipe">
 	 */
-	.directive('recipe', function(){
+	.directive('recipe', function( RecipeModel ){
 		return {
 			restrict: 'E',
 			scope: {
@@ -251,6 +264,8 @@
 
 				// When initiating a recipe we need to pair the 
 				scope.edit = scope.editRecipe();
+
+				scope.removeRecipe = RecipeModel.removeRecipe;
 			}
 		}
 	})
@@ -299,9 +314,10 @@
 					// update it, otherwise we create a new one
 					if(recipe.id){
 						RecipeModel.updateRecipe(recipe);
+						scope.recipe = undefined;
 					}else{
 						RecipeModel.createRecipe(recipe);
-						scope.newRecipe = {};
+						scope.recipe = undefined;
 					}
 				}
 
@@ -311,19 +327,8 @@
 				 * to handle proper reverse pairing. 
 				 */
 				self._startReversePairing = function(){
-					
-					var nh = scope.$watch('habits', function(n){
-						if(n){
-							RecipeModel.reversePairHabits(scope.recipe, scope.habits);
-							nh();
-						}
-					})
-					var nm = scope.$watch('monitors', function(n){
-						if(n){
-							RecipeModel.reversePairHabits(scope.recipe, scope.monitors);
-							nm();
-						}
-					})
+					RecipeModel.reversePairHabits(scope.recipe, scope.habits);
+					RecipeModel.reversePairMonitors(scope.recipe, scope.habits);
 				}
 				
 				self._init();

@@ -1,7 +1,26 @@
 <div>    
-    <div class="ListItem-name Recipe-title">
+    <div class="ListItem-name Recipe-title" ng-click="showDescription = !showDescription">
         {{ recipe.name }}
         <button class="Btn reg" ng-click="edit(recipe)">Edit</button>
+    </div>
+    <div class="ListItem-meta" ng-show="showDescription">
+        <div class="ListItem-meta-section">
+            {{ recipe.description }}
+        </div>
+        <div class="ListItem-meta-section">
+            <button class="Btn lilly" ng-click="recipe.confirmDelete = true">Remove</button>
+        </div>
+        <div ng-if="recipe.confirmDelete" class="ListItem-meta-section">
+            <h2 class="Head medium">Holdup!</h2>
+            <div class="L-vbox-15">
+                <p class="Para small">Deleting this recipe will erase all data related to it - except the habits and monitors. Art thou sureth?</p>
+                <div class="L-hbox">
+                    <button class="Btn lilly" ng-click="recipe.confirmDelete = false">Cancel</button>
+                    <div class="L-spacer"></div>
+                    <button class="Btn lilly" ng-click="removeRecipe(recipe)">Yes - Remove</button>
+                </div>
+            </div>
+        </div>
     </div>
     <div>
         <ul class="List_bordered" >

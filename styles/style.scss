@@ -88,7 +88,10 @@
 	}
 	.Btn-alt{ font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-family: "Open sans" sans-serif;  background:#444; color: #f4f4f4;  }
 	.Btn-reg{ }
-	.Btn-lilly{ @include rounded(30px); border:1px solid #666; color: #333;
+	.Btn{
+		&.lilly{ @include rounded(30px); border:1px solid #666; color: #333; padding: 8px  15px; }
+	}
+	.Btn-lilly{ 
 		&:active{ background-color: #666; color: #eee; }
 		&.dark{ border:1px solid #aaa; color: #999; 
 		}

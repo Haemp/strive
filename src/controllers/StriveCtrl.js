@@ -151,6 +151,7 @@ Strive.controller('StriveCtrl', function(
 		console.log('Logging user out...');
 		HabitModel.clear();
 		MonitorModel.clear();
+		RecipeModel.clear();
 		TransactionModel.clear();
 		UserModel.logout()
 			.then(function(){

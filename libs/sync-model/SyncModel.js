@@ -1,16 +1,27 @@
 angular.module('SyncModel', ['JsonStorage'])
 
 .constant('URL_SYNC', undefined)
+
+.service('SyncOptions', function(){
+	var self = this;
+
+	/**
+	 * @param Imediatly after an action is recorded - should we try to sync?
+	 */
+	self.autoSync = true;
+})
+
 /**
  *
- * @return {[type]} [description]
  */
-.service('SyncModel', ['$http','TransactionModel', 'URL_SYNC', '$rootScope', '$timeout',
-	function($http, TransactionModel, URL_SYNC, $rootScope, $timeout) {
+.service('SyncModel', ['$http','TransactionModel', 'URL_SYNC', '$rootScope', '$timeout', 'SyncOptions',
+	function($http, TransactionModel, URL_SYNC, $rootScope, $timeout, SyncOptions) {
 		var self = this;
 		self.models = {};
 		self.playbacks = {};
 		self.isSyncing = false;
+
+
 		/**
 		 * Sets methods on an object to be recordable
 		 */
@@ -41,6 +52,10 @@ angular.module('SyncModel', ['JsonStorage'])
 									data: data,
 									time: Date.now()
 								});
+
+								if(SyncOptions.autoSync === true){
+									self.sync();
+								}
 							}
 						})
 					}
@@ -54,6 +69,10 @@ angular.module('SyncModel', ['JsonStorage'])
 				data: data,
 				time: Date.now()
 			})
+
+			if(SyncOptions.autoSync === true){
+				self.sync()
+			}
 		}
 
 		self.registerPlayback = function(transName, callback){
@@ -65,7 +84,7 @@ angular.module('SyncModel', ['JsonStorage'])
 		 * @return {[type]} [description]
 		 */
 		self.sync = function(){
-			
+			console.log('Syncing...');
 			if(self.isSyncing){
 				return console.log('Is already sycning...'); 
 			}

@@ -31,7 +31,7 @@
 			HabitModel.newHabit = undefined;
 		}
 		$scope.saveAll = function(){
-			HabitModel.save()
+			HabitModel.save();
 		}
 		$scope.selectHabit = function( habit ){
 			if( $scope.selectedHabit ){
