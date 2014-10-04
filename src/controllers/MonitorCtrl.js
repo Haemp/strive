@@ -3,91 +3,71 @@ Strive.controller('MonitorCtrl', function( $scope, MonitorModel ){
 	$scope.newMonitor = undefined;
 	$scope.newDataPoint = {};
 	$scope.MonitorModel = MonitorModel;
+
+	$scope.createMonitor = function(newMonitor){
+		MonitorModel.createMonitor(newMonitor);
+		self.newMonitor = undefined;
+	}
 	
-	$scope._init = function(){
+	// $scope.addDataPoint = function( monitor, newDataValue ){
+	// 	delete monitor.newDataValue; 
+
+	// 	var dataPoint = {
+	// 		createdAt: Date.now(),
+	// 		value: parseFloat(newDataValue, 10),
+	// 		monitorId: monitor.id
+	// 	}
+
+	// 	MonitorModel.addDataPoint( dataPoint );
 		
-		// load models
-		
-	}
-	
-	$scope.createMonitor = function( newMonitor ){
-		MonitorModel.createMonitor(newMonitor );
-		
-		$scope.newMonitor = undefined;
-	}
+	// }
 
-	$scope.addDataPoint = function( monitor, newDataValue ){
-		delete monitor.newDataValue; 
+	// $scope.hasDataPointToday = function( monitor ){
+	// 	return MonitorModel.hasDataPointToday( monitor.id );
+	// }
 
-		var dataPoint = {
-			createdAt: Date.now(),
-			value: parseFloat(newDataValue, 10),
-			monitorId: monitor.id
-		}
-
-		MonitorModel.addDataPoint( dataPoint );
-		
-	}
-
-	$scope.hasDataPointToday = function( monitor ){
-		return MonitorModel.hasDataPointToday( monitor.id );
-	}
-
-	$scope.removeMonitor = function( habit ){
-		MonitorModel.removeMonitor(habit);
-	}
-	$scope.numDataPoints = function( monitor ){
-		return ( typeof monitor.dataPoints != 'undefined' ) ? monitor.dataPoints.length : 0;
-	}
+	// $scope.removeMonitor = function( habit ){
+	// 	MonitorModel.removeMonitor(habit);
+	// }
+	// $scope.numDataPoints = function( monitor ){
+	// 	return ( typeof monitor.dataPoints != 'undefined' ) ? monitor.dataPoints.length : 0;
+	// }
 	
 	/** 
 	 * Show the chart for all monitors that
 	 * have atleast 1 data point
 	 */
-	$scope.showChartForMonitor = function( monitor ){
-		return (typeof monitor.dataPoints != 'undefined' && monitor.dataPoints.length > 0 )
-	}
-	$scope.selectMonitor = function( monitor ){
-		if( $scope.selectedMonitor ){
-			delete $scope.selectedMonitor.selected;
-			delete $scope.selectedMonitor.isEditable;
-			delete $scope.selectedMonitor.confirmDelete;
-		}
+	
+	// $scope.selectMonitor = function( monitor ){
+	// 	if( $scope.selectedMonitor ){
+	// 		delete $scope.selectedMonitor.selected;
+	// 		delete $scope.selectedMonitor.isEditable;
+	// 		delete $scope.selectedMonitor.confirmDelete;
+	// 	}
 			
 		
-		if( $scope.selectedMonitor != monitor ){
-			monitor.selected = true;
-			$scope.selectedMonitor = monitor;	
-		}else{
-			$scope.selectedMonitor = undefined;
-		}
-	}
+	// 	if( $scope.selectedMonitor != monitor ){
+	// 		monitor.selected = true;
+	// 		$scope.selectedMonitor = monitor;	
+	// 	}else{
+	// 		$scope.selectedMonitor = undefined;
+	// 	}
+	// }
 
-	$scope.toggleEditMode = function( monitor ){
+	// $scope.toggleEditMode = function( monitor ){
 		
-		// if we go from editable to 
-		// non editable -> we save the 
-		// current state of all habits
-		monitor.isEditable = !monitor.isEditable;	
-		if( !monitor.isEditable ){
-			monitor.selected = false;	
-			MonitorModel.editMonitor(self._edit(monitor));
-			$scope.selectedMonitor = undefined;
-			self.saveAll();
-		}
-	}
+	// 	// if we go from editable to 
+	// 	// non editable -> we save the 
+	// 	// current state of all habits
+	// 	monitor.isEditable = !monitor.isEditable;	
+	// 	if( !monitor.isEditable ){
+	// 		monitor.selected = false;	
+	// 		MonitorModel.editMonitor(self._edit(monitor));
+	// 		$scope.selectedMonitor = undefined;
+	// 		self.saveAll();
+	// 	}
+	// }
 
-	self.saveAll = function(){
-		MonitorModel.save()
-	}
-	
-	self._edit = function(monitor){
-		var edited = angular.copy(monitor);
-		delete edited.dataPoints;
-		return edited;
-	}
-
-	$scope._init();	
 });
 
 Strive.controller('ChartCtrl', function( $scope, MonitorModel ){

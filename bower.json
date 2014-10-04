@@ -36,6 +36,7 @@
     "angular-cookies": "~1.2.18",
     "click-hide": "*",
     "sync": "Haemp/sync",
-    "angular-uuid-service": "~0.0.1"
+    "angular-uuid-service": "~0.0.1",
+    "underscore": "~1.7.0"
   }
 }

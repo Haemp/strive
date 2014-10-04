@@ -1,6 +1,5 @@
 <div>
     <div as-touch-active class="ListItem-head L-hbox">
-
         <button class="Btn_icon Btn_medium ListItem-edit" ng-click="toggleEditMode( habit )" ng-if="habit.selected">
             <i class="Icon edit" ng-class="{ edit: !habit.isEditable, save: habit.isEditable }"></i>
         </button>
@@ -18,7 +17,7 @@
                     <div class="Box_medium Flip-front Btn-reg Btn_icon" ng-click="tickHabit(habit.id)">
                         <i class="Icon checkmark-gray"></i>
                     </div>
-                    <div class="Flip-back  Box_medium">
+                    <div class="Flip-back Box_medium">
                         <div class="IconText IconText_medium">
                             <i class="Icon flame-{{ StriveHelper.getStreakIcon(habit.streak); }} IconText-icon"></i>
                             <div class="IconText-text">{{ habit.streak }}</div>
@@ -62,7 +61,8 @@
         <div class="ListItem-meta-section" ng-if="!habit.isEditable">
             <div class="L-hbox L-hbox-sep10">
                 <button ng-click="habit.confirmDelete = true" ng-if="!habit.confirmDelete" class="Btn Btn-lilly Btn_small">Delete Habit</button>
-                <button ng-click="archive(habit)" class="Btn Btn-lilly Btn_small">Archive Habit</button>
+                <button ng-if="!habit.isArchived" ng-click="archive(habit)" class="Btn Btn-lilly Btn_small">Archive Habit</button>
+                <button ng-if="habit.isArchived" ng-click="unArchive(habit)" class="Btn Btn-lilly Btn_small">Un-Archive Habit</button>
             </div>
         </div>
 

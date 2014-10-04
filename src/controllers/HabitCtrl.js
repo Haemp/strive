@@ -59,7 +59,7 @@
 	})
 
 
-	.directive('habit', function(HabitModel, StriveHelper){
+	.directive('habit', function(HabitModel, StriveHelper, StateModel){
 		return{
 			restrict: 'E',
 			scope:{
@@ -69,11 +69,13 @@
 			link: function(scope){
 				
 				scope.StriveHelper = StriveHelper;
+				scope.StateModel = StateModel;
 
 				scope.toggleEditMode = HabitModel.toggleEditMode;
 				scope.selectHabit = HabitModel.selectHabit;
 				scope.isTickedToday = HabitModel.tickedToday;
 				scope.archive = HabitModel.archive;
+				scope.unArchive = HabitModel.unArchive;
 				scope.removeHabit = HabitModel.removeHabit;
 
 				scope.tickHabit = function( habitId ){

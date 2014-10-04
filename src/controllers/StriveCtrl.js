@@ -12,7 +12,8 @@ Strive.controller('StriveCtrl', function(
 	asUtility,
 	TransactionModel,
 	SyncModel,
-	TipModel
+	TipModel,
+	RecipeModel
 ){
 	var self = this;
 
@@ -53,6 +54,9 @@ Strive.controller('StriveCtrl', function(
 				
 				HabitModel.habits = data.resyncData.habits;
 				MonitorModel.monitors = data.resyncData.monitors;
+			
+				RecipeModel.recipes = data.resyncData.recipes; 
+				RecipeModel.objectPairRecipes(data.resyncData.recipes);
 				
 				MonitorModel.sort();
 				HabitModel.sort();

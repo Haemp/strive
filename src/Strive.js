@@ -6,15 +6,15 @@ var Strive = angular.module('Strive', [
 	'JsonStorage',
 	'Basement',
 	'AngularSugar',
-	'ngCookies',
 	'User',
 	'SyncModel',
 	'Tip',
 	'OnBoarding',
+	'Recipe',
 	'uuid'
 ]);
-var domain = 'http://130.211.52.153:3000';
-//domain = 'http://localhost:3000';
+//var domain = 'http://130.211.52.153:3000';
+var domain = 'http://localhost:3000';
 
 // switch to remote API for production.
 Strive.constant('API_DOMAIN', domain);
@@ -61,6 +61,15 @@ Strive.config(function($stateProvider, $httpProvider) {
 				main:{
 					templateUrl: "views/view-create-recipe.html",
 					controller: "CreateRecipeCtrl"
+				}		
+			}
+		})
+		.state('recipeupdate', {
+			url: "/update-recipe/:recipeId",
+			views: {
+				main:{
+					templateUrl: "views/view-update-recipe.html",
+					controller: "UpdateRecipeCtrl"
 				}		
 			}
 		})

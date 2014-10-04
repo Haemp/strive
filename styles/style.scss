@@ -6,6 +6,7 @@
 /* Reset */
 	html,body{ overflow:auto !important; }
 	h1,h2,h3,body, ul, li, input, button, p{ margin:0; padding:0; }
+	li{display:block; }
 	button, input{ border:none; }
 	*{ -webkit-tap-highlight-color: rgba(0,0,0,0); }
 	body{ background-color:#eee; font: 16px normal "Open sans" sans-serif; letter-spacing:0.8; line-height: 1.5em; padding-bottom: 150px;}
@@ -43,7 +44,11 @@
 
 /* List item is the white box with a meta box underneath it */
 	.ListItem{ display:block; @extend .Box-ali;}
-
+	.List_bordered{ 
+		&>*{ border-bottom:1px solid #ddd; 
+			&:first-child{ border-top:1px solid #ddd;}
+		}
+	}
 	.ListItem-head{ height: 50px; }
 	.ListItem-head.active{ background-color: #ddd; @include transition(0.1s); }
 	.ListItem-name{ font-family: "RobotoSlab" sans-serif; padding: 15px 30px; }
@@ -207,6 +212,9 @@
 	  fill: #333; stroke: #333;
 	}
 	.nv-group{ stroke: #999 !important; stroke-width: 4px !important; }
+
+/* Recipe */
+	.Recipe-title{ text-align: center; font-weight: 900; letter-spacing: -1px;  @extend .ListItem-name; }
 
 /* Login */
 	.Login{ overflow-y:auto; font-weight:300; color: #ccc; position:fixed; background-color: #333; top:0; left:0; right:0; bottom:0; z-index:10; padding: 20px; background: -webkit-radial-gradient(top, circle cover, #545454 0%,#333333 30%);	

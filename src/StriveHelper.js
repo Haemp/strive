@@ -110,5 +110,97 @@ Strive.service('StriveHelper', function(){
 
 		return streak;
 	}
+	
+	self.newCalcStreak = function(ticks){
+
+		var today,
+			tick,
+			tickDate,
+			refDate,
+			streak;
+
+		if(!ticks || ticks.length == 0) return 0;
+
+		streak = 0;
+		refDate = self._getRefDate(new Date().toString('yyyy-MM-dd HH:mm:ss'));
+		
+		for(var i = 0; i < ticks.length; i++){
+			tick = ticks[i];
+			tickDate = new Date(tick.createdAt);
+			// if the next tick is before the ref date
+			// it's a streak
+			if(tickDate.isAfter(refDate)){
+				streak++;	
+				// get the next ticks refDate
+				refDate = self._getRefDate(tick.createdAt);
+			}else{
+				break;
+			}
+		}	
+		
+		return streak;
+	}
+
+	self.newCalcStreakRecord = function(ticks){
+
+		var streak, 
+			recordStreak = 0,
+			latestTick,
+			refDate,
+			tick,
+			d;
+
+		if(!ticks || ticks.length == 0) return 0;
+		if(ticks.length == 1) return 1;
+		
+		streak = 1;
+		latestTick = ticks[0];
+		refDate = self._getRefDate(latestTick.createdAt);
+		
+		for(var i = 1; i < ticks.length; i++){
+			tick = ticks[i];
+			d = new Date(tick.createdAt);
+			
+			// if the next tick is before the ref date
+			// it's a streak
+			if(d.isAfter(refDate)){
+				streak++;	
+			}else{
+				streak = 1;
+			}
+
+			if(streak > recordStreak)
+				recordStreak = streak;
+			// get the next ticks refDate
+			refDate = self._getRefDate(tick.createdAt);
+		}	
+		
+		return recordStreak;
+	}
+	
+	/** 
+	 * A reference day is the latest time which a next comming
+	 * tick has to be created for it to be counted as a streak.
+	 */
+	self._getRefDate = function(created){
+		var d = new Date(created);
+		
+		// if the tick happened before 03.00
+		// the reference date limit will be
+		// the next day at 03.00
+		if( d.getHours() < 3 ){
+			d.add(-2).day();
+		}
+		
+		// if the tick happened after 3 the limit
+		// will be -2 days at 03.00
+		else{
+			d.add(-1).days();
+		}
+		
+		d.set({hour: 3, minute: 0, second: 0, millisecond: 0});
+		
+		return d;
+	}
 
 });

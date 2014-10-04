@@ -1,0 +1,16 @@
+<div>    
+    <div class="ListItem-name Recipe-title">
+        {{ recipe.name }}
+        <button class="Btn reg" ng-click="edit(recipe)">Edit</button>
+    </div>
+    <div>
+        <ul class="List_bordered" >
+            <li ng-repeat="habit in recipe.habits" >
+                <habit habit="habit"></habit>
+            </li>
+            <li ng-repeat="monitor in recipe.monitors" style="">
+                <monitor monitor="monitor"></monitor>
+            </li>
+        </ul>
+    </div>
+</div>

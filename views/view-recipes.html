@@ -11,16 +11,9 @@
             </div>
         </div>
         
-        <div class"L-vbox-10">
+        <div class="L-vbox-10">
             <div class="ListItem" ng-repeat="recipe in RecipeModel.recipes">    
-                <div class="ListItem-name">
-                    {{ recipe.name }}
-                </div>
-                <div>
-                    <ul>
-                        <li ng-repeat="habit in recipe.habits">{{ habit.name }}</li>
-                    </ul>
-                </div>
+                <recipe recipe="recipe" edit-recipe="editRecipe"></recipe>
             </div>
         </div>
         <div class="MainInput">
