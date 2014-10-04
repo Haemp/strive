@@ -1,0 +1,29 @@
+{
+  "name": "sync",
+  "version": "0.1.0",
+  "homepage": "https://github.com/Haemp/sync",
+  "authors": [
+    "+HampusAhlgren <wcw106@gmail.com>"
+  ],
+  "description": "Service to batch up offline requests and sync them with a server when possible.",
+  "main": "dist/Sync.js",
+  "keywords": [
+    "sync",
+    "batch",
+    "http",
+    "request"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AngularSugar": "*",
+    "angular-mocks": "~1.2.16",
+    "angular": "~1.2.16"
+  }
+}
