@@ -1,168 +1,184 @@
-.Icon.edit {
+.Icon.flag-orange {
 	background-image: url(../img/sprites@2x.png);
-	width: 26.5px;
-	height: 26.5px;
-	background-position: -0px -366.5px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
-}
-.Icon.flame-blue {
-	background-image: url(../img/sprites@2x.png);
-	width: 14px;
-	height: 18px;
-	background-position: -0px -60px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
-}
-.Icon.synced {
-	background-image: url(../img/sprites@2x.png);
-	width: 25px;
-	height: 15.5px;
-	background-position: -0px -28px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
-}
-.Icon.flame-orange {
-	background-image: url(../img/sprites@2x.png);
-	width: 14px;
-	height: 18.5px;
-	background-position: -0px -114.5px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
-}
-.Icon.flame-green {
-	background-image: url(../img/sprites@2x.png);
-	width: 14px;
-	height: 18.5px;
-	background-position: -0px -133px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
-}
-.Icon.flame-purple {
-	background-image: url(../img/sprites@2x.png);
-	width: 14px;
-	height: 18.5px;
-	background-position: -0px -96px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
+	width: 8px;
+	height: 21px;
+	background-position: -0px -294.5px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
 }
 .Icon.cross-thin-gray {
 	background-image: url(../img/sprites@2x.png);
 	width: 24px;
 	height: 24.5px;
 	background-position: -0px -315.5px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
 }
-.Icon.flag-orange {
+.Icon.flag-blue {
 	background-image: url(../img/sprites@2x.png);
 	width: 8px;
 	height: 21px;
-	background-position: -0px -231.5px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
+	background-position: -0px -210.5px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
 }
-.Icon.flag-purple {
+.Icon.checkmark-circle-checked-gray {
 	background-image: url(../img/sprites@2x.png);
-	width: 8px;
-	height: 21px;
-	background-position: -0px -273.5px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
-}
-.Icon.strive-dark {
-	background-image: url(../img/sprites@2x.png);
-	width: 165px;
-	height: 52px;
-	background-position: -0px -393px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
+	width: 25.5px;
+	height: 25.5px;
+	background-position: -0px -365.5px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
 }
 .Icon.flag-green {
 	background-image: url(../img/sprites@2x.png);
 	width: 8px;
 	height: 21px;
-	background-position: -0px -252.5px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
+	background-position: -0px -273.5px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
 }
-.Icon.flame-gray {
+.Icon.flame-green {
 	background-image: url(../img/sprites@2x.png);
 	width: 14px;
 	height: 18.5px;
-	background-position: -0px -151.5px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
+	background-position: -0px -96px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
+}
+.Icon.flag-purple {
+	background-image: url(../img/sprites@2x.png);
+	width: 8px;
+	height: 21px;
+	background-position: -0px -189.5px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
+}
+.Icon.strive-dark {
+	background-image: url(../img/sprites@2x.png);
+	width: 165px;
+	height: 52px;
+	background-position: -0px -444px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
+}
+.Icon.flame-blue {
+	background-image: url(../img/sprites@2x.png);
+	width: 14px;
+	height: 18px;
+	background-position: -0px -60px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
 }
 .Icon.unsynced {
 	background-image: url(../img/sprites@2x.png);
 	width: 25px;
 	height: 15px;
 	background-position: -0px -13px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
+}
+.Icon.flame-gray {
+	background-image: url(../img/sprites@2x.png);
+	width: 14px;
+	height: 18.5px;
+	background-position: -0px -133px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
 }
 .Icon.flag-gold {
 	background-image: url(../img/sprites@2x.png);
 	width: 8px;
 	height: 21px;
-	background-position: -0px -210.5px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
-}
-.Icon.cross-red {
-	background-image: url(../img/sprites@2x.png);
-	width: 12px;
-	height: 13px;
-	background-position: -0px -0px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
-}
-.Icon.save {
-	background-image: url(../img/sprites@2x.png);
-	width: 26.5px;
-	height: 26.5px;
-	background-position: -0px -340px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
-}
-.Icon.flame-gold {
-	background-image: url(../img/sprites@2x.png);
-	width: 14px;
-	height: 18px;
-	background-position: -0px -78px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
-}
-.Icon.flag-blue {
-	background-image: url(../img/sprites@2x.png);
-	width: 8px;
-	height: 21px;
-	background-position: -0px -294.5px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
-}
-.Icon.hamburger {
-	background-image: url(../img/sprites@2x.png);
-	width: 18.5px;
-	height: 19.5px;
-	background-position: -0px -170px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
+	background-position: -0px -231.5px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
 }
 .Icon.checkmark-gray {
 	background-image: url(../img/sprites@2x.png);
 	width: 16px;
 	height: 16.5px;
 	background-position: -0px -43.5px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
+}
+.Icon.edit {
+	background-image: url(../img/sprites@2x.png);
+	width: 26.5px;
+	height: 26.5px;
+	background-position: -0px -391px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
+}
+.Icon.flame-gold {
+	background-image: url(../img/sprites@2x.png);
+	width: 14px;
+	height: 18px;
+	background-position: -0px -78px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
+}
+.Icon.flame-orange {
+	background-image: url(../img/sprites@2x.png);
+	width: 14px;
+	height: 18.5px;
+	background-position: -0px -114.5px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
+}
+.Icon.flame-purple {
+	background-image: url(../img/sprites@2x.png);
+	width: 14px;
+	height: 18.5px;
+	background-position: -0px -151.5px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
 }
 .Icon.flag-gray {
 	background-image: url(../img/sprites@2x.png);
 	width: 8px;
 	height: 21px;
-	background-position: -0px -189.5px;
-	-webkit-background-size: 165px 445px;
-	background-size: 165px 445px;
+	background-position: -0px -252.5px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
+}
+.Icon.synced {
+	background-image: url(../img/sprites@2x.png);
+	width: 25px;
+	height: 15.5px;
+	background-position: -0px -28px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
+}
+.Icon.checkmark-circle-unchecked-gray {
+	background-image: url(../img/sprites@2x.png);
+	width: 25.5px;
+	height: 25.5px;
+	background-position: -0px -340px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
+}
+.Icon.hamburger {
+	background-image: url(../img/sprites@2x.png);
+	width: 18.5px;
+	height: 19.5px;
+	background-position: -0px -170px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
+}
+.Icon.cross-red {
+	background-image: url(../img/sprites@2x.png);
+	width: 12px;
+	height: 13px;
+	background-position: -0px -0px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
+}
+.Icon.save {
+	background-image: url(../img/sprites@2x.png);
+	width: 26.5px;
+	height: 26.5px;
+	background-position: -0px -417.5px;
+	-webkit-background-size: 165px 496px;
+	background-size: 165px 496px;
 }

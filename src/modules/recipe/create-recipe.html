@@ -1,0 +1,39 @@
+<div class="CreateRecipe L-vbox-20">
+    
+    Be creative
+    <div class="ListItem">    
+        <div class="ListItem-name">
+            <input class="Input kalle" placeholder="Recipe name" ng-model="recipe.name">
+        </div>
+    </div>
+
+    <div >
+        Choose habits
+        <div class="Box_contained L-vbox-10 " style="width: 80%;">
+            <div ng-click="habit.recipeSelected = !habit.recipeSelected" class="FullCheckbox L-hbox L-hbox-sep10" ng-class="{'FullCheckbox-selected': habit.recipeSelected}" ng-repeat="habit in habits | filter: nonArchived">
+                <i ng-class="{'Icon checkmark-circle-unchecked-gray': !habit.recipeSelected, 'Icon checkmark-circle-checked-gray': habit.recipeSelected}"></i>
+                <div>{{habit.name}}</div>
+            </div>
+        </div>
+    </div>
+    <div>
+        Choose monitors
+        <div class="Box_contained L-vbox-10" style="width: 80%;">
+            <div ng-click="monitor.recipeSelected = !monitor.recipeSelected" class="FullCheckbox L-hbox L-hbox-sep10" ng-class="{'FullCheckbox-selected': monitor.recipeSelected}" ng-repeat="monitor in monitors | filter: nonArchived">
+                <i ng-class="{'Icon checkmark-circle-unchecked-gray': !monitor.recipeSelected, 'Icon checkmark-circle-checked-gray': monitor.recipeSelected}"></i>
+                <div>{{monitor.name}}</div>
+            </div>
+        </div>
+    </div>
+    <div>
+        Describe, instruct, envangalize.
+        <div class="ListItem">
+            <div class="ListItem-name">
+                <textarea type="text" class="Input-reg " ng-model="recipe.description"> </textarea> 
+            </div>
+        </div>
+    </div>
+    <div class="MainInput">
+        <button class="Btn-alt Btn_medium MainInput-btn L-hbox-1" ng-click="saveRecipe(recipe)"><span ng-bind="submitLabel"></span> Recipe</button>
+    </div>
+</div>

@@ -1,44 +1,26 @@
 <div>
 
-    <div tip="recipe-tip" class="Tip">
-        <div>
-            <div class="Tip-title">Recipes</div>
-            <p class="Tip-text">Recipes are interesting</p>
+    <div>
+        <div tip="recipe-tip" class="Tip">
+            <div>
+                <div class="Tip-title">Recipes</div>
+                <p class="Tip-text">Recipes are interesting</p>
+            </div>
+            <div class="Tip-footer">
+                <button class="Tip-close" ng-click="closeTip()">Right...</button>
+            </div>
         </div>
-        <div class="Tip-footer">
-            <button class="Tip-close" ng-click="closeTip()">Right...</button>
+        
+        <div class="L-vbox-10">
+            <div class="ListItem" ng-repeat="recipe in RecipeModel.recipes">    
+                <recipe recipe="recipe" edit-recipe="editRecipe"></recipe>
+            </div>
+        </div>
+        <div class="MainInput">
+            <div class="MainInput-inner Box-reg Box_round L-hbox">
+                <button class="Btn-alt Btn_medium MainInput-btn L-hbox-1" ng-click="showCreateRecipe()">Create Recipe</button>
+            </div>
         </div>
     </div>
 
-    <div class="MainInput">
-        <div class="MainInput-inner Box-reg Box_round L-hbox">
-            <button class="Btn-alt Btn_medium MainInput-btn L-hbox-1" ng-click="createHabit(HabitModel.newHabit)">add Recipe</button>
-        </div>
-    </div>
-    
-    <div class="CreateRecipe">
-        <div>
-            Recipe name (be creative)
-            <input class="Input" ng-model="RecipeModel.newRecipe.name">
-        </div>
-        <div>
-            Choose habits
-            <div ng-repeat="HabitModel.habits | filter: nonArchived">
-                
-            </div>
-        </div>
-        <div>
-            Choose monitors
-            <div ng-repeat="HabitModel.habits | filter: nonArchived">
-                
-            </div>
-        </div>
-        <div>
-            Describe, instruct, envangalize.
-            <div ng-repeat="HabitModel.habits | filter: nonArchived">
-                
-            </div>
-        </div>
-    </div>
-    
 </div>

@@ -1,119 +1,35 @@
 <div>
 
-    <div tip="habit-tip" class="Tip">
+    <div tip="habit-tip" btn-text="Right..." class="Tip">
         <div>
             <div class="Tip-title">Habits</div>
             <p class="Tip-text">The trick to habits is to have them be as effortless as possible. Now go forth!</p>
         </div>
-        <div class="Tip-footer">
-            <button class="Tip-close" ng-click="closeTip()">Right...</button>
-        </div>
     </div>
 
-    <div tip="first-habit-tip" class="Tip">
+    <div tip="first-habit-tip" btn-text="Tick when done, alright" class="Tip">
         <div>
-
             <div class="Tip-title">First!</div>
             <p class="Tip-text">Cool, now you have your first daily habit. Tick the checkmark once it’s done.</p>
         </div>
-        <div class="Tip-footer">
-            <button class="Tip-close" ng-click="closeTip()">Tick when done, sure</button>
-        </div>
     </div>
 
-    <div tip="first-tick-tip" class="Tip">
+    <div tip="first-tick-tip" btn-text="Loud and clear!" class="Tip">
         <div>
             <div class="Tip-title">First!</div>
             <p class="Tip-text">Good job! See that number? That’s your streak.</p>
 
         </div>
         <p class="Tip-fine-text"><b>Warning</b> Your habit must be ticked between 00.00 and 23.59 for it to count. If you miss a ticking a daily habit your streak is gone.</p>
-        <div class="Tip-footer">
-            <button class="Tip-close" ng-click="closeTip()">Loud and clear!</button>
-        </div>
     </div>
 
     <ul class="L-vbox-15">
-        <li class="ListItem" ng-class="{'ListItem_selected': habit.selected}" ng-repeat="habit in HabitModel.habits | filter:filterArchived">
-    
-            <div as-touch-active class="ListItem-head L-hbox">					
-                <button class="Btn_icon Btn_medium ListItem-edit" ng-click="toggleEditMode( habit )" ng-if="habit.selected">
-                    <i class="Icon edit" ng-class="{ edit: !habit.isEditable, save: habit.isEditable }"></i>
-                </button>
-                <div class="L-hbox-1 ListItem-name" ng-if="!habit.isEditable" ng-click="selectHabit(habit)">
-                    <span>{{ habit.name }}</span>
-                </div>
-                <div class="L-hbox-1 ListItem-name" ng-if="habit.isEditable" >
-                    <input  placeholder="Habit name" type="text" class="Input-alt T-50 T-alt" ng-model="habit.name">
-                </div>
-                
-                <!-- Fancy pancy flip thingy if we're in a chrome environment -->
-                <div ng-if="StateModel.isChrome">
-                    <div class="Flip-container">
-                        <div class="Flip-inner" ng-class="{switched: isTickedToday(habit)}">
-                            <div class="Box_medium Flip-front Btn-reg Btn_icon" ng-click="tickHabit(habit.id)">
-                                <i class="Icon checkmark-gray"></i>
-                            </div>
-                            <div class="Flip-back  Box_medium">
-                                <div class="IconText IconText_medium">
-                                    <i class="Icon flame-{{ StriveHelper.getStreakIcon(habit.streak); }} IconText-icon"></i>
-                                    <div class="IconText-text">{{ habit.streak }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div ng-if="isTickedToday(habit) && !StateModel.isChrome" class="Box_medium">
-                    <div class="IconText IconText_medium">
-                        <i class="Icon flame-{{ StriveHelper.getStreakIcon(habit.streak); }} IconText-icon"></i><div class="IconText-text">{{ habit.streak }}</div>
-                    </div>
-                </div>
-                <button ng-if="!isTickedToday(habit) && !StateModel.isChrome" ng-click="tickHabit(habit.id)" class="Btn-reg Btn_icon Btn_medium Habit-tick"><i class="Icon checkmark-gray"></i></button>
-            </div>
-            
-            <div class="ListItem-meta" ng-if="habit.selected">
-                <div class="ListItem-meta-section">
-                    <div class="L-hbox L-hbox-sep15">
-                        <div ng-if="!habit.isEditable" class="L-hbox-1">
-                            {{ habit.description }}	
-                            <span ng-if="!habit.description" ng-click="toggleEditMode(habit)">Add description</span>	
-                        </div>
-                        <div ng-if="habit.ticks.length > 0 && !habit.isEditable">
-                            <div class="HabitRecord">
-                                <div class="HabitRecord-record IconText IconText_medium">
-                                    <i class="Icon flame-{{ StriveHelper.getStreakIcon( StriveHelper.calculateStreakRecord(habit) ); }} IconText-icon"></i>
-                                    <div class="IconText-text">{{ StriveHelper.calculateStreakRecord(habit) }}</div>
-                                </div>
-                                <div class="HabitRecord-label">Record</div>
-                            </div>                            
-                        </div>
-                    </div >
-                    <div ng-if="habit.isEditable" class="L-hbox">
-                        <input class="Input-alt Input_-medium L-hbox-1" placeholder="Describe it" type="text" ng-model="habit.description">
-                    </div>
-                </div> 
-                <div class="ListItem-meta-section" ng-if="!habit.isEditable">
-                    <div class="L-hbox L-hbox-sep10">
-                        <button ng-click="habit.confirmDelete = true" ng-if="!habit.confirmDelete" class="Btn Btn-lilly Btn_small">Delete Habit</button>
-                        <button ng-click="archive(habit)" class="Btn Btn-lilly Btn_small">Archive Habit</button>
-                    </div>
-                </div>
-            
-                <div ng-if="habit.confirmDelete" class="ListItem-meta-section" >
-                    <h2 class="Head medium">Whoa there cowboy!</h2>
-                    <div class="L-vbox-15">
-                        <p class="Para small">Deleting this habit will erase all the streaks you've earned. Really dude?</p>
-                        <div class="L-hbox">
-                            <button class="Btn-lilly Btn_small" ng-click="habit.confirmDelete = false">Cancel</button>
-                            <div class="L-spacer"></div>
-                            <button class="Btn-lilly Btn_small" ng-click="removeHabit(habit)">Got it - Delete</button>
-                        </div>
-                    </div>
-                </div>
-            
-            </div>
+        
+        
+        <li class="ListItem" ng-class="{'ListItem_selected': habit.selected}" ng-repeat="habit in HabitModel.habits | filter:filterArchived">        
+            <habit habit="habit"></habit>            
         </li>
+
     </ul>
     <div class="MainInput">
         <div class="MainInput-inner Box-reg Box_round L-hbox">

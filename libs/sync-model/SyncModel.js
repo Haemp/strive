@@ -1,14 +1,26 @@
 angular.module('SyncModel', ['JsonStorage'])
 
 .constant('URL_SYNC', undefined)
+
+.service('SyncOptions', function(){
+	var self = this;
+
+	/**
+	 * @param Imediatly after an action is recorded - should we try to sync?
+	 */
+	self.autoSync = true;
+})
+
 /**
  *
- * @return {[type]} [description]
  */
-.service('SyncModel', ['$http','TransactionModel', 'URL_SYNC', '$rootScope', '$timeout',
-	function($http, TransactionModel, URL_SYNC, $rootScope, $timeout) {
+.service('SyncModel', ['$http','TransactionModel', 'URL_SYNC', '$rootScope', '$timeout', 'SyncOptions',
+	function($http, TransactionModel, URL_SYNC, $rootScope, $timeout, SyncOptions) {
 		var self = this;
 		self.models = {};
+		self.playbacks = {};
+		self.isSyncing = false;
+
 
 		/**
 		 * Sets methods on an object to be recordable
@@ -40,6 +52,10 @@ angular.module('SyncModel', ['JsonStorage'])
 									data: data,
 									time: Date.now()
 								});
+
+								if(SyncOptions.autoSync === true){
+									self.sync();
+								}
 							}
 						})
 					}
@@ -47,12 +63,33 @@ angular.module('SyncModel', ['JsonStorage'])
 			}
 		}
 
+		self.recordManual = function(transName, data){
+			TransactionModel.push({
+				name: transName,
+				data: data,
+				time: Date.now()
+			})
+
+			if(SyncOptions.autoSync === true){
+				self.sync()
+			}
+		}
+
+		self.registerPlayback = function(transName, callback){
+			self.playbacks[transName] = callback;
+		}
+
 		/**
 		 * Sends all the transactions to server
 		 * @return {[type]} [description]
 		 */
 		self.sync = function(){
+			console.log('Syncing...');
+			if(self.isSyncing){
+				return console.log('Is already sycning...'); 
+			}
 			console.log('Syncing Up...', TransactionModel.transactions, 'with syncVersion', TransactionModel.syncVersion);
+			self.isSyncing = true;
 			$http({
 				method: 'POST',
 				url: URL_SYNC,
@@ -94,6 +131,8 @@ angular.module('SyncModel', ['JsonStorage'])
 					}
 					
 					
+				}).finally(function(){
+					self.isSyncing = false;
 				})
 		}
 
@@ -121,11 +160,24 @@ angular.module('SyncModel', ['JsonStorage'])
 
 				console.log('Playing back', t);
 				var model = self.models[t.name];
-				model['_'+t.name](JSON.parse(t.data), function(){});
 
-				if(i < transactions.length-1){
-					i++;
-					$timeout( runrunrunrun, 1000/30);
+				// case: manual registered transaction
+				if(!model){	
+
+					// execute registered callback
+					self.playbacks[t.name](JSON.parse(t.data))
+					
+					if(i < transactions.length-1){
+						i++;
+						$timeout( runrunrunrun, 1000/30);
+					}
+				}else{					
+					model['_'+t.name](JSON.parse(t.data), function(){});
+
+					if(i < transactions.length-1){
+						i++;
+						$timeout( runrunrunrun, 1000/30);
+					}
 				}
 			})()
 		}

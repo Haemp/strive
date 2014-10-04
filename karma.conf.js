@@ -20,16 +20,17 @@ module.exports = function(config) {
       'bower_components/angular/angular.js',
       'bower_components/Datejs/build/date.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'bower_components/angular-ui-router/angular-ui-router.min.js',
+      'bower_components/angular-ui-router/release/angular-ui-router.min.js',
       'bower_components/click-hide/ClickHide.js',
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-filesystem/src/filesystem.js',
       'bower_components/AngularSugar/AngularSugar.js',
       'bower_components/ah-basement/Basement.js',
-      'libs/JsonStorage.js',
+	  'bower_components/angular-uuid-service/uuid-svc.js',
+      'libs/**/*.js',
 
       // tests
-      'test/**/*Spec.js',
+      'test/**/helperSpec.js',
 
       // src
       'src/Strive.js',

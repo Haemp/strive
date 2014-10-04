@@ -1,18 +1,19 @@
+
 Strive.service('HabitModel', function(
 	JsonStorage,
 	$q,
 	StriveHelper,
 	API_DOMAIN,
 	Utils,
-	HabitModelInterface,
-	SyncAdapter,
 	TransactionModel,
-	SyncModel
+	SyncModel,
+	$rootScope
 ) {
 	var self = this;
 
 	self.habits = [];
 	self.newHabit = {};
+	self.selectedHabit;
 	self.syncAdapter;
 	self.initiated = false;
 
@@ -41,6 +42,23 @@ Strive.service('HabitModel', function(
 		return def.promise;
 	}
 
+	self.isInitiated = function(){
+		var d = $q.defer();
+
+		var f = $rootScope.$watch(function(){
+			return self.initiated;
+		}, function(newVal){
+			if(newVal == true){
+				d.resolve();
+
+				// no need to watch this more
+				f();
+			}
+		})
+
+		d.promise;
+	}
+
 	self.getArchived = function(){
 		var a = []
 		var habit;
@@ -53,6 +71,20 @@ Strive.service('HabitModel', function(
 		}
 
 		return a;
+	}
+
+	self.toggleEditMode = function(habit){
+
+		// if we go from editable to 
+		// non editable -> we save the 
+		// current state of all habits
+		habit.isEditable = !habit.isEditable;	
+		if( !habit.isEditable ){
+			habit.selected = false;	
+			var edited = angular.copy(habit);
+			delete edited.ticks;
+			self.editHabit(edited);
+		}
 	}
 
 	self.addExistingHabit = function(habit, done){
@@ -83,6 +115,7 @@ Strive.service('HabitModel', function(
 
 	self.createHabit = function(newHabit, done) {
 
+		// to check for playback
 		if(!newHabit.createdAt && !newHabit.id){
 			newHabit.id = Date.now();
 			newHabit.createdAt = new Date();
@@ -103,7 +136,6 @@ Strive.service('HabitModel', function(
 			if (self.habits[i].id == habit.id){
 				self.habits.splice(i, 1);
 				found = true;
-
 			}
 		}
 
@@ -152,11 +184,22 @@ Strive.service('HabitModel', function(
 		if (!habit.ticks)
 			habit.ticks = [];
 
+		
 		if( self.tickedToday(habit) ){
 
 			done(false);
 			return false;
 		}
+		
+		// This is checking if the habit has been 
+		// ticked on the day that this new tick has been submitted
+		// otherwise resynced ticks from yesterday will pass this check
+		// and will be duplicating ticks.
+		if( self.isDuplicateTick(habit.ticks, params) ){
+			done(false);
+			return false;
+		}
+		
 		habit.ticks.unshift(params);
 
 		// calculate the streak
@@ -166,7 +209,34 @@ Strive.service('HabitModel', function(
 
 		done(true);
 	}
-
+	
+	self.isDuplicateTick = function(targetTick, ticks){
+		
+		for(var i = 0; i < ticks.length; i++){
+			// if any of the ticks for this habit is on the
+			// same date, month and year as the new ticks
+			// we don't want to add it since that makes it a
+			// duplicate. 
+			if( self.isTicksOnSameDay(ticks[i], targetTick) ){
+				return true;		
+			}
+		}
+		
+		return false;
+	}
+	self.isTicksOnSameDay = function(tick1, tick2){
+		var d1 = new Date.parse(tick1.createdAt);
+		var d2 = new Date.parse(tick2.createdAt);
+		
+		if( d1.getDate() != d2.getDate() ){
+			return false;
+		}else if( d1.getMonth() != d2.getMonth() ){
+			return false;
+		}else if( d1.getFullYear() != d2.getFullYear() ){
+			return false;
+		}
+		return true;
+	}
 	self.tickedToday = function(habit){
 		if( !habit.ticks || habit.ticks.length == 0 ) return false;
 		return new Date(habit.ticks[0].createdAt).isToday();
@@ -204,6 +274,34 @@ Strive.service('HabitModel', function(
 		}, function(error) {
 			console.log('There was an error saving the habits', error);
 		});
+	}
+
+	self.selectHabit = function( habit ){
+		if( self.selectedHabit ){
+			self.selectedHabit.selected = false;
+			self.selectedHabit.isEditable = false;
+			self.selectedHabit.confirmDelete = false;
+		}
+		
+		if( self.selectedHabit != habit ){
+			habit.selected = true;
+			self.selectedHabit = habit;	
+		}else{
+			self.selectedHabit = undefined;
+		}
+	}
+
+	self.unArchive = function( habit ){
+		habit.isArchived = false;
+		self.editHabit(habit);
+	}
+
+	self.archive = function( habit ){
+		
+		habit.isArchived = true;
+		var edited = angular.copy(habit);
+		delete edited.ticks;
+		self.editHabit(edited);
 	}
 
 	self.clear = function(){
