@@ -1,0 +1,22 @@
+{
+  "name": "Angular Sugar",
+  "version": "0.0.1",
+  "authors": [
+    "Hampus Ahlgren <wcw106@gmail.com>"
+  ],
+  "description": "Not something you really need, but something that makes your life feel a bit better.",
+  "main": "AngularSugar.js",
+  "keywords": [
+    "angular",
+    "utility"
+  ],
+  "license": "MIT",
+  "homepage": "ahlgren.co",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

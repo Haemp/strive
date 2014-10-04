@@ -1,0 +1,22 @@
+{
+  "name": "staggolee",
+  "version": "0.1.0",
+  "main": "Layout.scss",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt",
+    "facebook",
+    "bower_components",
+    "test",
+    "node_modules",
+    "*.md",
+    "*.css",
+    "**/*.css"
+  ],
+  "dependencies": {
+
+  },
+  "devDependencies": {
+
+  }
+}
