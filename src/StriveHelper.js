@@ -110,6 +110,102 @@ Strive.service('StriveHelper', function(){
 
 	// 	return streak;
 	// }
+
+	/**
+	 * Ticked on the same day refers to either the same day
+	 * or previous days but before 03.00
+	 */
+	self.isTicksOnSameDay = function(tick1, tick2){
+		var d1 = new Date.parse(tick1.createdAt);
+		var d2 = new Date.parse(tick2.createdAt);
+		
+		if( d1.getMonth() != d2.getMonth() ){
+			return false;
+		}else if( d1.getFullYear() != d2.getFullYear() ){
+			return false;
+		}
+		var d1Date = d1.getDate();
+		var d2Date = d2.getDate();
+		var d1Hour = d1.getHours();
+		var d2Hour = d1.getHours();
+
+		if( d1Date == d2Date ){
+			
+			// We know they are on the same date - but are they 
+			// within range of one another?
+			if( d1Hour < 3 ){
+
+				// only one day can be ticked before three
+				// for it to count as separate days
+				if( d2Hour < 3 ){
+					return true;
+				}else{
+					return false;
+				}
+
+			// D1 is ticked after 03.00
+			}else{
+
+				// THey are both over 03.00 - means they are on the
+				// same day
+				if( d2Hour >= 3 ){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}else{
+
+			// We know they are on different dates - but they
+			// could still be on the same strive day. For that
+			// to happen the one of the lower date must be ticked
+			// after 03.00 and the one of the higher date must
+			// be ticked before 03.00
+			if( d1Date > d2Date ){
+				if( d2Hour >= 3 && d1Hour < 3 ){
+					return true
+				}else{
+					return false;
+				}
+			}else{
+				if( d1Hour >= 3 && d2Hour < 3 ){
+					return true
+				}else{
+					return false;
+				}
+			}
+		}
+	}
+
+	
+	/**
+	 * Today here means either today or tomorrow to 03.00, since 
+	 * that is the cutof limits for habtis now.
+	 */
+	self.tickedToday = function(habit){
+
+		if( !habit.ticks || habit.ticks.length == 0 ) return false;
+		
+		var d = new Date(habit.ticks[0].createdAt);
+		if( d.isToday() ){
+
+			// If a tick is made today but before three
+			// it does not belong to today - it's really yesterday
+			return d.getHours() >= 3;
+
+		// if it was yesterday
+		// if this calculation is run between 00 -> 03
+		// we need to count that as if it were the today.
+		// Say the target tick date is 23:00 2 of March. Today
+		// is 3 or march 02:00 - this tick should be counted as ticked
+		// today
+		}else if( d.add(1).day().isToday() && d.getHours() < 3 ){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	
 	self.newCalcStreak = function(ticks){
 

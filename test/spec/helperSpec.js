@@ -147,6 +147,29 @@ describe('StriveHelper', function(){
     expect(recordStreak).toBe(1);
   })
 
+  describe('Tick duplication', function(){
+
+    it('should not be treated as separate days if ticked after and before 03.00', function(){
+      var habit = {ticks: [
+        {createdAt: new Date().format()}
+      ]};
+
+      var r = StriveHelper.tickedToday(habit);
+
+      expect(r).toBe(true);
+    })
+
+    it('should not be treated as separate days if ticked after and before 03.00', function(){
+
+      var habit = {ticks: [
+        {createdAt: new Date().set({hour:2}).format()}
+      ]};
+      var r = StriveHelper.tickedToday(habit);
+
+      expect(r).toBe(false);
+    })
+  })
+
 
   // it('should count the record streak for end steak', function(){
   //   habit = { ticks: [

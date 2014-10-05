@@ -73,7 +73,7 @@
 
 				scope.toggleEditMode = HabitModel.toggleEditMode;
 				scope.selectHabit = HabitModel.selectHabit;
-				scope.isTickedToday = HabitModel.tickedToday;
+				scope.isTickedToday = StriveHelper.tickedToday;
 				scope.archive = HabitModel.archive;
 				scope.unArchive = HabitModel.unArchive;
 				scope.removeHabit = HabitModel.removeHabit;

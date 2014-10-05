@@ -185,7 +185,7 @@ Strive.service('HabitModel', function(
 			habit.ticks = [];
 
 		
-		if( self.tickedToday(habit) ){
+		if( StriveHelper.tickedToday(habit) ){
 
 			done(false);
 			return false;
@@ -217,29 +217,12 @@ Strive.service('HabitModel', function(
 			// same date, month and year as the new ticks
 			// we don't want to add it since that makes it a
 			// duplicate. 
-			if( self.isTicksOnSameDay(ticks[i], targetTick) ){
+			if( StriveHelper.isTicksOnSameDay(ticks[i], targetTick) ){
 				return true;		
 			}
 		}
 		
 		return false;
-	}
-	self.isTicksOnSameDay = function(tick1, tick2){
-		var d1 = new Date.parse(tick1.createdAt);
-		var d2 = new Date.parse(tick2.createdAt);
-		
-		if( d1.getDate() != d2.getDate() ){
-			return false;
-		}else if( d1.getMonth() != d2.getMonth() ){
-			return false;
-		}else if( d1.getFullYear() != d2.getFullYear() ){
-			return false;
-		}
-		return true;
-	}
-	self.tickedToday = function(habit){
-		if( !habit.ticks || habit.ticks.length == 0 ) return false;
-		return new Date(habit.ticks[0].createdAt).isToday();
 	}
 
 	self.recalculateAllStreaks = function() {
