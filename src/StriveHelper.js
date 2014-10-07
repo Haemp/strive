@@ -187,6 +187,7 @@ Strive.service('StriveHelper', function(){
 		if( !habit.ticks || habit.ticks.length == 0 ) return false;
 		
 		var d = new Date(habit.ticks[0].createdAt);
+		var now = new Date();
 		if( d.isToday() ){
 
 			// If a tick is made today but before three
@@ -199,7 +200,7 @@ Strive.service('StriveHelper', function(){
 		// Say the target tick date is 23:00 2 of March. Today
 		// is 3 or march 02:00 - this tick should be counted as ticked
 		// today
-		}else if( d.add(1).day().isToday() && d.getHours() < 3 ){
+		}else if( d.add(1).day().isToday() && d.getHours() > 3 && now.getHours() < 3 ){
 			return true;
 		}else{
 			return false;
