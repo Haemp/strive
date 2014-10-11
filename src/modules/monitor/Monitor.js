@@ -26,7 +26,7 @@
 				}
 			})
 
-			d.promise;
+			return d.promise;
 		}
 
 		self.merge = function(monitors) {

@@ -3,6 +3,7 @@ Strive.controller('StriveCtrl', function(
 	$state,
 	$rootScope,
 	$interval,
+	$q,
 	HabitModel,
 	StriveHelper,
 	StateModel,
@@ -32,6 +33,17 @@ Strive.controller('StriveCtrl', function(
 	}
 
 	$scope._init = function(){
+
+		// after all the models are initiated we 
+		// sync.
+		$q.all([	
+			HabitModel.isInitiated(),
+			MonitorModel.isInitiated(),
+			RecipeModel.isInitiated(),
+			TransactionModel.isInitiated()
+		]).then(function(){
+			SyncModel.sync();
+		})
 
 		// initialize data from localStorage
 		HabitModel.loadHabits()

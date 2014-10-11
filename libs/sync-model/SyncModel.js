@@ -188,16 +188,34 @@ angular.module('SyncModel', ['JsonStorage'])
 
 })
 
-.service('TransactionModel', function(JsonStorage){
+.service('TransactionModel', function(JsonStorage, $rootScope, $q){
 	var self = this;
 
 
 	self.transactions = [];
 	self.syncVersion = 0;
 	console.log('TransactionModel instantiated transactions and version are now [] and 0');
-
+	self.initiated = false;
+	
 	self._init = function(){
 		self._load();
+	}
+
+	self.isInitiated = function(){
+		var d = $q.defer();
+
+		var f = $rootScope.$watch(function(){
+			return self.initiated;
+		}, function(newVal){
+			if(newVal == true){
+				d.resolve();
+
+				// no need to watch this more
+				f();
+			}
+		})
+
+		return d.promise;
 	}
 
 	self.isEmpty = function(){
@@ -234,21 +252,21 @@ angular.module('SyncModel', ['JsonStorage'])
 
 	self._load = function(){
 		console.log('Loading SyncModel data...');
-		JsonStorage.serial_get('transactions')
-			.then(function(t){
-				if( typeof t == 'string') t = [];
-				self.transactions = t || [];
 
-				console.log('Transactions loaded!', self.transactions);
-			});
+		var p1 = JsonStorage.serial_get('transactions').then(function(t){
+			if( typeof t == 'string') t = [];
+			self.transactions = t || [];
 
-		JsonStorage.serial_get('syncVersion')
-			.then(function(v){
+			console.log('Transactions loaded!', self.transactions);
+		});
+		var p2 = JsonStorage.serial_get('syncVersion').then(function(v){
+			self.syncVersion = parseInt(v || 0);
+			console.log('Sync Version loaded!', self.syncVersion);
+		});
 
-
-				self.syncVersion = parseInt(v || 0);
-				console.log('Sync Version loaded!', self.syncVersion);
-			});
+		return $q.all(p1, p2).then(function(){
+			self.initiated = true;
+		})
 	}
 
 	self._save = function(){

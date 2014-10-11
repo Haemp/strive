@@ -56,7 +56,7 @@ Strive.service('HabitModel', function(
 			}
 		})
 
-		d.promise;
+		return d.promise;
 	}
 
 	self.getArchived = function(){

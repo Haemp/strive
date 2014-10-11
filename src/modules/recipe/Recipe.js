@@ -6,7 +6,7 @@
 	angular.module('Recipe', [])
 
 
-	.service('RecipeModel', function($q, rfc4122, JsonStorage, SyncModel, HabitModel, MonitorModel){
+	.service('RecipeModel', function($q, rfc4122, JsonStorage, $rootScope, SyncModel, HabitModel, MonitorModel){
 		var self = this;
 		self.recipes = [];
 		self.initiated = false;
@@ -36,6 +36,23 @@
 			}).then(function(){
 				self.objectPairRecipes(self.recipes);
 			})
+		}
+
+		self.isInitiated = function(){
+			var d = $q.defer();
+
+			var f = $rootScope.$watch(function(){
+				return self.initiated;
+			}, function(newVal){
+				if(newVal == true){
+					d.resolve();
+
+					// no need to watch this more
+					f();
+				}
+			})
+
+			return d.promise;
 		}
 			
 		/**
