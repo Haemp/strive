@@ -280,7 +280,7 @@
 				// When initiating a recipe we need to pair the 
 				scope.edit = scope.editRecipe();
 				scope.toggleDescription = function(){
-					scope.recipe.showDescription = !scope.recipe.showDescription;
+					scope.recipe.selected = !scope.recipe.selected;
 				}
 				scope.removeRecipe = RecipeModel.removeRecipe;
 			}

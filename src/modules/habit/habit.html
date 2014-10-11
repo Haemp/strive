@@ -60,9 +60,9 @@
         </div>
         <div class="ListItem-meta-section" ng-if="!habit.isEditable">
             <div class="L-hbox L-hbox-sep10">
-                <button ng-click="habit.confirmDelete = true" ng-if="!habit.confirmDelete" class="Btn Btn-lilly Btn_small">Delete Habit</button>
-                <button ng-if="!habit.isArchived" ng-click="archive(habit)" class="Btn Btn-lilly Btn_small">Archive Habit</button>
-                <button ng-if="habit.isArchived" ng-click="unArchive(habit)" class="Btn Btn-lilly Btn_small">Un-Archive Habit</button>
+                <button ng-click="habit.confirmDelete = true" ng-if="!habit.confirmDelete" class="Btn lilly">Delete Habit</button>
+                <button ng-if="!habit.isArchived" ng-click="archive(habit)" class="Btn lilly">Archive Habit</button>
+                <button ng-if="habit.isArchived" ng-click="unArchive(habit)" class="Btn lilly">Un-Archive Habit</button>
             </div>
         </div>
 
@@ -71,9 +71,9 @@
             <div class="L-vbox-15">
                 <p class="Para small">Deleting this habit will erase all the streaks you've earned. Really dude?</p>
                 <div class="L-hbox">
-                    <button class="Btn-lilly Btn_small" ng-click="habit.confirmDelete = false">Cancel</button>
+                    <button class="Btn lilly" ng-click="habit.confirmDelete = false">Cancel</button>
                     <div class="L-spacer"></div>
-                    <button class="Btn-lilly Btn_small" ng-click="removeHabit(habit)">Got it - Delete</button>
+                    <button class="Btn lilly" ng-click="removeHabit(habit)">Got it - Delete</button>
                 </div>
             </div>
         </div>

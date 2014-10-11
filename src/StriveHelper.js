@@ -192,7 +192,14 @@ Strive.service('StriveHelper', function(){
 
 			// If a tick is made today but before three
 			// it does not belong to today - it's really yesterday
-			return d.getHours() >= 3;
+			
+			if( d.getHours() < 3 ){
+				// tick is made between 00 and 03 - this is counted
+				// as ticked today only if today is between 00 and 03
+				return now.getHours() < 3;
+			}else{
+				return now.getHours() >= 3;
+			}
 
 		// if it was yesterday
 		// if this calculation is run between 00 -> 03

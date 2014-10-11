@@ -31,6 +31,7 @@ describe('StriveHelper', function(){
       { createdAt: new Date().add(-3).day().set({hour: 2}).format() },
       { createdAt: new Date().add(-4).day().format() },
     ]};
+    console.log(habit.ticks);
 
     var streak = StriveHelper.newCalcStreak( habit.ticks );
     expect(streak).toBe(6);
@@ -134,6 +135,7 @@ describe('StriveHelper', function(){
       { createdAt: '2014-03-26 23:00:00' }
     ]};
 
+
     var recordStreak = StriveHelper.newCalcStreakRecord( habit.ticks );
     expect(recordStreak).toBe(1);
   });
@@ -161,6 +163,7 @@ describe('StriveHelper', function(){
 
     it('should not be treated as separate days if ticked after and before 03.00', function(){
 
+      // This all depends on when today is you numbnut
       var habit = {ticks: [
         {createdAt: new Date().set({hour:2}).format()}
       ]};

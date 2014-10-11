@@ -2,6 +2,7 @@ Strive.controller('StriveCtrl', function(
 	$scope,
 	$state,
 	$rootScope,
+	$interval,
 	HabitModel,
 	StriveHelper,
 	StateModel,
@@ -57,6 +58,7 @@ Strive.controller('StriveCtrl', function(
 			
 				RecipeModel.recipes = data.resyncData.recipes; 
 				RecipeModel.objectPairRecipes(data.resyncData.recipes);
+				RecipeModel._save();
 				
 				MonitorModel.sort();
 				HabitModel.sort();
@@ -74,7 +76,7 @@ Strive.controller('StriveCtrl', function(
 		// the pre-kitkat android browser.
 		yepnope([{ test: Browser.isAndroid, yep: 'styles/android.css' }]);
 
-		$state.go('habits');
+		$state.go('recipes');
 
 		// handling backwards button
 		$rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
@@ -114,7 +116,7 @@ Strive.controller('StriveCtrl', function(
 		
 		
 		// start the sync loop on 30s
-		asUtility.pollFunction(function(){
+		$interval(function(){
 			
 			// sync only if the user is logged in
 			// otherwise this causes issues if the
@@ -122,7 +124,7 @@ Strive.controller('StriveCtrl', function(
 			if( UserModel.user ){
 				SyncModel.sync();	
 			}
-		}, 30*1000)
+		}, 30*1000);
 	}
 
 	$scope.switch = function( state ){

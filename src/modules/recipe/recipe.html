@@ -1,10 +1,14 @@
 <div>    
     <div class="ListItem-name Recipe-title" ng-click="toggleDescription()">
-        {{ recipe.name }}
-        <button class="Btn reg" ng-click="edit(recipe)">Edit</button>
+        <button class="Btn_icon Btn_medium ListItem-edit" ng-click="edit(recipe)" style="float:left; position:relative; top:-3px; left: -24px;" ng-if="recipe.selected">
+            <i class="Icon edit"></i>
+        </button>
+        <div>
+            {{ recipe.name }}
+        </div>
     </div>
 
-    <div class="ListItem-meta" ng-if="recipe.showDescription">
+    <div class="ListItem-meta" ng-if="recipe.selected">
         <div class="ListItem-meta-section">
             {{ recipe.description }}
         </div>
