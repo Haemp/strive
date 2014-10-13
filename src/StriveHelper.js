@@ -127,7 +127,7 @@ Strive.service('StriveHelper', function(){
 		var d1Date = d1.getDate();
 		var d2Date = d2.getDate();
 		var d1Hour = d1.getHours();
-		var d2Hour = d1.getHours();
+		var d2Hour = d2.getHours();
 
 		if( d1Date == d2Date ){
 			
@@ -145,7 +145,7 @@ Strive.service('StriveHelper', function(){
 
 			// D1 is ticked after 03.00
 			}else{
-
+				
 				// THey are both over 03.00 - means they are on the
 				// same day
 				if( d2Hour >= 3 ){
