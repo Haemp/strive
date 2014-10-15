@@ -50,7 +50,7 @@ chrome.alarms.onAlarm.addListener(function( alarm ){
 
 			var links = {};
 			// store a reference to the habit in a notifications storage
-			var notificationName = Date.now()+'';
+			var notificationName = 'striveOverview';
 			var hList = [];
 			for (var i = 0; i < habits.length; i++) {
 
@@ -65,7 +65,7 @@ chrome.alarms.onAlarm.addListener(function( alarm ){
 			chrome.notifications.create(notificationName, {
 				type: 'list',
 				title: 'Reminder',
-				message: 'Your daily habits today:',
+				message: 'Your habits today:',
 				iconUrl: 'img/strive-128.png',
 				items: hList
 			}, function(){

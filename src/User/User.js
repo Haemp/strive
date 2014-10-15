@@ -18,6 +18,7 @@ angular.module('User', ['JsonStorage'])
 					console.log('User was invalidated by the server and now set as unauthorized');
 					UserModel.user.authorized = false;	
 					UserModel.saveUser();
+					UserModel.showUserLogin = true;
 				}
 			}
 			return $q.reject(response);

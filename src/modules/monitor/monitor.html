@@ -21,7 +21,7 @@
         <div class="ListItem-meta-section">
             <div class="L-hbox L-hbox-sep10">
                 <input class="Input-alt Input_centered Input_-medium" placeholder="Value" type="text" ng-model="monitor.newDataValue">
-                <button class="Btn-lilly Btn_small L-hbox-1" ng-click="addDataPoint(monitor, monitor.newDataValue)">Add Data Point</button>
+                <button class="Btn lilly" ng-click="addDataPoint(monitor, monitor.newDataValue)">Add Data Point</button>
             </div>
         </div>
         <div class="ListItem-meta-section" ng-if="showChartForMonitor(monitor)">
@@ -41,15 +41,15 @@
             </div>
         </div>
         <div class="ListItem-meta-section" ng-if="!monitor.isEditable">
-            <button ng-click="monitor.confirmDelete = true" ng-if="!monitor.confirmDelete" class="Btn Btn-lilly Btn_small">Delete Monitor</button>
+            <button ng-click="monitor.confirmDelete = true" ng-if="!monitor.confirmDelete" class="Btn lilly">Delete Monitor</button>
             <div ng-if="monitor.confirmDelete">
                 <h2 class="Head medium">No turning back</h2>
                 <div class="L-vbox-15">
                     <p class="Para small">You take the blue pill - the story ends, you wake up in your bed and believe whatever you want to believe. You take the red pill - you stay in Wonderland and I show you how deep the rabbit-hole goes.</p>
                     <div class="L-hbox">
-                        <button class="Btn-lilly Btn_small" ng-click="monitor.confirmDelete = false">Cancel</button>
+                        <button class="Btn lilly" ng-click="monitor.confirmDelete = false">Cancel</button>
                         <div class="L-spacer"></div>
-                        <button class="Btn-lilly Btn_small" ng-click="removeMonitor(monitor)">Delete</button>
+                        <button class="Btn lilly" ng-click="removeMonitor(monitor)">Delete</button>
                     </div>
                 </div>
             </div>

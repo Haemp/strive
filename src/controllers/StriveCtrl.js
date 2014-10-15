@@ -124,7 +124,7 @@ Strive.controller('StriveCtrl', function(
 			});
 		}
 
-
+		
 		
 		
 		// start the sync loop on 30s

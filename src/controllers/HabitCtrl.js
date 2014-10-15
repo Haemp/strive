@@ -2,7 +2,7 @@
 
 	angular.module('Strive')
 
-	.controller('HabitCtrl', function( $scope, HabitModel ){
+	.controller('HabitCtrl', function( $scope, HabitModel, StriveNotifications ){
 		var self = this;
 		$scope._init = function(){
 				
@@ -21,14 +21,12 @@
 				$scope.saveAll();
 			}
 		}
-		$scope.isTickedToday = function( habit ){
-			return HabitModel.tickedToday(habit);
-		}
 		
 		$scope.createHabit = function( habit ){
 			HabitModel.createHabit( habit );
 			
 			HabitModel.newHabit = undefined;
+			StriveNotifications.refreshOverview();
 		}
 		$scope.saveAll = function(){
 			HabitModel.save();
@@ -59,7 +57,7 @@
 	})
 
 
-	.directive('habit', function(HabitModel, StriveHelper, StateModel){
+	.directive('habit', function(HabitModel, StriveHelper, StateModel, StriveNotifications){
 		return{
 			restrict: 'E',
 			scope:{
@@ -71,15 +69,30 @@
 				scope.StriveHelper = StriveHelper;
 				scope.StateModel = StateModel;
 
-				scope.toggleEditMode = HabitModel.toggleEditMode;
+				scope.toggleEditMode = function(habit){
+					HabitModel.toggleEditMode(habit);
+					StriveNotifications.refreshOverview();
+				}
 				scope.selectHabit = HabitModel.selectHabit;
 				scope.isTickedToday = StriveHelper.tickedToday;
-				scope.archive = HabitModel.archive;
-				scope.unArchive = HabitModel.unArchive;
-				scope.removeHabit = HabitModel.removeHabit;
+
+				scope.archive = function(habit){
+					HabitModel.archive(habit);
+					StriveNotifications.refreshOverview();
+				}
+				scope.unArchive = function(habit){
+					HabitModel.unArchive(habit);
+					StriveNotifications.refreshOverview();
+				}
+				
+				scope.removeHabit = function(habit){
+					HabitModel.removeHabit(habit);
+					StriveNotifications.refreshOverview();
+				}
 
 				scope.tickHabit = function( habitId ){
 					HabitModel.tickHabit( {habitId:habitId} );
+					StriveNotifications.refreshOverview();
 				}
 				
 			}

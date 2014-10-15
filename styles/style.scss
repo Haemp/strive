@@ -14,8 +14,6 @@
 	input{ background-color: transparent; }
 	.L-hbox >*{ display:block; }
 
-
-
 /* Fonts */
 	@font-face {
 	    font-family: 'RobotoSlab';
@@ -200,7 +198,7 @@
 	.Noti_progress .Noti-marker{ background-color: #d0bd49; }
 	
 /* Monitor */
-	.Monitor-flag{ @extend .Box_medium;}
+	.Monitor-flag{ @extend .Box_medium; width: 47px;}
 	.Monitor-chart{
 		svg{ position: relative; left: -20px; }
 		.nv-axis line{ display:none; }

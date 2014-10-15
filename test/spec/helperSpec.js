@@ -171,6 +171,19 @@ describe('StriveHelper', function(){
 
       expect(r).toBe(false);
     })
+
+
+    iit('should detect two ticks as separate strive days', function(){
+      var ticks = [
+        { createdAt:'2014-10-12 22:02:43'},
+        { createdAt:'2014-10-12 00:23:20'}
+      ];
+
+      var areThey = StriveHelper.isTicksOnSameDay(ticks[0], ticks[1]);
+      expect(areThey).toBe(false);
+    })
+
+
   })
 
 
