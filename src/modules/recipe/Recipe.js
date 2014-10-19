@@ -299,6 +299,19 @@
 				scope.toggleDescription = function(){
 					scope.recipe.selected = !scope.recipe.selected;
 				}
+
+				scope.publish = function(recipe){
+					recipe.published = true;
+
+					RecipeModel.updateRecipe(recipe);
+				}
+				
+				scope.unPublish = function(recipe){
+					recipe.published = false;
+
+					RecipeModel.updateRecipe(recipe);
+				}
+				
 				scope.removeRecipe = RecipeModel.removeRecipe;
 			}
 		}

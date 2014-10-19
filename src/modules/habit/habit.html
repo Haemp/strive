@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div ng-if="habit.isEditable" class="L-hbox">
-                <input class="Input-alt Input_-medium L-hbox-1" placeholder="Describe it" type="text" ng-model="habit.description">
+                <textarea class="Input-textarea L-hbox-1" placeholder="Describe it" type="text" ng-model="habit.description"></textarea>
             </div>
         </div>
         <div class="ListItem-meta-section" ng-if="!habit.isEditable">

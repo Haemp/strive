@@ -183,6 +183,25 @@ describe('StriveHelper', function(){
       expect(areThey).toBe(false);
     })
 
+    iit('should detect two ticks as the same strive days', function(){
+      var ticks = [
+        { createdAt:'2014-10-12 22:02:43'},
+        { createdAt:'2014-10-12 03:23:20'}
+      ];
+
+      var areThey = StriveHelper.isTicksOnSameDay(ticks[0], ticks[1]);
+      expect(areThey).toBe(true);
+    })
+
+    iit('should detect two ticks as long separate strive days', function(){
+      var ticks = [
+        { createdAt:'2014-10-12 22:02:43'},
+        { createdAt:'2014-10-09 02:23:20'}
+      ];
+
+      var areThey = StriveHelper.isTicksOnSameDay(ticks[0], ticks[1]);
+      expect(areThey).toBe(false);
+    })
 
   })
 

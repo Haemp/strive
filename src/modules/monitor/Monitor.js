@@ -216,6 +216,8 @@
 				return done(false);
 			}
 
+			if(!dataPoint) return done(false);
+
 			if (!monitor.dataPoints)
 				monitor.dataPoints = [];
 

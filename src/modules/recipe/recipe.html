@@ -4,7 +4,8 @@
             <i class="Icon edit"></i>
         </button>
         <div>
-            {{ recipe.name }}
+            <i class="Icon published-gray" ng-show="recipe.published" style="float: left; margin-top: 6px;"></i>
+            <span ng-bind="recipe.name"></span>
         </div>
     </div>
 
@@ -14,6 +15,8 @@
         </div>
         <div class="ListItem-meta-section">
             <button class="Btn lilly" ng-click="recipe.confirmDelete = true">Remove</button>
+            <button class="Btn lilly" ng-if="!recipe.published" ng-click="publish(recipe)">Publish</button>
+            <button class="Btn lilly" ng-if="recipe.published" ng-click="unPublish(recipe)">Un-Publish</button>
         </div>
         <div ng-if="recipe.confirmDelete" class="ListItem-meta-section">
             <h2 class="Head medium">Holdup!</h2>

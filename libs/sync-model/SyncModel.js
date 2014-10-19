@@ -90,7 +90,7 @@ angular.module('SyncModel', ['JsonStorage'])
 			}
 			console.log('Syncing Up...', TransactionModel.transactions, 'with syncVersion', TransactionModel.syncVersion);
 			self.isSyncing = true;
-			$http({
+			return $http({
 				method: 'POST',
 				url: URL_SYNC,
 				data: {

@@ -13,8 +13,8 @@ var Strive = angular.module('Strive', [
 	'Recipe',
 	'uuid'
 ]);
-var domain = 'http://130.211.52.153:3000';
-//var domain = 'http://localhost:3000';
+//var domain = 'http://130.211.52.153:3000';
+var domain = 'http://localhost:3000';
 
 // switch to remote API for production.
 Strive.constant('API_DOMAIN', domain);
@@ -89,6 +89,7 @@ Strive.config(function($stateProvider, $httpProvider) {
 });
 
 Strive.constant('URL_SYNC', domain+'/api/commands');
+Strive.constant('DOMAIN', domain);
 
 Strive.run(function(UserOptions) {
 	UserOptions.URL_LOGIN = domain+'/api/login';

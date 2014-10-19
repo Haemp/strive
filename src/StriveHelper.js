@@ -128,7 +128,8 @@ Strive.service('StriveHelper', function(){
 		var d2Date = d2.getDate();
 		var d1Hour = d1.getHours();
 		var d2Hour = d2.getHours();
-
+		
+		if( Math.abs(d2Date - d1Date) > 1 ) return false;
 		if( d1Date == d2Date ){
 			
 			// We know they are on the same date - but are they 
