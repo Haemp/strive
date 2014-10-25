@@ -1,0 +1,16 @@
+<div>
+    <div class="ListItem-head L-hbox">
+        <div class="L-hbox-1 ListItem-name" ng-click="selectHabit(habit)">
+            <span>{{ habit.name }}</span>
+        </div>
+    </div>
+    <div class="ListItem-meta" ng-if="habit.selected">
+        <div class="ListItem-meta-section">
+            <div class="L-hbox">
+                <div class="L-hbox-1">
+                    {{ habit.description }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

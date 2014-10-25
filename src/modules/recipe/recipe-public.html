@@ -1,0 +1,26 @@
+<div>    
+    <div class="ListItem-name Recipe-title">
+        <div>
+            <span ng-bind="recipe.name"></span>
+        </div>
+    </div>
+
+    <div class="ListItem-meta">
+        <div class="ListItem-meta-section">
+            {{ recipe.description }}
+        </div>
+        <div class="ListItem-meta-section">
+            <button class="Btn lilly" ng-click="copy(recipe)">Copy</button>
+        </div>
+    </div>
+    <div>
+        <ul class="List_bordered">
+            <li ng-repeat="habit in recipe.habits">
+                <habit-public habit="habit"></habit-public>
+            </li>
+            <li ng-repeat="monitor in recipe.monitors">
+                <monitor-public monitor="monitor"></monitor-public>
+            </li>
+        </ul>
+    </div>
+</div>

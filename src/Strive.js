@@ -13,8 +13,8 @@ var Strive = angular.module('Strive', [
 	'Recipe',
 	'uuid'
 ]);
-//var domain = 'http://130.211.52.153:3000';
-var domain = 'http://localhost:3000';
+var domain = 'http://130.211.52.153:3000';
+//var domain = 'http://localhost:3000';
 
 // switch to remote API for production.
 Strive.constant('API_DOMAIN', domain);
@@ -26,6 +26,11 @@ Strive.config(function($stateProvider, $httpProvider) {
 	// 	flushInterval: 5000,
 	// 	pollUrl: 'http://localhost:3000/login'
 	// });
+
+	// We have to set this to true so we're always sending
+	// the cookie. This is because we are not requesting
+	// from the same domain CORS.
+	$httpProvider.defaults.withCredentials = true;
 
 	$stateProvider
 		.state('habits', {

@@ -16,17 +16,20 @@
 
 	})
 
-	.controller('HomeCtrl', function($http, DOMAIN, SyncModel, $state){
+	.controller('HomeCtrl', function($scope, $http, DOMAIN, SyncModel, $state){
 
 		var self = this;
-		self.recipes = [];
+		$scope.recipes = [];
 
 
 		self._init = function(){
 
 			// fetch all published recipes
-			$http.get(DOMAIN+'/api/recipe/published').then(function(res){
-				self.recipes = res.data;
+			$http({ 
+				url: DOMAIN+'/api/recipe/published',
+				method: 'GET'
+			}).then(function(res){
+				$scope.recipes = res.data;
 			})
 		}	
 

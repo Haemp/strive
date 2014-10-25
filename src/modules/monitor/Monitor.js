@@ -2,7 +2,7 @@
 
 	angular.module('Strive')
 
-	.service('MonitorModel', function(JsonStorage, $q, Utils, API_DOMAIN, SyncModel, $rootScope) {
+	.service('MonitorModel', function(JsonStorage, $q, Utils, API_DOMAIN, SyncModel, $rootScope, rfc4122 ){
 		var self = this;
 		self.monitors;
 		self.initiated = false;
@@ -152,7 +152,8 @@
 		self.createMonitor = function(newMonitor, done) {
 
 			if (!newMonitor.createdAt && !newMonitor.id) {
-				newMonitor.createdAt = newMonitor.id = Date.now();
+				newMonitor.id = rfc4122.v4();
+				newMonitor.createdAt = Date.now();
 			}
 
 			if (!self.monitors) self.monitors = [];

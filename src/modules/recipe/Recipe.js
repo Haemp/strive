@@ -5,8 +5,7 @@
 
 	angular.module('Recipe', [])
 
-
-	.service('RecipeModel', function($q, rfc4122, JsonStorage, $rootScope, SyncModel, HabitModel, MonitorModel){
+	.service('RecipeModel', function($q, rfc4122, JsonStorage, $rootScope, SyncModel, HabitModel, MonitorModel, DOMAIN){
 		var self = this;
 		self.recipes = [];
 		self.initiated = false;
@@ -54,6 +53,34 @@
 
 			return d.promise;
 		}
+
+		/**
+		 * Copies the target recipe to the currently logged in users
+		 * recipes list. This is done through commands on the server
+		 * side so can be synced as a normal action.
+		 */
+		self.copyRecipe = function(recipe){
+
+			recipe.copiedFrom = recipe.id;
+
+			// copy the habits - these habits
+			// are the full objects so we can create
+			// them directly from these objects
+			recipe.habits.forEach(function(habit){
+				habit.id = undefined;
+				habit.createdAt = undefined;
+				HabitModel.createHabit(habit);
+			})
+
+			// copy the monitors
+			recipe.monitors.forEach(function(monitor){
+				monitor.id = undefined;
+				monitor.createdAt = undefined;
+				MonitorModel.createMonitor(monitor);
+			})
+
+			self.createRecipe(recipe);
+		}
 			
 		/**
 		 * This step is needed to fit into the sync model
@@ -75,7 +102,7 @@
 		}
 		self.createRecipePlayback = function(recipe, done){
 
-			self.objectPairRecipe(recipe, HabitModel.habits, MonitorModel.monitors);
+			self.objectPairRecipe(recipe, HabitModel.habits, MonitorModel.Jmonitors);
 			self.recipes.push(recipe);
 			self._save();		
 		}	
@@ -312,7 +339,35 @@
 					RecipeModel.updateRecipe(recipe);
 				}
 				
+				scope.archive = function(recipe){
+					recipe.archived = true;
+
+					RecipeModel.updateRecipe(recipe);
+				}
+
+				scope.unArchive = function(recipe){
+					recipe.archived = false;
+					
+					RecipeModel.updateRecipe(recipe);
+				}
 				scope.removeRecipe = RecipeModel.removeRecipe;
+			}
+		}
+	})
+
+	.directive('recipePublic', function( RecipeModel ){
+		return {
+			restrict: 'E',
+			scope: {
+				recipe: '=?'
+			},
+			templateUrl: 'src/modules/recipe/recipe-public.html',
+			link: function(scope){
+
+				// When initiating a recipe we need to pair the 
+				scope.copy = function(recipe){
+					RecipeModel.copyRecipe(recipe);
+				}
 			}
 		}
 	})
@@ -347,6 +402,8 @@
 						self._startReversePairing();
 					}
 				}
+
+
 				
 				scope.saveRecipe = function(recipe){
 					var p;

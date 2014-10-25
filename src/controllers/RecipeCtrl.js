@@ -24,6 +24,9 @@
 			$state.transitionTo('recipeupdate', {recipeId: recipe.id});
 		}
 
+		$scope.archived = function(recipe){
+			return !recipe.archived;
+		}
 		self._init();	
 	})
 

@@ -7,7 +7,7 @@
 
         self.refreshOverview = function(){
             
-            if( !chrome.notifications ) return;
+            if( typeof chrome == 'undefined' || !chrome.notifications ) return;
                
             var habitsList = [];
             angular.forEach(HabitModel.habits, function(habit){

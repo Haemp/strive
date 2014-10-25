@@ -7,7 +7,8 @@ Strive.service('HabitModel', function(
 	Utils,
 	TransactionModel,
 	SyncModel,
-	$rootScope
+	$rootScope,
+	rfc4122
 ) {
 	var self = this;
 
@@ -87,6 +88,9 @@ Strive.service('HabitModel', function(
 		}
 	}
 
+	/**
+	 * Adds a habit with ticks
+	 */
 	self.addExistingHabit = function(habit, done){
 		var h = self.getHabit(habit.id);
 		if( h ){ // this habit already exists
@@ -117,10 +121,9 @@ Strive.service('HabitModel', function(
 
 		// to check for playback
 		if(!newHabit.createdAt && !newHabit.id){
-			newHabit.id = Date.now();
+			newHabit.id = rfc4122.v4();
 			newHabit.createdAt = new Date();
 		}
-			
 
 		if (!self.habits) self.habits = [];
 		self.habits.push(angular.copy(newHabit));

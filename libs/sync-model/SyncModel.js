@@ -21,7 +21,6 @@ angular.module('SyncModel', ['JsonStorage'])
 		self.playbacks = {};
 		self.isSyncing = false;
 
-
 		/**
 		 * Sets methods on an object to be recordable
 		 */

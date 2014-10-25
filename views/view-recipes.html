@@ -12,7 +12,7 @@
         </div>
         
         <div class="L-vbox-10">
-            <div class="ListItem" ng-repeat="recipe in RecipeModel.recipes">    
+            <div class="ListItem" ng-repeat="recipe in RecipeModel.recipes | filter: archived">    
                 <recipe recipe="recipe" edit-recipe="editRecipe"></recipe>
             </div>
         </div>

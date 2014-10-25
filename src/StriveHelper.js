@@ -1,6 +1,14 @@
 Strive.service('StriveHelper', function(){
 	var self = this;
 
+	// fix for Date parsing inconsistencies
+	Date.dateParse = Date.parse;
+	Date.parse = function(d){
+		var r = Date.dateParse(d);
+		if(!r) r = new Date(d);
+		return r;
+	}
+
 	self.getStreakIcon = function( streak ){
 
 		if( streak >= 100 ){
@@ -116,8 +124,8 @@ Strive.service('StriveHelper', function(){
 	 * or previous days but before 03.00
 	 */
 	self.isTicksOnSameDay = function(tick1, tick2){
-		var d1 = new Date.parse(tick1.createdAt);
-		var d2 = new Date.parse(tick2.createdAt);
+		var d1 = Date.parse(tick1.createdAt);
+		var d2 = Date.parse(tick2.createdAt);
 		
 		if( d1.getMonth() != d2.getMonth() ){
 			return false;
@@ -187,7 +195,7 @@ Strive.service('StriveHelper', function(){
 
 		if( !habit.ticks || habit.ticks.length == 0 ) return false;
 		
-		var d = new Date(habit.ticks[0].createdAt);
+		var d = Date.parse(habit.ticks[0].createdAt);
 		var now = new Date();
 		if( d.isToday() ){
 
@@ -231,7 +239,8 @@ Strive.service('StriveHelper', function(){
 		
 		for(var i = 0; i < ticks.length; i++){
 			tick = ticks[i];
-			tickDate = new Date(tick.createdAt);
+			tickDate = Date.parse(tick.createdAt);
+			if(tickDate == null) continue;
 			// if the next tick is before the ref date
 			// it's a streak
 			if(tickDate.isAfter(refDate)){
@@ -264,11 +273,11 @@ Strive.service('StriveHelper', function(){
 		
 		for(var i = 1; i < ticks.length; i++){
 			tick = ticks[i];
-			d = new Date(tick.createdAt);
+			d = Date.parse(tick.createdAt);
 			
 			// if the next tick is before the ref date
 			// it's a streak
-			if(d.isAfter(refDate)){
+			if(d && d.isAfter(refDate)){
 				streak++;	
 			}else{
 				streak = 1;
@@ -288,7 +297,7 @@ Strive.service('StriveHelper', function(){
 	 * tick has to be created for it to be counted as a streak.
 	 */
 	self._getRefDate = function(created){
-		var d = new Date(created);
+		var d = Date.parse(created);
 		
 		// if the tick happened before 03.00
 		// the reference date limit will be
