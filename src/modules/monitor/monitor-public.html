@@ -1,0 +1,12 @@
+<div>
+
+    <div as-touch-active class="ListItem-head L-hbox L-hbox-vcenter">
+        <div class="ListItem-name L-hbox-1" ng-click="selectMonitor(monitor)">{{ monitor.name }}</div>
+    </div>
+
+    <div class="ListItem-meta" ng-if="monitor.selected">
+        <div class="ListItem-meta-section">
+            {{ monitor.description }}
+        </div>
+    </div>
+</div>

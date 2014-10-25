@@ -36,6 +36,7 @@
 		<script src="src/modules/habit/HabitCtrl.js"></script>
 		<script src="src/modules/habit/HabitPublic.js"></script>
 		<script src="src/modules/monitor/Monitor.js"></script>
+		<script src="src/modules/monitor/MonitorPublic.js"></script>
 		<script src="src/modules/recipe/Recipe.js"></script>
 
 		<!-- Own Libraires -->
@@ -87,6 +88,10 @@
 				<li as-touch-active class="Basement-menu-item" ng-click="switch('recipes')">
 					<i class="Basement-menu-item_active" ng-if="$state.includes('recipes')"></i>
 					<span class="Basement-menu-item-name">recipes</span>
+				</li>
+				<li as-touch-active class="Basement-menu-item" ng-click="switch('home')">
+					<i class="Basement-menu-item_active" ng-if="$state.includes('home')"></i>
+					<span class="Basement-menu-item-name">home</span>
 				</li>
 				<li as-touch-active class="Basement-menu-item" ng-if="!UserModel.user || !UserModel.user.authorized" ng-click="UserModel.showUserLogin = true">
 					<span class="Basement-menu-item-name">Login</span>
