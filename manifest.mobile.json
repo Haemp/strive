@@ -1,6 +1,6 @@
 {
 	"packageId": "co.ahlgren.App",
-	"versionCode": 17,
+	"versionCode": 18,
 	"CFBundleVersion": "0.5.2",
 	"android": {
 		"oauth2": {
