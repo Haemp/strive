@@ -22,6 +22,22 @@ angular.module('User', ['JsonStorage'])
 				}
 			}
 			return $q.reject(response);
+		},
+
+		'response' : function(response){
+			if(response.status == 200){
+
+				// we have a validated call
+				// the user is logged in
+				if( ~response.config.url.indexOf('commands') &&
+					UserModel.user.authorized == false ){
+						
+					UserModel.user.authorized = true;	
+					UserModel.saveUser();
+				}
+			}	
+
+			return response;
 		}
 	};
 })

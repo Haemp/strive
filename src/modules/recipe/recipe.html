@@ -4,7 +4,7 @@
             <i class="Icon edit"></i>
         </button>
         <div>
-            <i class="Icon published-gray" ng-show="recipe.published" style="float: left; margin-top: 6px;"></i>
+            <i class="Icon published-gray" ng-if="!!recipe.published" style="float: left; margin-top: 6px;"></i>
             <span ng-bind="recipe.name"></span>
         </div>
     </div>
