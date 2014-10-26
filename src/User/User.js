@@ -25,16 +25,19 @@ angular.module('User', ['JsonStorage'])
 		},
 
 		'response' : function(response){
-			if(response.status == 200){
+
+			UserModel = $injector.get('UserModel');
+
+			if( response.status == 200 && 
+				UserModel && 
+				UserModel.user && 
+				~response.config.url.indexOf('commands') &&
+				UserModel.user.authorized == false ){
 
 				// we have a validated call
 				// the user is logged in
-				if( ~response.config.url.indexOf('commands') &&
-					UserModel.user.authorized == false ){
-						
-					UserModel.user.authorized = true;	
-					UserModel.saveUser();
-				}
+				UserModel.user.authorized = true;	
+				UserModel.saveUser();
 			}	
 
 			return response;
