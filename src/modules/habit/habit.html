@@ -41,7 +41,7 @@
         <div class="ListItem-meta-section">
             <div class="L-hbox L-hbox-sep15">
                 <div ng-if="!habit.isEditable" class="L-hbox-1">
-                    {{ habit.description }}
+                    <remarkable text="habit.description"></remarkable>
                     <span ng-if="!habit.description" ng-click="toggleEditMode(habit)">Add description</span>
                 </div>
                 <div ng-if="habit.ticks.length > 0 && !habit.isEditable">

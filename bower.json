@@ -37,6 +37,9 @@
     "click-hide": "*",
     "sync": "Haemp/sync",
     "angular-uuid-service": "~0.0.1",
-    "underscore": "~1.7.0"
+    "underscore": "~1.7.0",
+    "remarkable": "~1.2.0",
+    "requirejs": "~2.1.15",
+    "angular-sanitize": "~1.3.0"
   }
 }

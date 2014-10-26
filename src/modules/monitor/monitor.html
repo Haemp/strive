@@ -33,11 +33,11 @@
         </div>
         <div class="ListItem-meta-section">
             <div ng-if="!monitor.isEditable">
-                {{ monitor.description }}
+                <remarkable text="monitor.description"></remarkable>
                 <span ng-if="!monitor.description" ng-click="toggleEditMode(monitor)">Add description</span>
             </div>
             <div ng-if="monitor.isEditable" class="L-hbox">
-                <input class="Input-alt Input_-medium L-hbox-1" placeholder="Describe it" type="text" ng-model="monitor.description">
+                <textarea class="Input-textarea L-hbox-1" placeholder="Describe it" type="text" ng-model="monitor.description"></textarea>
             </div>
         </div>
         <div class="ListItem-meta-section" ng-if="!monitor.isEditable">

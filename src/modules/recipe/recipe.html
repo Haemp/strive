@@ -11,7 +11,7 @@
 
     <div class="ListItem-meta" ng-if="recipe.selected">
         <div class="ListItem-meta-section">
-            {{ recipe.description }}
+            <remarkable text="recipe.description"></remarkable>
         </div>
         <div class="ListItem-meta-section">
             <button class="Btn lilly" ng-click="recipe.confirmDelete = true">Remove</button>
