@@ -13,7 +13,7 @@
         <!-- Fancy pancy flip thingy if we're in a chrome environment -->
         <div ng-if="StateModel.isChrome">
             <div class="Flip-container">
-                <div class="Flip-inner" ng-class="{switched: isTickedToday(habit)}">
+                <div class="Flip-inner" ng-class="{switched: habit.tickedToday}">
                     <div class="Box_medium Flip-front Btn-reg Btn_icon" ng-click="tickHabit(habit.id)">
                         <i class="Icon checkmark-gray"></i>
                     </div>
@@ -27,13 +27,13 @@
             </div>
         </div>
 
-        <div ng-if="isTickedToday(habit) && !StateModel.isChrome" class="Box_medium">
+        <div ng-if="habit.tickedToday && !StateModel.isChrome" class="Box_medium">
             <div class="IconText IconText_medium">
                 <i class="Icon flame-{{ StriveHelper.getStreakIcon(habit.streak); }} IconText-icon"></i>
                 <div class="IconText-text">{{ habit.streak }}</div>
             </div>
         </div>
-        <button ng-if="!isTickedToday(habit) && !StateModel.isChrome" ng-click="tickHabit(habit.id)" class="Btn-reg Btn_icon Btn_medium Habit-tick"><i class="Icon checkmark-gray"></i>
+        <button ng-if="!habit.tickedToday && !StateModel.isChrome" ng-click="tickHabit(habit.id)" class="Btn-reg Btn_icon Btn_medium Habit-tick"><i class="Icon checkmark-gray"></i>
         </button>
     </div>
 
@@ -47,8 +47,8 @@
                 <div ng-if="habit.ticks.length > 0 && !habit.isEditable">
                     <div class="HabitRecord">
                         <div class="HabitRecord-record IconText IconText_medium">
-                            <i class="Icon flame-{{ StriveHelper.getStreakIcon( StriveHelper.newCalcStreakRecord(habit.ticks) ); }} IconText-icon"></i>
-                            <div class="IconText-text">{{ StriveHelper.newCalcStreakRecord(habit.ticks) }}</div>
+                            <i class="Icon flame-{{ StriveHelper.getStreakIcon( habit.streakRecord ); }} IconText-icon"></i>
+                            <div class="IconText-text">{{ habit.streakRecord }}</div>
                         </div>
                         <div class="HabitRecord-label">Record</div>
                     </div>

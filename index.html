@@ -70,7 +70,7 @@
 		</div>
 
 		<basement open="StateModel.basementOpen">
-			<ul class="Basement-menu">
+			<ul class="Basement-menu" gesture="false">
 				<li class="Basement-menu-item L-hbox L-hbox-vcenter" ng-if="UserModel.user">
 					<i ng-class="{'Icon-circle-green': UserModel.user.authorized, 'Icon-circle-red':!UserModel.user.authorized  }" style="margin-right:10px"></i>
 					<div class="Basement-menu-item-name">{{ UserModel.user.email }}</div>

@@ -189,7 +189,7 @@ Strive.service('HabitModel', function(
 
 		
 		if( StriveHelper.tickedToday(habit) ){
-
+			habit.tickedToday = true;
 			done(false);
 			return false;
 		}
@@ -209,7 +209,8 @@ Strive.service('HabitModel', function(
 		habit.streak = StriveHelper.newCalcStreak(habit.ticks);
 
 		self.save();
-
+		
+		habit.tickedToday = true;
 		done(true);
 	}
 	
@@ -231,6 +232,7 @@ Strive.service('HabitModel', function(
 	self.recalculateAllStreaks = function() {
 
 		// check if we've already calculated for today
+		// TODO: This does not count streak day
 		if (self.lastCalculation && self.lastCalculation.today()) return;
 
 		if (!self.habits || self.habits.length == 0) return;
@@ -239,7 +241,9 @@ Strive.service('HabitModel', function(
 			var habit = self.habits[i];
 			if (!habit.ticks) continue;
 
+			if( StriveHelper.tickedToday(habit) ) habit.tickedToday = true;
 			habit.streak = StriveHelper.newCalcStreak(habit.ticks);
+			habit.streakRecord = StriveHelper.newCalcStreakRecord(habit.ticks);
 		}
 
 		self.lastCalculation = new Date();

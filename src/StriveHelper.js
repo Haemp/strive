@@ -124,6 +124,7 @@ Strive.service('StriveHelper', function(){
 	 * or previous days but before 03.00
 	 */
 	self.isTicksOnSameDay = function(tick1, tick2){
+		console.log('isTicksOnSameDay');
 		var d1 = Date.parse(tick1.createdAt);
 		var d2 = Date.parse(tick2.createdAt);
 		
@@ -192,8 +193,11 @@ Strive.service('StriveHelper', function(){
 	 * that is the cutof limits for habtis now.
 	 */
 	self.tickedToday = function(habit){
-
-		if( !habit.ticks || habit.ticks.length == 0 ) return false;
+		console.time('tickedToday');
+		if( !habit.ticks || habit.ticks.length == 0 ){
+			console.timeEnd('tickedToday');
+			return false;	
+		} 
 		
 		var d = Date.parse(habit.ticks[0].createdAt);
 		var now = new Date();
@@ -205,8 +209,12 @@ Strive.service('StriveHelper', function(){
 			if( d.getHours() < 3 ){
 				// tick is made between 00 and 03 - this is counted
 				// as ticked today only if today is between 00 and 03
+				console.timeEnd('tickedToday');
 				return now.getHours() < 3;
+				
+
 			}else{
+				console.timeEnd('tickedToday');
 				return now.getHours() >= 3;
 			}
 
@@ -217,22 +225,24 @@ Strive.service('StriveHelper', function(){
 		// is 3 or march 02:00 - this tick should be counted as ticked
 		// today
 		}else if( d.add(1).day().isToday() && d.getHours() > 3 && now.getHours() < 3 ){
+			console.timeEnd('tickedToday');
 			return true;
 		}else{
+			console.timeEnd('tickedToday');
 			return false;
 		}
 	}
 
 	
 	self.newCalcStreak = function(ticks){
-
+		console.time('newCalcStreak');
 		var today,
 			tick,
 			tickDate,
 			refDate,
 			streak;
 
-		if(!ticks || ticks.length == 0) return 0;
+		if(!ticks || ticks.length == 0){ console.timeEnd('newCalcStreak'); return 0; }
 
 		streak = 0;
 		refDate = self._getRefDate(new Date().toString('yyyy-MM-dd HH:mm:ss'));
@@ -251,12 +261,12 @@ Strive.service('StriveHelper', function(){
 				break;
 			}
 		}	
-		
+		console.timeEnd('newCalcStreak');
 		return streak;
 	}
 
 	self.newCalcStreakRecord = function(ticks){
-
+		console.time('newCalcStreakRecord');
 		var streak, 
 			recordStreak = 0,
 			latestTick,
@@ -264,8 +274,8 @@ Strive.service('StriveHelper', function(){
 			tick,
 			d;
 
-		if(!ticks || ticks.length == 0) return 0;
-		if(ticks.length == 1) return 1;
+		if(!ticks || ticks.length == 0){ console.timeEnd('newCalcStreakRecord'); return 0; }
+		if(ticks.length == 1){ console.timeEnd('newCalcStreakRecord'); return 1; }
 		
 		streak = 1;
 		latestTick = ticks[0];
@@ -289,6 +299,7 @@ Strive.service('StriveHelper', function(){
 			refDate = self._getRefDate(tick.createdAt);
 		}	
 		
+		console.timeEnd('newCalcStreakRecord');
 		return recordStreak;
 	}
 	
