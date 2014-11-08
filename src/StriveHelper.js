@@ -1,4 +1,6 @@
-Strive.service('StriveHelper', function(){
+
+
+function _StriveHelper(){
 	var self = this;
 
 	// fix for Date parsing inconsistencies
@@ -327,5 +329,8 @@ Strive.service('StriveHelper', function(){
 		
 		return d;
 	}
+}
 
-});
+if( typeof angular != 'undefined' ){
+	Strive.service('StriveHelper', _StriveHelper);
+}

@@ -48,7 +48,10 @@ Strive.controller('StriveCtrl', function(
 		// initialize data from localStorage
 		HabitModel.loadHabits()
 			.then(function(){
-				HabitModel.recalculateAllStreaks();
+				//return HabitModel.recalculateAllStreaks();
+				return HabitModel.asyncRecalc();
+			}).then(function(habits){
+				console.log('Finished calc', habits);
 			});
 		MonitorModel.loadMonitors();
 
@@ -120,7 +123,7 @@ Strive.controller('StriveCtrl', function(
 		// checkmarks to tick
 		if( typeof chrome != 'undefined' && chrome.runtime && chrome.runtime.onSuspendCanceled ){
 			chrome.runtime.onSuspendCanceled.addListener(function(){
-				HabitModel.recalculateAllStreaks();
+				HabitModel.asyncRecalc();
 			});
 		}
 

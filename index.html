@@ -42,6 +42,7 @@
 		<script src="src/modules/monitor/Monitor.js"></script>
 		<script src="src/modules/monitor/MonitorPublic.js"></script>
 		<script src="src/modules/recipe/Recipe.js"></script>
+		<script src="src/modules/workers/Workers.js"></script>
 
 		<!-- Own Libraires -->
 		<script src="libs/Tip.js"></script>
@@ -77,7 +78,7 @@
 					<div class="L-spacer"></div>
 					<i class="Icon" ng-class="{unsynced: TransactionModel.transactions.length > 0, synced: !(TransactionModel.transactions.length > 0)}"></i>
 				</li>
-				<li as-touch-active class="Basement-menu-item" ng-click="switch('habits')">
+				<li class="Basement-menu-item" ng-click="switch('habits')">
 					<i class="Basement-menu-item_active" class="Icon-circle-white" ng-if="$state.includes('habits')"></i>
 					<span class="Basement-menu-item-name">Habits</span>
 				</li>

@@ -49,7 +49,6 @@ Basement.directive('basement', function($document, $parse) {
 					$scope.$apply(function() {
 						$scope.open = true;
 					});
-
 				}
 			}
 

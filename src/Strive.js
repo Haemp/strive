@@ -13,6 +13,7 @@ var Strive = angular.module('Strive', [
 	'Recipe',
 	'uuid',
 	'RemarkableNg',
+	'Workers'
 ]);
 var domain = 'http://130.211.52.153:3000';
 //var domain = 'http://localhost:3000';

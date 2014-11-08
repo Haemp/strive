@@ -8,7 +8,8 @@ Strive.service('HabitModel', function(
 	TransactionModel,
 	SyncModel,
 	$rootScope,
-	rfc4122
+	rfc4122,
+	Workers
 ) {
 	var self = this;
 
@@ -227,6 +228,13 @@ Strive.service('HabitModel', function(
 		}
 		
 		return false;
+	}
+
+	self.asyncRecalc = function(){
+		return Workers.postMessage({name: 'recalc', habits: self.habits, lastCalculation: self.lastCalculation}).then(function(message){
+			self.habits = message.data.habits;
+			self.lastCalculation = message.data.lastCalculation;
+		});
 	}
 
 	self.recalculateAllStreaks = function() {
