@@ -66,8 +66,13 @@
 			<div class="MainHeader-title" ng-click="StateModel.basementOpen = !StateModel.basementOpen">{{ $state.current.name }}</div>
 			<img class="MainHeader-logo" src="img/logo-strive-2x.png" alt="">
 		</div>
-		<div ui-view="main" class="MainContent slide">
-
+		<div class="MainContent slide">
+			<div ng-show="$state.current.name == 'habits'" ng-controller="HabitCtrl" ng-include="'views/view-habits.html'"></div>
+			<div ng-show="$state.current.name == 'monitors'" ng-controller="MonitorCtrl" ng-include="'views/view-monitors.html'" ></div>
+			<div ng-show="$state.current.name == 'archive'" ng-controller="ArchiveCtrl" ng-include="'views/view-archive.html'" ></div>
+			<div ng-show="$state.current.name == 'recipes'" ng-controller="RecipeCtrl" ng-include="'views/view-recipes.html'" ></div>
+			<div ng-show="$state.current.name == 'recipecreate'" ng-controller="CreateRecipeCtrl" ng-include="'views/view-create-recipe.html'" ></div>
+			<div ng-show="$state.current.name == 'recipeupdate'" ng-controller="UpdateRecipeCtrl" ng-include="'views/view-update-recipe.html'" ></div>
 		</div>
 
 		<basement open="StateModel.basementOpen">

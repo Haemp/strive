@@ -15,8 +15,8 @@ var Strive = angular.module('Strive', [
 	'RemarkableNg',
 	'Workers'
 ]);
-var domain = 'http://130.211.52.153:3000';
-//var domain = 'http://localhost:3000';
+//var domain = 'http://130.211.52.153:3000';
+var domain = 'http://localhost:3000';
 
 // switch to remote API for production.
 Strive.constant('API_DOMAIN', domain);
