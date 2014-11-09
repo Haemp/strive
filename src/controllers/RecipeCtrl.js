@@ -60,7 +60,7 @@
 		self._init = function(){
 			$scope.$watch('recipe', function(newVal){
 				if(newVal === undefined){
-					$state.transitionTo('recipes')
+					//$state.transitionTo('recipes')
 				}
 			})
 		}

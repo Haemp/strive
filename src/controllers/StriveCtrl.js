@@ -15,7 +15,8 @@ Strive.controller('StriveCtrl', function(
 	TransactionModel,
 	SyncModel,
 	TipModel,
-	RecipeModel
+	RecipeModel,
+	$timeout
 ){
 	var self = this;
 
@@ -32,16 +33,13 @@ Strive.controller('StriveCtrl', function(
 		SyncModel.sync();
 	}
 
+	
+
 	$scope._init = function(){
 
 		// after all the models are initiated we 
 		// sync.
-		$q.all([	
-			HabitModel.isInitiated(),
-			MonitorModel.isInitiated(),
-			RecipeModel.isInitiated(),
-			TransactionModel.isInitiated()
-		]).then(function(){
+		StateModel.whenLoaded().then(function(){
 			SyncModel.sync();
 		})
 
@@ -91,7 +89,7 @@ Strive.controller('StriveCtrl', function(
 		// the pre-kitkat android browser.
 		yepnope([{ test: Browser.isAndroid, yep: 'styles/android.css' }]);
 
-		$state.go('recipes');
+
 
 		// handling backwards button
 		$rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
@@ -131,26 +129,50 @@ Strive.controller('StriveCtrl', function(
 		
 		
 		// start the sync loop on 30s
-		$interval(function(){
+		// $interval(function(){
 			
-			// sync only if the user is logged in
-			// otherwise this causes issues if the
-			// user wassnt fully logged out
-			if( UserModel.user ){
-				SyncModel.sync();	
-			}
-		}, 30*1000);
+		// 	// sync only if the user is logged in
+		// 	// otherwise this causes issues if the
+		// 	// user wassnt fully logged out
+		// 	if( UserModel.user ){
+		// 		SyncModel.sync();	
+		// 	}
+		// }, 30*1000);
 	}
-
+	var oldState = '';
 	$scope.switch = function( state ){
+
 		requestAnimationFrame(function(){
-			requestAnimationFrame(function(){
-				$state.transitionTo(state);
-				StateModel.basementOpen = false;	
-				$scope.$apply();
-			})
+			StateModel.basementOpen = false;	
+			$scope.$apply();
+			$timeout(function(){
+
+				// prepare the new DOM by adding a class to force it recalc
+				// prepare the new DOM by adding a class to force it recalc
+				oldState = oldState == '' ? $state.current.name : oldState ;
+				var newElem = document.querySelector('[ng-show="$state.current.name == \''+state+'\'"]');
+				var oldElem = document.querySelector('[ng-show="$state.current.name == \''+oldState+'\'"]');
+				oldState = state;
+				newElem.classList.add('ng-hide-remove-pre');
+									
+				$timeout(function(){	
+					requestAnimationFrame(function(){
+						oldElem.animate([
+							{transform: 'translateX(0)'},
+							{transform: 'translateX(-100%)'}
+						], {duration: 500, easing: 'ease'}).onfinish = function(){
+							oldElem.style.transform = 'translateX(-100%)';							
+						}
+						newElem.animate([
+							{transform: 'translateX(100%)'},
+							{transform: 'translateX(0)'}
+						], {duration: 500, easing: 'ease'}).onfinish = function(){
+							newElem.style.transform = 'translateX(0)';							
+						}
+					})
+				}, 10);
+			}, 270)
 		})
-		
 	}
 	
 	$scope.clear = function(){
@@ -227,13 +249,13 @@ Strive.directive('autoTop', function( $rootScope, $timeout ){
 	return{
 		link: function( $scope, element, attr ){
 
-			$rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
-				$timeout(function(){
-					$('body').scrollTop(0);
-					console.log('Setting scroll');
-				}, 100);
+			// $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+			// 	$timeout(function(){
+			// 		$('body').scrollTop(0);
+			// 		console.log('Setting scroll');
+			// 	}, 100);
 
-			});
+			// });
 		}
 	}
 });

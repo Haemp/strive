@@ -310,16 +310,6 @@ Strive.service('HabitModel', function(
 	self._init();
 });
 
-Strive.service('StateModel', function() {
-	var self = this;
-	self.isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-	self.userAgent = navigator.userAgent;
-	self.isAndroidBrowser = ((navigator.userAgent.indexOf('Mozilla/5.0') > -1 && navigator.userAgent.indexOf('Android ') > -1 && navigator.userAgent.indexOf('AppleWebKit') > -1) && !(navigator.userAgent.indexOf('Chrome') > -1));
-
-	self.states = [];
-	console.log('Is it chrome: ', self.isChrome);
-});
-
 Strive.service('Utils', function() {
 	var self = this;
 

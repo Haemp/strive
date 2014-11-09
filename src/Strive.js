@@ -1,3 +1,5 @@
+console.time('Init load');
+console.time('Model load');
 var Strive = angular.module('Strive', [
 	'ui.router',
 	'ClickHide',
@@ -33,10 +35,12 @@ Strive.config(function($stateProvider, $httpProvider) {
 	// the cookie. This is because we are not requesting
 	// from the same domain CORS.
 	$httpProvider.defaults.withCredentials = true;
+	
 
 	$stateProvider
 		.state('habits', {
 			url: "/habits",
+			
 			views: {
 				main: {
 					templateUrl: "views/view-habits.html",
@@ -46,6 +50,7 @@ Strive.config(function($stateProvider, $httpProvider) {
 		})
 		.state('monitors', {
 			url: "/monitors",
+			
 			views: {
 				main: {
 					templateUrl: "views/view-monitors.html",
@@ -54,6 +59,7 @@ Strive.config(function($stateProvider, $httpProvider) {
 			}
 		})
 		.state('recipes', {
+			
 			url: "/recipes",
 			views: {
 				main: {
@@ -64,6 +70,7 @@ Strive.config(function($stateProvider, $httpProvider) {
 		})
 		.state('recipecreate', {
 			url: "/create-recipe",
+			
 			views: {
 				main:{
 					templateUrl: "views/view-create-recipe.html",
@@ -73,6 +80,7 @@ Strive.config(function($stateProvider, $httpProvider) {
 		})
 		.state('recipeupdate', {
 			url: "/update-recipe/:recipeId",
+			
 			views: {
 				main:{
 					templateUrl: "views/view-update-recipe.html",
@@ -82,6 +90,7 @@ Strive.config(function($stateProvider, $httpProvider) {
 		})
 		.state('archived', {
 			url: "/archived",
+			
 			views: {
 				main: {
 					templateUrl: "views/view-archive.html",
@@ -102,4 +111,35 @@ Strive.run(function(UserOptions) {
 	UserOptions.URL_LOGIN = domain+'/api/login';
 	UserOptions.URL_EXPORT = domain+'/api/user/import';
 	UserOptions.URL_LOGOUT = domain+'/api/logout';
+})
+
+Strive.directive('haOnLoad', function($rootScope){
+	return {
+		compile: function(){
+			return {
+				post: function(){ console.timeEnd('Init load'); console.log('Init Load');  }
+			}
+		}
+	}
+})
+
+Strive.directive('haOnModelLoad', function(StateModel, $state){
+	return {
+		link: function(){
+			StateModel.whenLoaded().then(function(){
+				console.timeEnd('Model load');
+				console.log('Models loaded');
+				var splash = document.querySelector('.Splash');
+				splash.animate([
+					{transform: 'translateX(0)'},
+					{transform: 'translateX(-100%)'}
+				], { duration: 500, easing: 'ease' }).onfinish = function(){
+					splash.style.transform = 'translateX(-100%)';
+					
+					$state.transitionTo('recipes');
+				}
+
+			})
+		}
+	}
 })
