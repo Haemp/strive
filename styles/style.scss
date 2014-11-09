@@ -303,11 +303,11 @@
 // }
 .ng-hide-add{
 	position: fixed; width: 100%;
-	-webkit-animation:1s slideOut ease;
+	-webkit-animation:0.5s slideOut ease;
 }
 .ng-hide-remove{
 	position: fixed; width: 100%;
-	-webkit-animation:1s slideIn ease;	
+	-webkit-animation:0.5s slideIn ease;	
 }
 
 .ng-hide.ng-hide-remove-pre{ 
