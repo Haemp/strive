@@ -139,39 +139,25 @@ Strive.controller('StriveCtrl', function(
 		// 	}
 		// }, 30*1000);
 	}
-	var oldState = '';
-	$scope.switch = function( state ){
 
+	$scope.switch = function( state ){
 		requestAnimationFrame(function(){
 			StateModel.basementOpen = false;	
 			$scope.$apply();
 			$timeout(function(){
 
 				// prepare the new DOM by adding a class to force it recalc
-				// prepare the new DOM by adding a class to force it recalc
-				oldState = oldState == '' ? $state.current.name : oldState ;
-				var newElem = document.querySelector('[ng-show="$state.current.name == \''+state+'\'"]');
-				var oldElem = document.querySelector('[ng-show="$state.current.name == \''+oldState+'\'"]');
-				oldState = state;
-				newElem.classList.add('ng-hide-remove-pre');
-									
+				var elem = document.querySelector('[ng-show="$state.current.name == \''+state+'\'"]');
+				elem.classList.add('ng-hide-remove-pre');
+//				elem.offsetTop; // force layout
+
 				$timeout(function(){	
 					requestAnimationFrame(function(){
-						oldElem.animate([
-							{transform: 'translateX(0)'},
-							{transform: 'translateX(-100%)'}
-						], {duration: 500, easing: 'ease'}).onfinish = function(){
-							oldElem.style.transform = 'translateX(-100%)';							
-						}
-						newElem.animate([
-							{transform: 'translateX(100%)'},
-							{transform: 'translateX(0)'}
-						], {duration: 500, easing: 'ease'}).onfinish = function(){
-							newElem.style.transform = 'translateX(0)';							
-						}
+						$state.transitionTo(state);
+
 					})
-				}, 10);
-			}, 270)
+				}, 50);
+			}, 300)
 		})
 	}
 	
