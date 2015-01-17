@@ -6,7 +6,7 @@ angular.module('SyncModel', ['JsonStorage'])
 	var self = this;
 
 	/**
-	 * @param Imediatly after an action is recorded - should we try to sync?
+	 * @param Immediately after an action is recorded - should we try to sync?
 	 */
 	self.autoSync = true;
 })

@@ -3,6 +3,8 @@
 @import '../bower_components/ah-basement/basement';
 @import '../bower_components/nvd3/nv.d3.css';
 
+
+
 /* Reset */
 	html,body{ overflow:auto !important; }
 	h1,h2,h3,body, ul, ol, li, input, button, p{ margin:0; padding:0; }
@@ -13,6 +15,8 @@
 	button{ border:none; background:transparent; }
 	input{ background-color: transparent; }
 	.L-hbox >*{ display:block; }
+
+
 
 /* Fonts */
 	@font-face {
@@ -31,6 +35,7 @@
 	.T-50{ font-size: 16px; }
 	.Head.medium{ font-size: 18px; font-weight: 600; }
 	.Para.small{ font-size: 13px; line-height: 1.5em;}
+
 
 
 /* Icons */
@@ -54,7 +59,8 @@
 	.ListItem-meta{ background-color:#f5f5f5; }
 	.ListItem-meta-section{ padding: 15px 15px; border-top:1px solid #fff; box-shadow: 0px -1px 0px #ddd; -webkit-box-shadow: 0px -1px 0px #ddd; }
 	.ListItem-meta-section:first-child{ border-top:none; border-top:1px solid #fff; box-shadow: none; -webkit-box-shadow: none; }
-	
+
+
 	// animations
 	.ListItem-edit{
 		&.ng-enter{ @include trans(0.2s); }
@@ -236,22 +242,47 @@
 	.CreateRecipe-description{ width: 100%; min-height: 150px; border: none; border-bottom: 1px solid #bbb; }
 	.CreateRecipe-name-input{ width: 100%; }
 
+
+
 /* Basement */
-	.Basement{ padding-top: 0; bottom:0px; width:100%; top:initial; }
+	.Basement{ padding-top: 0; bottom:0px; right:0; width:100%; top:initial; will-change: transform; transition: 0.12s; position: absolute;}
+	
 	.Basement-menu-item_active{ margin-right: 5px; @extend .Icon-circle-white; }
 	.Basement-menu-item{ border-bottom: 1px solid #222222; box-shadow: 0px 1px 0px #444; -webkit-box-shadow: 0px 1px 0px #444; padding: 10px; @extend .T-stout}
-	.Basement-menu-item.active{ background-color: #999; @include transition(0.3s); }
+	.Basement-menu-item.active{ background-color: #999; }
 	.Basement-confirm{ @extend .L-center; @extend .L-vbox-10; font-weight: normal; text-transform: initial; }
+
 
 /* Flip card */
 	.Flip-inner.switched{ -webkit-transform: rotateY(180deg);
-		.Flip-front{ background-color: #eee; }
+		.Flip-front{ }
 	}
-	.Flip-container { -webkit-perspective: 1000; }
-	.Flip-inner { @include trans(1s); -webkit-transform-style: preserve-3d; }
+
+	.Flip-container { -webkit-perspective: 200; 
+	}
+	.Flip-inner.animate.no-border{ border:none; margin-top:0; }	
+	.Flip-inner.animate{ margin-top: -1px; border: 1px solid #ddd; -webkit-animation:.6s flip ease-out; transform: rotateY(180deg); }
+	.Flip-inner { -webkit-transform-style: preserve-3d; }
 	.Flip-front, .Flip-back { height:50px; box-sizing: border-box; -webkit-backface-visibility: hidden; }
-	.Flip-front {  z-index: 2; padding: 18px 50px; border-left: 1px solid #eee; }
+	.Flip-front { z-index: 2; padding: 18px 50px; border-left: 1px solid #eee; }
 	.Flip-back { background-color: #fff; padding-left: 39px; margin-top: -50px; position: relative; -webkit-transform: rotateY(180deg); }
+
+	@-webkit-keyframes flip {
+	  0% {
+	    transform: rotateY(0deg);
+	  }
+	  20% {
+	    transform: rotateY(90deg);
+	  }
+	  85% {
+	    transform: rotateY(170deg);
+	  }
+	  100% {
+	    transform: rotateY(180deg);
+	  }
+	}
+	
+
 
 /* Indentions */
 	.Indent-10-30{ padding: 10px 30px; }
@@ -303,12 +334,13 @@
 // }
 .ng-hide-add{
 	position: fixed; width: 100%;
-	-webkit-animation:1s slideOut ease;
+	-webkit-animation:0.7s slideOut ease;
 }
 .ng-hide-remove{
 	position: fixed; width: 100%;
-	-webkit-animation:1s slideIn ease;	
+	-webkit-animation:0.7s slideIn ease;	
 }
+
 
 .ng-hide.ng-hide-remove-pre{ 
 	display: block !important;
@@ -321,7 +353,9 @@
 @-webkit-keyframes slideIn {
   0% {
     transform: translateX(100%) translateY(-20px);
-
+  }
+  20% {
+  	transform: translateX(100%) translateY(-20px);	
   }
   100% {
     transform: translateX(0%) translateY(-20px);
@@ -331,10 +365,15 @@
   0% {
     transform: translateX(0%) translateY(-20px);
   }
+  20% {
+    transform: translateX(0%) translateY(-20px);
+  }
   100% {
     transform: translateX(-100%) translateY(-20px);
   }
 }
+
+
 
 /*
 .slide.ng-enter, .slide.ng-leave.ng-leave-active {

@@ -194,7 +194,7 @@ function _StriveHelper(){
 	 * Today here means either today or tomorrow to 03.00, since 
 	 * that is the cutof limits for habtis now.
 	 */
-	self.tickedToday = function(habit){
+	this.tickedToday = function(habit){
 		console.time('tickedToday');
 		if( !habit.ticks || habit.ticks.length == 0 ){
 			console.timeEnd('tickedToday');
@@ -329,6 +329,7 @@ function _StriveHelper(){
 		
 		return d;
 	}
+
 }
 
 if( typeof angular != 'undefined' ){

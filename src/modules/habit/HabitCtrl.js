@@ -50,6 +50,9 @@
 			return !habit.isArchived;
 		}
 		$scope.tickHabit = function( habitId ){
+
+
+
 			HabitModel.tickHabit( {habitId:habitId} );
 		}
 
@@ -57,7 +60,7 @@
 	})
 
 
-	.directive('habit', function(HabitModel, StriveHelper, StateModel, StriveNotifications){
+	.directive('habit', function(HabitModel, StriveHelper, StateModel, StriveNotifications, $rootScope, AnimService){
 		return{
 			restrict: 'E',
 			scope:{
@@ -91,8 +94,19 @@
 				}
 
 				scope.tickHabit = function( habitId ){
-					HabitModel.tickHabit( {habitId:habitId} );
-					StriveNotifications.refreshOverview();
+
+					// here we to keep inline with the 60fps we need
+					// to trigger the animation before we know the streak
+					scope.triggerFlip = true;
+
+					AnimService.onAnimEnd('flip').then(function(){
+
+						scope.noBorder = true;
+					})
+						//HabitModel.tickHabit( {habitId:habitId} );
+						//StriveNotifications.refreshOverview();
+					// wait for animation then calc
+					
 				}
 				
 			}

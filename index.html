@@ -11,7 +11,7 @@
 		<link rel="shortcut icon" href="img/favicon.png" type="image/png">
 		<script src="bower_components/jquery/dist/jquery.js"></script>
 		<script src="bower_components/angular/angular.js"></script>
-		
+
 		<script src="bower_components/fastclick/lib/fastclick.js"></script>
 		<script src="bower_components/AngularSugar/AngularSugar.js"></script>
 		<script src="bower_components/sync/src/Sync.js"></script>
@@ -35,6 +35,7 @@
 
 		<!-- Strive -->
 		<script src="src/Strive.js"></script>
+		<script src="src/CalcService.js"></script>
 		<script src="src/models/StateModel.js"></script>
 		<script src="src/modules/home/StriveHome.js"></script>
 		<script src="src/modules/habit/HabitModel.js"></script>
@@ -50,7 +51,7 @@
 		<script src="src/modules/OnBoarding.js"></script>
 		<script src="src/modules/StriveNotifications.js"></script>
 		<script src="libs/sync-model/SyncModel.js"></script>
-		
+
 		<script src="src/controllers/StriveCtrl.js"></script>
 		<script src="src/StriveHelper.js"></script>
 		<script src="src/controllers/MonitorCtrl.js"></script>
@@ -59,6 +60,7 @@
 		<script src="src/User/User.js"></script>
 
 	</head>
+	<div ></div>
 	<body ng-app="Strive" auto-top ng-csp ng-controller="StriveCtrl" ha:on-load ha:on-model-load>
 		<div class="Splash">
 			<img class="Splash-image" src="img/logo-strive-2x.png" alt="Strive">
@@ -71,15 +73,15 @@
 			<img class="MainHeader-logo" src="img/logo-strive-2x.png" alt="">
 		</div>
 		<div class="MainContent ">
-			<div class="slide" ng-show="$state.current.name == 'habits'" ng-controller="HabitCtrl" ng-include="'views/view-habits.html'"></div>
-			<div class="slide" ng-show="$state.current.name == 'monitors'" ng-controller="MonitorCtrl" ng-include="'views/view-monitors.html'" ></div>
-			<div class="slide" ng-show="$state.current.name == 'archived'" ng-controller="ArchiveCtrl" ng-include="'views/view-archive.html'" ></div>
-			<div class="slide" ng-show="$state.current.name == 'recipes'" ng-controller="RecipeCtrl" ng-include="'views/view-recipes.html'" ></div>
-			<div class="slide" ng-show="$state.current.name == 'recipecreate'" ng-controller="CreateRecipeCtrl" ng-include="'views/view-create-recipe.html'" ></div>
-			<div class="slide" ng-show="$state.current.name == 'recipeupdate'" ng-controller="UpdateRecipeCtrl" ng-include="'views/view-update-recipe.html'" ></div>
+			<div class="slide" ng-show="activeState == 'habits'" ng-controller="HabitCtrl" ng-include="'views/view-habits.html'"></div>
+			<div class="slide" ng-show="activeState == 'monitors'" ng-controller="MonitorCtrl" ng-include="'views/view-monitors.html'" ></div>
+			<div class="slide" ng-show="activeState == 'archived'" ng-controller="ArchiveCtrl" ng-include="'views/view-archive.html'" ></div>
+			<div class="slide" ng-show="activeState == 'recipes'" ng-controller="RecipeCtrl" ng-include="'views/view-recipes.html'" ></div>
+			<div class="slide" ng-show="activeState == 'recipecreate'" ng-controller="CreateRecipeCtrl" ng-include="'views/view-create-recipe.html'" ></div>
+			<div class="slide" ng-show="activeState == 'recipeupdate'" ng-controller="UpdateRecipeCtrl" ng-include="'views/view-update-recipe.html'" ></div>
 		</div>
-
-		<basement open="StateModel.basementOpen">
+		<s-tip "></s-tip>
+		<basement open="StateModel.basementOpen" anim:on-complete anim:name="basement">
 			<ul class="Basement-menu" gesture="false">
 				<li class="Basement-menu-item L-hbox L-hbox-vcenter" ng-if="UserModel.user">
 					<i ng-class="{'Icon-circle-green': UserModel.user.authorized, 'Icon-circle-red':!UserModel.user.authorized  }" style="margin-right:10px"></i>
@@ -133,6 +135,6 @@
 
 		</div>
 
-	
+
 	</body>
 </html>

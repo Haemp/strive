@@ -207,7 +207,8 @@ Strive.service('HabitModel', function(
 		habit.ticks.unshift(params);
 
 		// calculate the streak
-		habit.streak = StriveHelper.newCalcStreak(habit.ticks);
+		CalcService.invalidateHabit(habit);
+		CalcService.recalcHabit(habit);
 
 		self.save();
 		
@@ -229,6 +230,29 @@ Strive.service('HabitModel', function(
 		
 		return false;
 	}
+
+	self.habitDirtyCheck = function(habit){
+		if(habit.lastCalc){
+			var bestBefore = StriveHelper.getBestBeforeCalcDate(habit.lastCalc);
+
+			if(new Date().isAfter(bestBefore)){
+				habit.dirty = true;
+			}
+		}
+	}
+
+	self.allDirtyCheck = function(){
+		if(self.lastCalculation){
+
+			var bestBefore = StriveHelper.getBestBeforeCalcDate(self.lastCalculation);
+
+			if(new Date().isAfter(bestBefore)){
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 	self.asyncRecalc = function(){
 		return Workers.postMessage({name: 'recalc', habits: self.habits, lastCalculation: self.lastCalculation}).then(function(message){
@@ -252,6 +276,7 @@ Strive.service('HabitModel', function(
 			if( StriveHelper.tickedToday(habit) ) habit.tickedToday = true;
 			habit.streak = StriveHelper.newCalcStreak(habit.ticks);
 			habit.streakRecord = StriveHelper.newCalcStreakRecord(habit.ticks);
+			habit.lastCalc = new Date();
 		}
 
 		self.lastCalculation = new Date();

@@ -1,4 +1,4 @@
-Strive.controller('StriveCtrl', function(
+Strive.controller('StriveCtrl', function StriveCtrl(
 	$scope,
 	$state,
 	$rootScope,
@@ -16,7 +16,9 @@ Strive.controller('StriveCtrl', function(
 	SyncModel,
 	TipModel,
 	RecipeModel,
-	$timeout
+	AnimService,
+	$timeout,
+	CalcService
 ){
 	var self = this;
 
@@ -27,152 +29,167 @@ Strive.controller('StriveCtrl', function(
 	$scope.TransactionModel = TransactionModel;
 	$scope.UserModel = UserModel;
 	$scope.TipModel = TipModel;
-	
+
 	$scope.basementState = { logoutPopup: false };
 	$scope.sync = function(){
 		SyncModel.sync();
 	}
-
-	
-
 	$scope._init = function(){
 
-		// after all the models are initiated we 
-		// sync.
-		StateModel.whenLoaded().then(function(){
-			SyncModel.sync();
-		})
-
-		// initialize data from localStorage
-		HabitModel.loadHabits()
-			.then(function(){
-				//return HabitModel.recalculateAllStreaks();
-				return HabitModel.asyncRecalc();
-			}).then(function(habits){
-				console.log('Finished calc', habits);
-			});
-		MonitorModel.loadMonitors();
-
-		// on sync - every 30s
-		$rootScope.$on('SyncModel.SYNC_COMPLETE', function(e, data){
-			
-			// check played transactions
-			if( data.transactions && data.transactions.length > 0 ){
-				
-				console.log('Updating data after new incomming transactions');
-				// update habits, monitors and data points.
-				MonitorModel.sort();
-				HabitModel.sort();
-				HabitModel.recalculateAllStreaks();
-			}else if(data.resyncData){
-				
-				HabitModel.habits = data.resyncData.habits;
-				MonitorModel.monitors = data.resyncData.monitors;
-			
-				RecipeModel.recipes = data.resyncData.recipes; 
-				RecipeModel.objectPairRecipes(data.resyncData.recipes);
-				RecipeModel._save();
-				
-				MonitorModel.sort();
-				HabitModel.sort();
-				HabitModel.recalculateAllStreaks();
-			}
-		})
-		
-		// make sure we clear the Sync buffer when
-		// there is a new user
-		$rootScope.$on('User.LOGIN_SUCCESS', function(){
-			SyncModel.sync();
-		})
-		
-		// load in separate stylesheet for
-		// the pre-kitkat android browser.
-		yepnope([{ test: Browser.isAndroid, yep: 'styles/android.css' }]);
-
-
-
-		// handling backwards button
-		$rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
-
-			// if the state change is a change backwards
-			// we just shift the top state
-			if( StateModel.states.length < 1 ){
-				StateModel.states.unshift(from);
-			}else if(StateModel.states[0].name == to.name){
-				StateModel.states.shift();
-			}else{
-				StateModel.states.unshift(from);
-			}
-		});
-
-		document.addEventListener("backbutton", function(){
-			console.log('Backbutton was pressed');
-			$scope.back();
-		});
-
-		// skip the 300ms delay
-		FastClick.attach(document.body);
-
-		// if the app is resumed as a focused activity
-		// this event is called and we then make an attempt
-		// at recalculating the streaks. The usecase here is
-		// when a user resumes the app after a new day has passed,
-		// if we don't recalculate the streaks there will be no
-		// checkmarks to tick
-		if( typeof chrome != 'undefined' && chrome.runtime && chrome.runtime.onSuspendCanceled ){
-			chrome.runtime.onSuspendCanceled.addListener(function(){
-				HabitModel.asyncRecalc();
-			});
-		}
-
-		
-		
-		
-		// start the sync loop on 30s
-		// $interval(function(){
-			
-		// 	// sync only if the user is logged in
-		// 	// otherwise this causes issues if the
-		// 	// user wassnt fully logged out
-		// 	if( UserModel.user ){
-		// 		SyncModel.sync();	
-		// 	}
-		// }, 30*1000);
+		//// after all the models are initiated we
+		//// sync.
+		//StateModel.whenLoaded().then(function(){
+		//	SyncModel.sync();
+		//})
+        //
+		//// initialize data from localStorage
+		//HabitModel.loadHabits()
+		//	.then(function(){
+		//		return CalcService.recalcAll(HabitModel.habits);
+		//	}).then(function () {
+		//		console.log('Finished calc');
+		//	})
+        //
+		//MonitorModel.loadMonitors();
+        //
+        //
+		//// on sync - every 30s
+		//$rootScope.$on('SyncModel.SYNC_COMPLETE', function(e, data){
+		//
+		//	// check played transactions
+		//	if( data.transactions && data.transactions.length > 0 ){
+		//
+		//		console.log('Updating data after new incomming transactions');
+		//		// update habits, monitors and data points.
+		//		MonitorModel.sort();
+		//		HabitModel.sort();
+        //
+		//	}else if(data.resyncData){
+		//
+		//		HabitModel.habits = data.resyncData.habits;
+		//		MonitorModel.monitors = data.resyncData.monitors;
+		//
+		//		RecipeModel.recipes = data.resyncData.recipes;
+		//		RecipeModel.objectPairRecipes(data.resyncData.recipes);
+		//		RecipeModel._save();
+		//
+		//		MonitorModel.sort();
+		//		HabitModel.sort();
+        //
+		//		CalcService.invalidateAll();
+		//		CalcService.recalcAll();
+		//	}
+		//})
+		//
+		//// make sure we clear the Sync buffer when
+		//// there is a new user
+		//$rootScope.$on('User.LOGIN_SUCCESS', function(){
+		//	SyncModel.sync();
+		//})
+		//
+		//// load in separate stylesheet for
+		//// the pre-kitkat android browser.
+		//yepnope([{ test: Browser.isAndroid, yep: 'styles/android.css' }]);
+        //
+        //
+        //
+		//// handling backwards button
+		//$rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+        //
+        //
+		//	// if the state change is a change backwards
+		//	// we just shift the top state
+		//	if( StateModel.states.length < 1 ){
+		//		StateModel.states.unshift(from);
+		//	}else if(StateModel.states[0].name == to.name){
+		//		StateModel.states.shift();
+		//	}else{
+		//		StateModel.states.unshift(from);
+		//	}
+        //
+		//	$timeout(function(){
+		//		$scope.activeState = to.name;
+		//	});
+		//});
+        //
+		//document.addEventListener("backbutton", function(){
+		//	console.log('Backbutton was pressed');
+		//	$scope.back();
+		//});
+        //
+		//// skip the 300ms delay
+		//FastClick.attach(document.body);
+        //
+		//// if the app is resumed as a focused activity
+		//// this event is called and we then make an attempt
+		//// at recalculating the streaks. The usecase here is
+		//// when a user resumes the app after a new day has passed,
+		//// if we don't recalculate the streaks there will be no
+		//// checkmarks to tick
+		//if( typeof chrome != 'undefined' && chrome.runtime && chrome.runtime.onSuspendCanceled ){
+		//	chrome.runtime.onSuspendCanceled.addListener(function(){
+		//		CalcService.recalcAll(HabitModel.habits);
+		//	});
+		//}
+        //
+		//
+		//
+		//
+		//// start the sync loop on 30s
+		//// $interval(function(){
+		//
+		//// 	// sync only if the user is logged in
+		//// 	// otherwise this causes issues if the
+		//// 	// user wassnt fully logged out
+		//// 	if( UserModel.user ){
+		//// 		SyncModel.sync();
+		//// 	}
+		//// }, 30*1000);
 	}
-	var oldState = '';
+	
+	$scope.activeState;
 	$scope.switch = function( state ){
+		// Trigger animation: basement slide
+		StateModel.basementOpen = false;
 
-		requestAnimationFrame(function(){
-			StateModel.basementOpen = false;	
-			$scope.$apply();
-			$timeout(function(){
-
-				// prepare the new DOM by adding a class to force it recalc
-				// prepare the new DOM by adding a class to force it recalc
-				oldState = oldState == '' ? $state.current.name : oldState ;
-				var newElem = document.querySelector('[ng-show="$state.current.name == \''+state+'\'"]');
-				var oldElem = document.querySelector('[ng-show="$state.current.name == \''+oldState+'\'"]');
-				oldState = state;
-				newElem.classList.add('ng-hide-remove-pre');
-									
-				$timeout(function(){	
-					requestAnimationFrame(function(){
-						oldElem.animate([
-							{transform: 'translateX(0)'},
-							{transform: 'translateX(-100%)'}
-						], {duration: 500, easing: 'ease'}).onfinish = function(){
-							oldElem.style.transform = 'translateX(-100%)';							
-						}
-						newElem.animate([
-							{transform: 'translateX(100%)'},
-							{transform: 'translateX(0)'}
-						], {duration: 500, easing: 'ease'}).onfinish = function(){
-							newElem.style.transform = 'translateX(0)';							
-						}
-					})
-				}, 10);
-			}, 270)
+		AnimService.onAnimEnd('basement').then(function(){
+			$state.transitionTo(state);
 		})
+
+		// Trigger animation to animate in view
+
+
+
+		// requestAnimationFrame(function(){
+		// 	StateModel.basementOpen = false;	
+		// 	$scope.$apply();
+		// 	$timeout(function(){
+
+		// 		oldState = oldState == '' ? $state.current.name : oldState ;
+		// 		var newElem = document.querySelector('[ng-show="$state.current.name == \''+state+'\'"]');
+		// 		var oldElem = document.querySelector('[ng-show="$state.current.name == \''+oldState+'\'"]');
+		// 		oldState = state;
+		// 		// prepare the new DOM by adding a class to force it recalc
+		// 		newElem.classList.add('ng-hide-remove-pre');
+									
+		// 		$timeout(function(){	
+		// 			requestAnimationFrame(function(){
+		// 				oldElem.animate([
+		// 					{transform: 'translateX(0)'},
+		// 					{transform: 'translateX(-100%)'}
+		// 				], {duration: 500, easing: 'ease'}).onfinish = function(){
+		// 					oldElem.style.transform = 'translateX(-100%)';							
+		// 				}
+		// 				newElem.animate([
+		// 					{transform: 'translateX(100%)'},
+		// 					{transform: 'translateX(0)'}
+		// 				], {duration: 500, easing: 'ease'}).onfinish = function(){
+		// 					newElem.style.transform = 'translateX(0)';							
+		// 				}
+		// 			})
+		// 		}, 10);
+		// 	}, 270)
+		// })
 	}
 	
 	$scope.clear = function(){
@@ -204,6 +221,12 @@ Strive.controller('StriveCtrl', function(
 		$scope.basementState.logoutPopup = status;
 		console.log('logoutPopup is: ',$scope.basementState.logoutPopup);
 	}
+
+	$scope.basementClosed = function(){
+		console.log('Closede');
+	}
+
+
 	self.newUserRoutine = function(e, data){
 
 		// A new user has been created,
@@ -259,3 +282,32 @@ Strive.directive('autoTop', function( $rootScope, $timeout ){
 		}
 	}
 });
+
+
+Strive.service('AnimService', function($q){
+	var self = this;
+	self.promises = {};
+
+	self.onAnimEnd = function(name){
+		var d = $q.defer();
+		self.promises[name] = d;
+		return d.promise;
+	}
+
+})
+
+Strive.directive('animOnComplete', function($rootScope, AnimService){
+	return {
+		restrict: 'A',
+		link: function(scope, element, attr){
+			
+			element.on('$animate:close', function(e){
+				console.log('Anim close');
+				if(AnimService.promises[attr.animName]){
+					console.log('Resolving...');
+					AnimService.promises[attr.animName].resolve();	
+				}
+			})
+		}
+	}
+})

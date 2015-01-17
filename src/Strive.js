@@ -1,5 +1,4 @@
-console.time('Init load');
-console.time('Model load');
+
 var Strive = angular.module('Strive', [
 	'ui.router',
 	'ClickHide',
@@ -25,22 +24,16 @@ Strive.constant('API_DOMAIN', domain);
 
 Strive.config(function($stateProvider, $httpProvider) {
 
-	// SyncOptionsProvider.setOptions({
-	// 	pollInterval: 5000,
-	// 	flushInterval: 5000,
-	// 	pollUrl: 'http://localhost:3000/login'
-	// });
-
 	// We have to set this to true so we're always sending
 	// the cookie. This is because we are not requesting
 	// from the same domain CORS.
 	$httpProvider.defaults.withCredentials = true;
-	
+
 
 	$stateProvider
 		.state('habits', {
 			url: "/habits",
-			
+
 			views: {
 				main: {
 					templateUrl: "views/view-habits.html",
@@ -50,7 +43,7 @@ Strive.config(function($stateProvider, $httpProvider) {
 		})
 		.state('monitors', {
 			url: "/monitors",
-			
+
 			views: {
 				main: {
 					templateUrl: "views/view-monitors.html",
@@ -59,7 +52,7 @@ Strive.config(function($stateProvider, $httpProvider) {
 			}
 		})
 		.state('recipes', {
-			
+
 			url: "/recipes",
 			views: {
 				main: {
@@ -70,27 +63,27 @@ Strive.config(function($stateProvider, $httpProvider) {
 		})
 		.state('recipecreate', {
 			url: "/create-recipe",
-			
+
 			views: {
 				main:{
 					templateUrl: "views/view-create-recipe.html",
 					controller: "CreateRecipeCtrl"
-				}		
+				}
 			}
 		})
 		.state('recipeupdate', {
 			url: "/update-recipe/:recipeId",
-			
+
 			views: {
 				main:{
 					templateUrl: "views/view-update-recipe.html",
 					controller: "UpdateRecipeCtrl"
-				}		
+				}
 			}
 		})
 		.state('archived', {
 			url: "/archived",
-			
+
 			views: {
 				main: {
 					templateUrl: "views/view-archive.html",
@@ -135,7 +128,7 @@ Strive.directive('haOnModelLoad', function(StateModel, $state){
 					{transform: 'translateX(-100%)'}
 				], { duration: 500, easing: 'ease' }).onfinish = function(){
 					splash.style.transform = 'translateX(-100%)';
-					
+
 					$state.transitionTo('recipes');
 				}
 

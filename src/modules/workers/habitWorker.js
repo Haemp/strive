@@ -7,18 +7,18 @@ addEventListener('message', function(e){
 	var params = e.data;
 	console.log('Worker input');
 	switch(params.name){
-		case 'recalc': recalc(params.habits, params.lastCalculation); break;
+		case 'recalcAll': recalcAll(params.habits); break;
+		case 'recalcHabit': recalcAll(params.habit); break;
 	}
 
 })
 
 
-function recalc(habits, lastCalculation){
-	console.log('Worker calc');
-	if (lastCalculation && lastCalculation.today()) return;
+function recalcAll(habits){
 
 	if (!habits || habits.length == 0) return;
 
+	console.log('Recalculating all habits');
 	for (var i = 0; i < habits.length; i++) {
 		var habit = habits[i];
 		if (!habit.ticks) continue;
@@ -28,7 +28,21 @@ function recalc(habits, lastCalculation){
 		habit.streakRecord = StriveHelper.newCalcStreakRecord(habit.ticks);
 	}
 
-	lastCalculation = new Date();
+	postMessage({name: 'recalcAll', habits: habits});
+}
 
-	postMessage({name: 'recalc', habits: habits, lastCalculation: lastCalculation});
+function recalcHabit(habit){
+	if(!habit) return;
+
+	console.log('Recalculating habit', habit.name);
+	var tickedToday = StriveHelper.tickedToday(habit);
+	var streak = StriveHelper.newCalcStreak(habit.ticks);
+	var streakRecord = StriveHelper.newCalcStreakRecord(habit.ticks);
+
+	postMessage({
+		name: 'recalcHabit',
+		tickedToday: tickedToday,
+		streak: streak,
+		streakRecord: streakRecord
+	});
 }
