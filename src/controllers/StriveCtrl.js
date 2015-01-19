@@ -36,115 +36,117 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 	}
 	$scope._init = function(){
 
-		//// after all the models are initiated we
-		//// sync.
-		//StateModel.whenLoaded().then(function(){
-		//	SyncModel.sync();
-		//})
-        //
-		//// initialize data from localStorage
-		//HabitModel.loadHabits()
-		//	.then(function(){
-		//		return CalcService.recalcAll(HabitModel.habits);
-		//	}).then(function () {
-		//		console.log('Finished calc');
-		//	})
-        //
-		//MonitorModel.loadMonitors();
-        //
-        //
-		//// on sync - every 30s
-		//$rootScope.$on('SyncModel.SYNC_COMPLETE', function(e, data){
-		//
-		//	// check played transactions
-		//	if( data.transactions && data.transactions.length > 0 ){
-		//
-		//		console.log('Updating data after new incomming transactions');
-		//		// update habits, monitors and data points.
-		//		MonitorModel.sort();
-		//		HabitModel.sort();
-        //
-		//	}else if(data.resyncData){
-		//
-		//		HabitModel.habits = data.resyncData.habits;
-		//		MonitorModel.monitors = data.resyncData.monitors;
-		//
-		//		RecipeModel.recipes = data.resyncData.recipes;
-		//		RecipeModel.objectPairRecipes(data.resyncData.recipes);
-		//		RecipeModel._save();
-		//
-		//		MonitorModel.sort();
-		//		HabitModel.sort();
-        //
-		//		CalcService.invalidateAll();
-		//		CalcService.recalcAll();
-		//	}
-		//})
-		//
-		//// make sure we clear the Sync buffer when
-		//// there is a new user
-		//$rootScope.$on('User.LOGIN_SUCCESS', function(){
-		//	SyncModel.sync();
-		//})
-		//
-		//// load in separate stylesheet for
-		//// the pre-kitkat android browser.
-		//yepnope([{ test: Browser.isAndroid, yep: 'styles/android.css' }]);
-        //
-        //
-        //
-		//// handling backwards button
-		//$rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
-        //
-        //
-		//	// if the state change is a change backwards
-		//	// we just shift the top state
-		//	if( StateModel.states.length < 1 ){
-		//		StateModel.states.unshift(from);
-		//	}else if(StateModel.states[0].name == to.name){
-		//		StateModel.states.shift();
-		//	}else{
-		//		StateModel.states.unshift(from);
-		//	}
-        //
-		//	$timeout(function(){
-		//		$scope.activeState = to.name;
-		//	});
-		//});
-        //
-		//document.addEventListener("backbutton", function(){
-		//	console.log('Backbutton was pressed');
-		//	$scope.back();
-		//});
-        //
-		//// skip the 300ms delay
-		//FastClick.attach(document.body);
-        //
-		//// if the app is resumed as a focused activity
-		//// this event is called and we then make an attempt
-		//// at recalculating the streaks. The usecase here is
-		//// when a user resumes the app after a new day has passed,
-		//// if we don't recalculate the streaks there will be no
-		//// checkmarks to tick
-		//if( typeof chrome != 'undefined' && chrome.runtime && chrome.runtime.onSuspendCanceled ){
-		//	chrome.runtime.onSuspendCanceled.addListener(function(){
-		//		CalcService.recalcAll(HabitModel.habits);
-		//	});
-		//}
-        //
-		//
-		//
-		//
-		//// start the sync loop on 30s
-		//// $interval(function(){
-		//
-		//// 	// sync only if the user is logged in
-		//// 	// otherwise this causes issues if the
-		//// 	// user wassnt fully logged out
-		//// 	if( UserModel.user ){
-		//// 		SyncModel.sync();
-		//// 	}
-		//// }, 30*1000);
+		// after all the models are initiated we
+		// sync.
+		StateModel.whenLoaded().then(function(){
+			SyncModel.sync();
+		})
+
+		// initialize data from localStorage
+		HabitModel.loadHabits()
+			.then(function(){
+
+				console.log('AllCalcWorkflow: #1 Loaded habits, now going to recalc');
+				return CalcService.recalcAll(HabitModel.habits);
+			}).then(function () {
+				console.log('Finished calc');
+			})
+
+		MonitorModel.loadMonitors();
+
+
+		// on sync - every 30s
+		$rootScope.$on('SyncModel.SYNC_COMPLETE', function(e, data){
+
+			// check played transactions
+			if( data.transactions && data.transactions.length > 0 ){
+
+				console.log('Updating data after new incomming transactions');
+				// update habits, monitors and data points.
+				MonitorModel.sort();
+				HabitModel.sort();
+
+			}else if(data.resyncData){
+
+				HabitModel.habits = data.resyncData.habits;
+				MonitorModel.monitors = data.resyncData.monitors;
+
+				RecipeModel.recipes = data.resyncData.recipes;
+				RecipeModel.objectPairRecipes(data.resyncData.recipes);
+				RecipeModel._save();
+
+				MonitorModel.sort();
+				HabitModel.sort();
+
+				CalcService.invalidateAll();
+				CalcService.recalcAll();
+			}
+		})
+
+		// make sure we clear the Sync buffer when
+		// there is a new user
+		$rootScope.$on('User.LOGIN_SUCCESS', function(){
+			SyncModel.sync();
+		})
+
+		// load in separate stylesheet for
+		// the pre-kitkat android browser.
+		yepnope([{ test: Browser.isAndroid, yep: 'styles/android.css' }]);
+
+
+
+		// handling backwards button
+		$rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+
+
+			// if the state change is a change backwards
+			// we just shift the top state
+			if( StateModel.states.length < 1 ){
+				StateModel.states.unshift(from);
+			}else if(StateModel.states[0].name == to.name){
+				StateModel.states.shift();
+			}else{
+				StateModel.states.unshift(from);
+			}
+
+			$timeout(function(){
+				$scope.activeState = to.name;
+			});
+		});
+
+		document.addEventListener("backbutton", function(){
+			console.log('Backbutton was pressed');
+			$scope.back();
+		});
+
+		// skip the 300ms delay
+		FastClick.attach(document.body);
+
+		// if the app is resumed as a focused activity
+		// this event is called and we then make an attempt
+		// at recalculating the streaks. The usecase here is
+		// when a user resumes the app after a new day has passed,
+		// if we don't recalculate the streaks there will be no
+		// checkmarks to tick
+		if( typeof chrome != 'undefined' && chrome.runtime && chrome.runtime.onSuspendCanceled ){
+			chrome.runtime.onSuspendCanceled.addListener(function(){
+				CalcService.recalcAll(HabitModel.habits);
+			});
+		}
+
+
+
+
+		// start the sync loop on 30s
+		// $interval(function(){
+
+		// 	// sync only if the user is logged in
+		// 	// otherwise this causes issues if the
+		// 	// user wassnt fully logged out
+		// 	if( UserModel.user ){
+		// 		SyncModel.sync();
+		// 	}
+		// }, 30*1000);
 	}
 	
 	$scope.activeState;
@@ -272,13 +274,13 @@ Strive.directive('autoTop', function( $rootScope, $timeout ){
 	return{
 		link: function( $scope, element, attr ){
 
-			// $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
-			// 	$timeout(function(){
-			// 		$('body').scrollTop(0);
-			// 		console.log('Setting scroll');
-			// 	}, 100);
+			$rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+				$timeout(function(){
+					$('body').scrollTop(0);
+					console.log('Setting scroll');
+				}, 100);
 
-			// });
+			});
 		}
 	}
 });

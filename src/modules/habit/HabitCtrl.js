@@ -96,15 +96,23 @@
 				scope.tickHabit = function( habitId ){
 
 					// here we to keep inline with the 60fps we need
-					// to trigger the animation before we know the streak
+					// to trigger the animation before we know the real streak.
+					// So we fake it here by just incrementing one
 					scope.triggerFlip = true;
+					if(scope.habit.streak)
+						scope.habit.streak++;
+					else
+						scope.habit.streak = 1;
 
+					// when the animation ends we trigger the calculation of
+					// the new streak
 					AnimService.onAnimEnd('flip').then(function(){
-
 						scope.noBorder = true;
+						return HabitModel.tickHabit( {habitId:habitId} );
+					}).then(function(){
+
+						StriveNotifications.refreshOverview();
 					})
-						//HabitModel.tickHabit( {habitId:habitId} );
-						//StriveNotifications.refreshOverview();
 					// wait for animation then calc
 					
 				}

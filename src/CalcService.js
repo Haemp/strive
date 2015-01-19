@@ -5,35 +5,15 @@
 
     angular.module('Strive')
         .service('CalcService', CalcService)
-
+    
 
     function CalcService(JsonStorage, $q, Workers, $timeout){
         var lastCalculation;
-        var lastCalcHabits = {};
 
         function _init(){
-
             JsonStorage.get('strive.CalcService').then(function(d){
-
                 lastCalculation = d ? new Date(d.lastCalculation || 0) : new Date(0);
-                lastCalcHabits = d ? d.lastCalcHabits : {};
-
-                // convert to real date objects
-                for(var key in lastCalcHabits){
-                    if(lastCalcHabits.hasOwnProperty(entry)){
-                        lastCalcHabits[key] = new Date(lastCalcHabits[key]);
-                    }
-                }
             });
-        }
-
-        /**
-         * Invalidate this habit by setting the lastcalc date
-         * to an old date;
-         * @param habit
-         */
-        this.invalidateHabit = function(habit){
-            lastCalcHabits[habit.id] = new Date(0);
         }
 
         this.invalidateAll = function(habit){
@@ -41,35 +21,28 @@
         }
 
         this.recalcHabit = function(habit){
+            console.log('HabitCalcWorkflow: #2 Sending habit to worker to recalculate');
+            return Workers.postMessage({name: 'recalcHabit', habit: habit}).then(function(message){
 
-            // dirty check habit
-            var d = $q.defer();
-            console.log('Recalc all triggered...');
-            if(habitIsDirty(habit)){
-                _recalcHabit(habit).then(function(){
-                    d.resolve({status: 'CalcService.RECALCULATED'});
-                })
-            }else{
-                console.log('Not dirty');
-                $timeout(function(){
-                    d.resolve({status: 'CalcService.NOT_DIRTY'});
-                })
-            }
-            return d.promise;
+                console.log('HabitCalcWorkflow: #5 Receiving calculated values, assigning it to the local habit...');
+                habit.streak = message.data.streak;
+                habit.tickedToday = message.data.tickedToday;
+                habit.streakRecord = message.data.streakRecord;
+                console.log('HabitCalcWorkflow: #6 Finished!');
+            });
         }
 
         this.recalcAll = function(habits){
 
             // dirty check habit
             var d = $q.defer();
-            console.log('Recalc all triggered...');
+            console.log('AllCalcWorkflow: #2 Attempting to recalc habits...');
             if(allAreDirty()){
                 _recalcAll(habits).then(function(){
                     d.resolve({status: 'CalcService.RECALCULATED'});
                 });
             }else{
-
-                console.log('Not dirty');
+                console.log('AllCalcWorkflow: #4 Habits are not dirty - no action required');
                 $timeout(function(){
                     d.resolve({status: 'CalcService.NOT_DIRTY'});
                 })
@@ -77,26 +50,39 @@
             return d.promise;
         }
 
-        function habitIsDirty(habit){
-            var h = lastCalcHabits[habit.id];
-            if(h){
-                var bestBefore = getBestBeforeCalcDate(lastCalcHabits[h].lastCalc);
+        function _recalcAll(habits){
 
-                if(new Date().isAfter(bestBefore)){
-                    return true;
-                }
-            }
-            return false;
+            console.log('AllCalcWorkflow: #5 Sending habits to the worker thread to be calculated');
+            return Workers.postMessage({name: 'recalcAll', habits: habits}).then(function(message){
+
+                console.log('AllCalcWorkflow: #8 Recieced habits from worker - now looping through and setting streak, streak reccord and tickedToday');
+                var oldHabit;
+                message.data.habits.forEach( function(habit){
+                    oldHabit = habits.filter(function(h){ return h.id == habit.id })[0];
+                    oldHabit.streak = habit.streak;
+                    oldHabit.streakRecord = habit.streakRecord;
+                    oldHabit.tickedToday = habit.tickedToday;
+                })
+
+                lastCalculation = new Date();
+                save();
+                console.log('AllCalcWorkflow: #9 Done! Now saving the last calculation time: ', lastCalculation);
+            });
         }
 
         function allAreDirty(){
+
+            console.log('AllCalcWorkflow: #3 Checking when the last calculation was made');
             if(lastCalculation){
                 var bestBefore = getBestBeforeCalcDate(lastCalculation);
 
                 if(new Date().isAfter(bestBefore)){
+                    console.log('AllCalcWorkflow: #3a All habits needs to be refreshed');
                     return true;
                 }
             }
+
+            console.log('AllCalcWorkflow: #3b It was made recently - this is clean');
             return false;
         }
 
@@ -114,38 +100,9 @@
             }
         }
 
-        function _recalcAll(habits){
-
-            return Workers.postMessage({name: 'recalcAll', habits: habits}).then(function(message){
-
-                var oldHabit;
-                message.data.habits.forEach( function(habit){
-                    oldHabit = habits.filter(function(h){ return h.id == habit.id })[0];
-                    oldHabit.streak = habit.streak;
-                    oldHabit.streakRecord = habit.streakRecord;
-                    oldHabit.tickedToday = habit.tickedToday;
-                })
-
-                lastCalculation = new Date();
-                save();
-            });
-        }
-
-        function _recalcHabit(habit){
-
-            return Workers.postMessage({name: 'recalcHabit', habit: habit}).then(function(message){
-                habit.streak = message.data.streak;
-                habit.tickedToday = message.data.tickedToday;
-                habit.streakRecord = message.data.streakRecord;
-                lastCalcHabits[habit.id] = new Date();
-                save();
-            });
-        }
-
         function save(){
             JsonStorage.save('strive.CalcService', {
-                lastCalculation: lastCalculation,
-                lastCalcHabits: lastCalcHabits
+                lastCalculation: lastCalculation
             });
         }
 

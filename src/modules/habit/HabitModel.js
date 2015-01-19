@@ -9,7 +9,8 @@ Strive.service('HabitModel', function(
 	SyncModel,
 	$rootScope,
 	rfc4122,
-	Workers
+	Workers,
+	CalcService
 ) {
 	var self = this;
 
@@ -191,6 +192,7 @@ Strive.service('HabitModel', function(
 		
 		if( StriveHelper.tickedToday(habit) ){
 			habit.tickedToday = true;
+			self.save();
 			done(false);
 			return false;
 		}
@@ -203,17 +205,18 @@ Strive.service('HabitModel', function(
 			done(false);
 			return false;
 		}
-		
-		habit.ticks.unshift(params);
+
+		console.log('HabitCalcWorkflow: #1 Habit is ticked');
+		habit.ticks.unshift(params); // adding the tick to the list of ticks
+		habit.tickedToday = true;
 
 		// calculate the streak
-		CalcService.invalidateHabit(habit);
-		CalcService.recalcHabit(habit);
+		return CalcService.recalcHabit(habit).then(function(){
 
-		self.save();
-		
-		habit.tickedToday = true;
-		done(true);
+			console.log('HabitCalcWorkflow: #6 Saving habit to have streak, streakRecord and tickedToday persist.');
+			self.save();
+			done(true);
+		})
 	}
 	
 	self.isDuplicateTick = function(targetTick, ticks){

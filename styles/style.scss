@@ -174,11 +174,11 @@
 	}
 
 /* Header */
-	.MainHeader{ font-size:20px; z-index:9; position:fixed; left:0; right:0; height:50px; padding: 15px 10px; box-sizing:border-box; background-color:#333; overflow: hidden; margin-bottom: 20px; top:0; }
+	.MainHeader{ font-size:20px; z-index:9; position:fixed; left:0; right:0; bottom:0; height:50px; padding: 15px 10px; box-sizing:border-box; background-color:#333; overflow: hidden; }
 	.MainHeader-hamburger{ margin-left: -20px; margin-top: 1px; padding-right:15px; float:left;}
 	.MainHeader-logo{ width:70px; float:right; }
 	.MainHeader-title{ float:left; color: #eee; font-weight:bold; text-transform:capitalize; @extend .T-alt; }
-	.MainContent{ margin-top:70px; }
+	.MainContent{ margin-top:20px; }
 
 /* Tip */
 	.Tip{ margin:0 auto; margin-bottom: 20px; width: 100%; max-width: 600px; min-width: 100px; }
@@ -245,8 +245,7 @@
 
 
 /* Basement */
-	.Basement{ padding-top: 0; bottom:0px; right:0; width:100%; top:initial; will-change: transform; transition: 0.12s; position: absolute;}
-	
+	.Basement{ padding-top: 0; bottom:50px; right:0; width:100%; top:initial; will-change: transform; transition: 0.12s; position: fixed;}
 	.Basement-menu-item_active{ margin-right: 5px; @extend .Icon-circle-white; }
 	.Basement-menu-item{ border-bottom: 1px solid #222222; box-shadow: 0px 1px 0px #444; -webkit-box-shadow: 0px 1px 0px #444; padding: 10px; @extend .T-stout}
 	.Basement-menu-item.active{ background-color: #999; }
