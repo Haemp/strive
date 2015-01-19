@@ -30,7 +30,7 @@ angular.module('Tip', [])
 	 * The `ngInit` directive allows you to evaluate an expression in the
 	 * current scope.
 	 */
-	.directive('sTip', function sTip(TipModel){
+	.directive('tip', function sTip(TipModel){
 
 		/**
 		 * @ngdoc directive

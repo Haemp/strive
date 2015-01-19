@@ -23,6 +23,7 @@ Basement.directive('basement', function($document, $parse) {
 			var startPos;
 			var endPos;
 
+
 			// swipey swipey?
 			var gestureEnabled = true;
 			if ($parse(attr.gesture) === false) {
@@ -34,13 +35,13 @@ Basement.directive('basement', function($document, $parse) {
 
 				// listen for a global slide in from the left
 				// if we have gestures enabled
-				// if (gestureEnabled) {
-				// 	Hammer($document[0]).on('dragright', self.onDragRight);
-				// 	Hammer(element[0]).on('dragleft', self.onDragLeft);
-				// }
-
-				$document.on('touchstart', self.onMouseDown);
-				$document.on('touchend', self.onMouseUp);
+				if (gestureEnabled) {
+					Hammer($document[0]).on('dragright', self.onDragRight);
+					Hammer(element[0]).on('dragleft', self.onDragLeft);
+				}
+                //
+				//$document.on('touchstart', self.onMouseDown);
+				//$document.on('touchend', self.onMouseUp);
 			}
 
 			/**
