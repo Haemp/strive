@@ -5,6 +5,7 @@ var Strive = angular.module('Strive', [
 	'ngAnimate',
 	'fileSystem',
 	'JsonStorage',
+    'Calculations',
 	'Basement',
 	'AngularSugar',
 	'User',

@@ -3,21 +3,23 @@
  */
 (function(){
 
-    angular.module('Strive')
+    angular.module('Calculations', ['JsonStorage'])
         .service('CalcService', CalcService)
     
 
-    function CalcService(JsonStorage, $q, Workers, $timeout){
+    function CalcService(JsonStorage, $q, Workers, $timeout, $rootScope){
         var lastCalculation;
 
         function _init(){
-            JsonStorage.get('strive.CalcService').then(function(d){
-                lastCalculation = d ? new Date(d.lastCalculation || 0) : new Date(0);
+            JsonStorage.serial_get('strive.CalcService').then(function(d){
+                console.log('CalcService: Loading last calculation...', d.lastCalculation);
+                lastCalculation = d ? new Date.parse(d.lastCalculation || 0) : new Date(0);
             });
         }
 
-        this.invalidateAll = function(habit){
+        this.invalidateAll = function(){
             lastCalculation = new Date(0);
+            save();
         }
 
         this.recalcHabit = function(habit){
@@ -38,10 +40,19 @@
             var d = $q.defer();
             console.log('AllCalcWorkflow: #2 Attempting to recalc habits...');
             if(allAreDirty()){
+
+                // mark all habits as dirty
+                habits.forEach(function(habit){
+                    habit.dirty = true;
+                })
+                $rootScope.$emit('CalcService.DIRTY');
+                 
                 _recalcAll(habits).then(function(){
+
                     d.resolve({status: 'CalcService.RECALCULATED'});
                 });
             }else{
+                
                 console.log('AllCalcWorkflow: #4 Habits are not dirty - no action required');
                 $timeout(function(){
                     d.resolve({status: 'CalcService.NOT_DIRTY'});
@@ -62,6 +73,7 @@
                     oldHabit.streak = habit.streak;
                     oldHabit.streakRecord = habit.streakRecord;
                     oldHabit.tickedToday = habit.tickedToday;
+                    oldHabit.dirty = false;
                 })
 
                 lastCalculation = new Date();
@@ -72,18 +84,23 @@
 
         function allAreDirty(){
 
-            console.log('AllCalcWorkflow: #3 Checking when the last calculation was made');
-            if(lastCalculation){
+            console.log('AllCalcWorkflow: #3 Checking when the last calculation was made: ', lastCalculation);
+            if(lastCalculation && typeof lastCalculation.getTime == 'function'){
                 var bestBefore = getBestBeforeCalcDate(lastCalculation);
 
                 if(new Date().isAfter(bestBefore)){
-                    console.log('AllCalcWorkflow: #3a All habits needs to be refreshed');
+                    console.log('AllCalcWorkflow: #3a All habits needs to be refreshed', lastCalculation);
                     return true;
+                }else{
+                    console.log('AllCalcWorkflow: #3b It was made recently - this is clean: ', lastCalculation);
+                    return false;
+
                 }
+            }else{
+                // last calc null - assume dirty
+                return true;
             }
 
-            console.log('AllCalcWorkflow: #3b It was made recently - this is clean');
-            return false;
         }
 
         /**
@@ -94,15 +111,17 @@
          */
         function getBestBeforeCalcDate(calcDate){
             if(calcDate.getHours() < 3){
-                return new Date(calcDate).set({hour: 3, minute: 0, second:0, millisecond:0})
+                return new Date.parse(calcDate).set({hour: 3, minute: 0, second:0, millisecond:0})
             }else{
-                return new Date(calcDate).add(1).day().set({hour: 3, minute: 0, second:0, millisecond:0})
+                return new Date.parse(calcDate).add(1).day().set({hour: 3, minute: 0, second:0, millisecond:0})
             }
         }
 
         function save(){
-            JsonStorage.save('strive.CalcService', {
-                lastCalculation: lastCalculation
+            var stringDate = lastCalculation.toString();
+            console.log('Saving last calculation date', stringDate);
+            JsonStorage.serial_save('strive.CalcService', {
+                lastCalculation: stringDate
             });
         }
 

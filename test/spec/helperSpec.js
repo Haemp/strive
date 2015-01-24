@@ -1,14 +1,15 @@
 describe('StriveHelper', function(){
-  var StriveHelper;
+  var StriveHelper, CalcService;
   //console.log = function(){};
   beforeEach(module('Strive'));
-  beforeEach(inject(function( _StriveHelper_ ){
-    StriveHelper = _StriveHelper_;
+  beforeEach(inject(function( _StriveHelper_, __CalcService__ ){
+      StriveHelper = _StriveHelper_;
+      CalcService = __CalcService__;
   }));
   Date.prototype.format = function(){
     return this.toString('yyyy-MM-dd HH:mm:ss');  
   }
-  
+
   it('should should count the current streak', function(){
 
     habit = { ticks: [
@@ -173,7 +174,7 @@ describe('StriveHelper', function(){
     })
 
 
-    iit('should detect two ticks as separate strive days', function(){
+    it('should detect two ticks as separate strive days', function(){
       var ticks = [
         { createdAt:'2014-10-12 22:02:43'},
         { createdAt:'2014-10-12 00:23:20'}
@@ -183,7 +184,7 @@ describe('StriveHelper', function(){
       expect(areThey).toBe(false);
     })
 
-    iit('should detect two ticks as the same strive days', function(){
+    it('should detect two ticks as the same strive days', function(){
       var ticks = [
         { createdAt:'2014-10-12 22:02:43'},
         { createdAt:'2014-10-12 03:23:20'}
@@ -193,7 +194,7 @@ describe('StriveHelper', function(){
       expect(areThey).toBe(true);
     })
 
-    iit('should detect two ticks as long separate strive days', function(){
+    it('should detect two ticks as long separate strive days', function(){
       var ticks = [
         { createdAt:'2014-10-12 22:02:43'},
         { createdAt:'2014-10-09 02:23:20'}
@@ -203,6 +204,13 @@ describe('StriveHelper', function(){
       expect(areThey).toBe(false);
     })
 
+  })
+
+  describe('calculation service', function(){
+      iit('Should calcualte the corrent best before day', function(){
+        expect(true).toBe(true);
+
+      })
   })
 
 

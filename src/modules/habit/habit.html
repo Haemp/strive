@@ -12,7 +12,7 @@
 
         <!-- Fancy pancy flippy thingy if we're in a chrome environment -->
         <div ng-if="StateModel.isChrome">
-            <div class="Flip-container" >
+            <div class="Flip-container" ng-hide="habit.dirty">
                 <div class="Flip-inner" anim:on-complete anim:name="flip" ng-class="{animate: triggerFlip, 'no-border': noBorder, switched: habit.tickedToday}">
                     <div class="Box_medium Flip-front Btn-reg Btn_icon"  ng-click="tickHabit(habit.id)">
                         <i class="Icon checkmark-gray"></i>
@@ -23,6 +23,11 @@
                             <div class="IconText-text">{{ habit.streak }}</div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div ng-show="habit.dirty" style="padding:20px;">
+                <div class="Anim-spinner">
+                    <div class="Anim-spinner-b1"></div>
                 </div>
             </div>
         </div>

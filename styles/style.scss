@@ -16,7 +16,10 @@
 	input{ background-color: transparent; }
 	.L-hbox >*{ display:block; }
 
-
+/* AngularJS */
+  [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+	display: none !important;
+  }
 
 /* Fonts */
 	@font-face {
@@ -174,7 +177,7 @@
 	}
 
 /* Header */
-	.MainHeader{ font-size:20px; z-index:9; position:fixed; left:0; right:0; bottom:0; height:50px; padding: 15px 10px; box-sizing:border-box; background-color:#333; overflow: hidden; }
+	.MainHeader{ font-size:20px; z-index:9; position:fixed; left:0; right:0; bottom:-1px; height:50px; padding: 15px 10px; box-sizing:border-box; background-color:#333; overflow: hidden; }
 	.MainHeader-hamburger{ margin-left: -20px; margin-top: 1px; padding-right:15px; float:left;}
 	.MainHeader-logo{ width:70px; float:right; }
 	.MainHeader-title{ float:left; color: #eee; font-weight:bold; text-transform:capitalize; @extend .T-alt; }
@@ -245,7 +248,7 @@
 
 
 /* Basement */
-	.Basement{ padding-top: 0; bottom:50px; right:0; width:100%; top:initial; will-change: transform; transition: 0.12s; position: fixed;}
+	.Basement{ padding-top: 0; bottom:40px; right:0; width:100%; top:initial; will-change: transform; transition: 0.12s; position: fixed;}
 	.Basement-menu-item_active{ margin-right: 5px; @extend .Icon-circle-white; }
 	.Basement-menu-item{ border-bottom: 1px solid #222222; box-shadow: 0px 1px 0px #444; -webkit-box-shadow: 0px 1px 0px #444; padding: 10px; @extend .T-stout}
 	.Basement-menu-item.active{ background-color: #999; }
@@ -337,10 +340,12 @@
 }
 .ng-hide-remove{
 	position: fixed; width: 100%;
-	-webkit-animation:0.7s slideIn ease;	
+	-webkit-animation:0.7s slideIn ease;
 }
 
-
+.ng-hide.ng-hide-add{
+  display:block !important;
+}
 .ng-hide.ng-hide-remove-pre{ 
 	display: block !important;
 	position: fixed;
@@ -372,6 +377,26 @@
   }
 }
 
+/**
+ * CSS Spinner
+ */
+.Anim-spinner {  width: 60px;  text-align: center;  }
+.Anim-spinner > div {  width: 10px;  height: 10px; background-color: #444; border-radius: 100%; display: inline-block; -webkit-animation: bouncedelay 1.4s infinite ease-in-out; animation: bouncedelay 1.4s infinite ease-in-out; -webkit-animation-fill-mode: both;   animation-fill-mode: both; }
+.Anim-spinner-b1 { -webkit-animation-delay: -0.32s; animation-delay: -0.32s; }
+.Anim-spinner-b2 { -webkit-animation-delay: -0.16s; animation-delay: -0.16s; }
+@-webkit-keyframes bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0.0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+@keyframes bouncedelay {
+  0%, 80%, 100% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 40% {
+      transform: scale(1.0);
+      -webkit-transform: scale(1.0);
+    }
+}
 
 
 /*

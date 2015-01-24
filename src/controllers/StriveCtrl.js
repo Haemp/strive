@@ -54,7 +54,6 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 
 		MonitorModel.loadMonitors();
 
-
 		// on sync - every 30s
 		$rootScope.$on('SyncModel.SYNC_COMPLETE', function(e, data){
 
@@ -79,7 +78,7 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 				HabitModel.sort();
 
 				CalcService.invalidateAll();
-				CalcService.recalcAll();
+				CalcService.recalcAll(HabitModel.habits);
 			}
 		})
 
@@ -92,7 +91,6 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 		// load in separate stylesheet for
 		// the pre-kitkat android browser.
 		yepnope([{ test: Browser.isAndroid, yep: 'styles/android.css' }]);
-
 
 
 		// handling backwards button
@@ -134,20 +132,18 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 			});
 		}
 
+        // start the sync loop on 30s
+        $interval(function(){
 
+            // sync only if the user is logged in
+            // otherwise this causes issues if the
+            // user wassnt fully logged out
+            if( UserModel.user ){
+                SyncModel.sync();
+            }
 
-
-		// start the sync loop on 30s
-		// $interval(function(){
-
-		// 	// sync only if the user is logged in
-		// 	// otherwise this causes issues if the
-		// 	// user wassnt fully logged out
-		// 	if( UserModel.user ){
-		// 		SyncModel.sync();
-		// 	}
-		// }, 30*1000);
-	}
+        }, 20*1000);
+    }
 	
 	$scope.activeState;
 	$scope.switch = function( state ){
@@ -158,40 +154,6 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 			$state.transitionTo(state);
 		})
 
-		// Trigger animation to animate in view
-
-
-
-		// requestAnimationFrame(function(){
-		// 	StateModel.basementOpen = false;	
-		// 	$scope.$apply();
-		// 	$timeout(function(){
-
-		// 		oldState = oldState == '' ? $state.current.name : oldState ;
-		// 		var newElem = document.querySelector('[ng-show="$state.current.name == \''+state+'\'"]');
-		// 		var oldElem = document.querySelector('[ng-show="$state.current.name == \''+oldState+'\'"]');
-		// 		oldState = state;
-		// 		// prepare the new DOM by adding a class to force it recalc
-		// 		newElem.classList.add('ng-hide-remove-pre');
-									
-		// 		$timeout(function(){	
-		// 			requestAnimationFrame(function(){
-		// 				oldElem.animate([
-		// 					{transform: 'translateX(0)'},
-		// 					{transform: 'translateX(-100%)'}
-		// 				], {duration: 500, easing: 'ease'}).onfinish = function(){
-		// 					oldElem.style.transform = 'translateX(-100%)';							
-		// 				}
-		// 				newElem.animate([
-		// 					{transform: 'translateX(100%)'},
-		// 					{transform: 'translateX(0)'}
-		// 				], {duration: 500, easing: 'ease'}).onfinish = function(){
-		// 					newElem.style.transform = 'translateX(0)';							
-		// 				}
-		// 			})
-		// 		}, 10);
-		// 	}, 270)
-		// })
 	}
 	
 	$scope.clear = function(){
@@ -211,6 +173,7 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 		MonitorModel.clear();
 		RecipeModel.clear();
 		TransactionModel.clear();
+		CalcService.invalidateAll();
 		UserModel.logout()
 			.then(function(){
 				$scope.basementState.logoutPopup = false;
