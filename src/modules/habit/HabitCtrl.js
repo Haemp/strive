@@ -50,53 +50,14 @@
 			return !habit.isArchived;
 		}
 		$scope.tickHabit = function( habitId ){
+
+
+
 			HabitModel.tickHabit( {habitId:habitId} );
 		}
 
 		$scope._init();	
 	})
 
-
-	.directive('habit', function(HabitModel, StriveHelper, StateModel, StriveNotifications){
-		return{
-			restrict: 'E',
-			scope:{
-				habit: '=?'
-			},
-			templateUrl: 'src/modules/habit/habit.html',
-			link: function(scope){
-				
-				scope.StriveHelper = StriveHelper;
-				scope.StateModel = StateModel;
-
-				scope.toggleEditMode = function(habit){
-					HabitModel.toggleEditMode(habit);
-					StriveNotifications.refreshOverview();
-				}
-				scope.selectHabit = HabitModel.selectHabit;
-				scope.isTickedToday = StriveHelper.tickedToday;
-
-				scope.archive = function(habit){
-					HabitModel.archive(habit);
-					StriveNotifications.refreshOverview();
-				}
-				scope.unArchive = function(habit){
-					HabitModel.unArchive(habit);
-					StriveNotifications.refreshOverview();
-				}
-				
-				scope.removeHabit = function(habit){
-					HabitModel.removeHabit(habit);
-					StriveNotifications.refreshOverview();
-				}
-
-				scope.tickHabit = function( habitId ){
-					HabitModel.tickHabit( {habitId:habitId} );
-					StriveNotifications.refreshOverview();
-				}
-				
-			}
-		}
-	})
 
 })()

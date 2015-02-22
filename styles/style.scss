@@ -3,6 +3,8 @@
 @import '../bower_components/ah-basement/basement';
 @import '../bower_components/nvd3/nv.d3.css';
 
+
+
 /* Reset */
 	html,body{ overflow:auto !important; }
 	h1,h2,h3,body, ul, ol, li, input, button, p{ margin:0; padding:0; }
@@ -13,6 +15,11 @@
 	button{ border:none; background:transparent; }
 	input{ background-color: transparent; }
 	.L-hbox >*{ display:block; }
+
+/* AngularJS */
+  [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+	display: none !important;
+  }
 
 /* Fonts */
 	@font-face {
@@ -31,6 +38,7 @@
 	.T-50{ font-size: 16px; }
 	.Head.medium{ font-size: 18px; font-weight: 600; }
 	.Para.small{ font-size: 13px; line-height: 1.5em;}
+
 
 
 /* Icons */
@@ -54,7 +62,8 @@
 	.ListItem-meta{ background-color:#f5f5f5; }
 	.ListItem-meta-section{ padding: 15px 15px; border-top:1px solid #fff; box-shadow: 0px -1px 0px #ddd; -webkit-box-shadow: 0px -1px 0px #ddd; }
 	.ListItem-meta-section:first-child{ border-top:none; border-top:1px solid #fff; box-shadow: none; -webkit-box-shadow: none; }
-	
+
+
 	// animations
 	.ListItem-edit{
 		&.ng-enter{ @include trans(0.2s); }
@@ -168,11 +177,11 @@
 	}
 
 /* Header */
-	.MainHeader{ font-size:20px; z-index:9; position:fixed; left:0; right:0; height:50px; padding: 15px 10px; box-sizing:border-box; background-color:#333; overflow: hidden; margin-bottom: 20px; top:0; }
+	.MainHeader{ font-size:20px; z-index:9; position:fixed; left:0; right:0; bottom:-1px; height:50px; padding: 15px 10px; box-sizing:border-box; background-color:#333; overflow: hidden; }
 	.MainHeader-hamburger{ margin-left: -20px; margin-top: 1px; padding-right:15px; float:left;}
 	.MainHeader-logo{ width:70px; float:right; }
 	.MainHeader-title{ float:left; color: #eee; font-weight:bold; text-transform:capitalize; @extend .T-alt; }
-	.MainContent{ margin-top:70px; }
+	.MainContent{ margin-top:20px; }
 
 /* Tip */
 	.Tip{ margin:0 auto; margin-bottom: 20px; width: 100%; max-width: 600px; min-width: 100px; }
@@ -236,22 +245,46 @@
 	.CreateRecipe-description{ width: 100%; min-height: 150px; border: none; border-bottom: 1px solid #bbb; }
 	.CreateRecipe-name-input{ width: 100%; }
 
+
+
 /* Basement */
-	.Basement{ padding-top: 0; bottom:0px; width:100%; top:initial; }
+	.Basement{ padding-top: 0; bottom:40px; right:0; width:100%; top:initial; will-change: transform; transition: 0.12s; position: fixed;}
 	.Basement-menu-item_active{ margin-right: 5px; @extend .Icon-circle-white; }
 	.Basement-menu-item{ border-bottom: 1px solid #222222; box-shadow: 0px 1px 0px #444; -webkit-box-shadow: 0px 1px 0px #444; padding: 10px; @extend .T-stout}
-	.Basement-menu-item.active{ background-color: #999; @include transition(0.1s); }
+	.Basement-menu-item.active{ background-color: #999; }
 	.Basement-confirm{ @extend .L-center; @extend .L-vbox-10; font-weight: normal; text-transform: initial; }
+
 
 /* Flip card */
 	.Flip-inner.switched{ -webkit-transform: rotateY(180deg);
-		.Flip-front{ background-color: #eee; }
+		.Flip-front{ }
 	}
-	.Flip-container { -webkit-perspective: 1000; }
-	.Flip-inner { @include trans(1s); -webkit-transform-style: preserve-3d; }
+
+	.Flip-container { -webkit-perspective: 200; 
+	}
+	.Flip-inner.animate.no-border{ border:none; margin-top:0; }	
+	.Flip-inner.animate{ margin-top: -1px; border: 1px solid #ddd; -webkit-animation:.6s flip ease-out; transform: rotateY(180deg); }
+	.Flip-inner { -webkit-transform-style: preserve-3d; }
 	.Flip-front, .Flip-back { height:50px; box-sizing: border-box; -webkit-backface-visibility: hidden; }
-	.Flip-front {  z-index: 2; padding: 18px 50px; border-left: 1px solid #eee; }
+	.Flip-front { z-index: 2; padding: 18px 50px; border-left: 1px solid #eee; }
 	.Flip-back { background-color: #fff; padding-left: 39px; margin-top: -50px; position: relative; -webkit-transform: rotateY(180deg); }
+
+	@-webkit-keyframes flip {
+	  0% {
+	    transform: rotateY(0deg);
+	  }
+	  20% {
+	    transform: rotateY(90deg);
+	  }
+	  85% {
+	    transform: rotateY(170deg);
+	  }
+	  100% {
+	    transform: rotateY(180deg);
+	  }
+	}
+	
+
 
 /* Indentions */
 	.Indent-10-30{ padding: 10px 30px; }
@@ -268,29 +301,103 @@
 	li{ display:list-item; list-style-position: inside;  }
 }
 
+/* Splash Screen */
+	.Splash{ z-index: 99; position: absolute; top:0; bottom:0; left:0; right:0; background-color:#eee; text-align:center; }
+	.Splash-image{ margin-top: 200px; }
+
 /* Section Transitions */
-.slide.ng-leave {
- position: absolute; width: 100%; margin-top: 50px;
+.slide{ 
+	//transform: translateZ(0);
 }
-.slide.ng-enter {
-  position: absolute; width: 100%; margin-top: 50px;
+// .slide.ng-hide-add.ng-hide-add-active,
+// .slide.ng-hide-remove.ng-hide-remove-active {
+  
+//   transition:1s;
+// }
+// .slide.ng-hide.ng-hide-add{
+// 	  position: absolute; width: 100%; margin-top: 50px;
+
+// 	transition:1s;
+// 	display:block !important;
+// 	-webkit-transform: translateX(-100%);
+// 	transform: translateX(-100%);
+// }
+// .slide.ng-hide.ng-hide-remove{
+// 	position: absolute; width: 100%; margin-top: 50px;
+// 	transition:1s;
+// 	display:block !important;
+// 	transform: translateX(0px);
+// }
+// .slide.ng-hide.ng-hide-remove-active{
+// 	position: absolute; width: 100%; margin-top: 50px;
+// 	transition:1s;
+// 	display:block !important;
+// 	transform: translateX(100%);
+// }
+.ng-hide-add{
+	position: fixed; width: 100%;
+	-webkit-animation:0.7s slideOut ease;
 }
-.slide.ng-enter, .slide.ng-leave {
-  -webkit-transition: 0.6s;
-     
+.ng-hide-remove{
+	position: fixed; width: 100%;
+	-webkit-animation:0.7s slideIn ease;
 }
-.slide.ng-leave{
-	-webkit-transform: translateX(0);
+
+.ng-hide.ng-hide-add{
+  display:block !important;
 }
-.slide.ng-leave.ng-leave-active{
-	-webkit-transform: translateX(-100%)
+.ng-hide.ng-hide-remove-pre{ 
+	display: block !important;
+	position: fixed;
+	width: 100%;
+	transform: translateX(100%);
 }
-.slide.ng-enter{
-	-webkit-transform: translateX(100%);
+
+/* light speed out */
+@-webkit-keyframes slideIn {
+  0% {
+    transform: translateX(100%) translateY(-20px);
+  }
+  20% {
+  	transform: translateX(100%) translateY(-20px);	
+  }
+  100% {
+    transform: translateX(0%) translateY(-20px);
+  }
 }
-.slide.ng-enter.ng-enter-active{
-	-webkit-transform: translateX(0);
+@-webkit-keyframes slideOut {
+  0% {
+    transform: translateX(0%) translateY(-20px);
+  }
+  20% {
+    transform: translateX(0%) translateY(-20px);
+  }
+  100% {
+    transform: translateX(-100%) translateY(-20px);
+  }
 }
+
+/**
+ * CSS Spinner
+ */
+.Anim-spinner {  width: 60px;  text-align: center;  }
+.Anim-spinner > div {  width: 10px;  height: 10px; background-color: #444; border-radius: 100%; display: inline-block; -webkit-animation: bouncedelay 1.4s infinite ease-in-out; animation: bouncedelay 1.4s infinite ease-in-out; -webkit-animation-fill-mode: both;   animation-fill-mode: both; }
+.Anim-spinner-b1 { -webkit-animation-delay: -0.32s; animation-delay: -0.32s; }
+.Anim-spinner-b2 { -webkit-animation-delay: -0.16s; animation-delay: -0.16s; }
+@-webkit-keyframes bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0.0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+@keyframes bouncedelay {
+  0%, 80%, 100% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 40% {
+      transform: scale(1.0);
+      -webkit-transform: scale(1.0);
+    }
+}
+
 
 /*
 .slide.ng-enter, .slide.ng-leave.ng-leave-active {

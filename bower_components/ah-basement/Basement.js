@@ -20,6 +20,10 @@ Basement.directive('basement', function($document, $parse) {
 
 			var self = this;
 
+			var startPos;
+			var endPos;
+
+
 			// swipey swipey?
 			var gestureEnabled = true;
 			if ($parse(attr.gesture) === false) {
@@ -35,6 +39,9 @@ Basement.directive('basement', function($document, $parse) {
 					Hammer($document[0]).on('dragright', self.onDragRight);
 					Hammer(element[0]).on('dragleft', self.onDragLeft);
 				}
+                //
+				//$document.on('touchstart', self.onMouseDown);
+				//$document.on('touchend', self.onMouseUp);
 			}
 
 			/**
@@ -56,6 +63,32 @@ Basement.directive('basement', function($document, $parse) {
 				$scope.$apply(function() {
 					$scope.open = false;
 				});
+			}
+			
+			self.onMouseDown = function(e){
+				startPos = -360;
+				endPos = 0;
+				if (e.originalEvent.touches[0].pageX < self.boundSize) {
+					console.log('Hooking in');
+					$document.on('touchmove', self.onMouseMove);
+				}
+			}
+			
+			self.onMouseMove = function(e){
+				e.preventDefault();
+				endPos = e.originalEvent.changedTouches[0].pageX + startPos;
+				element[0].style.transform = 'translateX('+endPos+'px)';
+				// element.animate([
+				// 	{transform: 'translateX('+startPos+'px)'},
+				// 	{transform: 'translateX('+endPos+'px)'},
+				// ], 100)
+				// startPos = endPos;
+				//console.log('Updating X', e.originalEvent.touches[0].pageX);
+			}
+
+			self.onMouseUp = function(){
+				console.log('Releasing');
+				$document.unbind('mousemove', self.onMouseDown);	
 			}
 
 			self._init();

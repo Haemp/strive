@@ -9,7 +9,9 @@ Strive.service('HabitModel', function(
 	SyncModel,
 	$rootScope,
 	rfc4122,
-	Workers
+	Workers,
+	ReCalcService,
+    CalcHelper
 ) {
 	var self = this;
 
@@ -175,6 +177,7 @@ Strive.service('HabitModel', function(
 	self.tickHabit = function(params, done) {
 
 		var habit = self.getHabit(params.habitId);
+        console.log('Ticking habit', habit.name);
 
 		// for play back
 		if(!params.createdAt)
@@ -187,10 +190,10 @@ Strive.service('HabitModel', function(
 
 		if (!habit.ticks)
 			habit.ticks = [];
-
 		
-		if( StriveHelper.tickedToday(habit) ){
+		if( CalcHelper.tickedToday(habit) ){
 			habit.tickedToday = true;
+			self.save();
 			done(false);
 			return false;
 		}
@@ -203,16 +206,18 @@ Strive.service('HabitModel', function(
 			done(false);
 			return false;
 		}
-		
-		habit.ticks.unshift(params);
+
+		console.log('HabitCalcWorkflow: #1 Habit is ticked');
+		habit.ticks.unshift(params); // adding the tick to the list of ticks
+		habit.tickedToday = true;
 
 		// calculate the streak
-		habit.streak = StriveHelper.newCalcStreak(habit.ticks);
+		return ReCalcService.recalcHabit(habit).then(function(){
 
-		self.save();
-		
-		habit.tickedToday = true;
-		done(true);
+			console.log('HabitCalcWorkflow: #6 Saving habit to have streak, streakRecord and tickedToday persist.');
+			self.save();
+			done(true);
+		})
 	}
 	
 	self.isDuplicateTick = function(targetTick, ticks){
@@ -222,40 +227,12 @@ Strive.service('HabitModel', function(
 			// same date, month and year as the new ticks
 			// we don't want to add it since that makes it a
 			// duplicate. 
-			if( StriveHelper.isTicksOnSameDay(ticks[i], targetTick) ){
+			if( CalcHelper.isTicksOnSameDay(ticks[i], targetTick) ){
 				return true;		
 			}
 		}
 		
 		return false;
-	}
-
-	self.asyncRecalc = function(){
-		return Workers.postMessage({name: 'recalc', habits: self.habits, lastCalculation: self.lastCalculation}).then(function(message){
-			self.habits = message.data.habits;
-			self.lastCalculation = message.data.lastCalculation;
-		});
-	}
-
-	self.recalculateAllStreaks = function() {
-
-		// check if we've already calculated for today
-		// TODO: This does not count streak day
-		if (self.lastCalculation && self.lastCalculation.today()) return;
-
-		if (!self.habits || self.habits.length == 0) return;
-
-		for (var i = 0; i < self.habits.length; i++) {
-			var habit = self.habits[i];
-			if (!habit.ticks) continue;
-
-			if( StriveHelper.tickedToday(habit) ) habit.tickedToday = true;
-			habit.streak = StriveHelper.newCalcStreak(habit.ticks);
-			habit.streakRecord = StriveHelper.newCalcStreakRecord(habit.ticks);
-		}
-
-		self.lastCalculation = new Date();
-		self.save();
 	}
 
 	self.save = function() {
@@ -308,16 +285,6 @@ Strive.service('HabitModel', function(
 	}
 
 	self._init();
-});
-
-Strive.service('StateModel', function() {
-	var self = this;
-	self.isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-	self.userAgent = navigator.userAgent;
-	self.isAndroidBrowser = ((navigator.userAgent.indexOf('Mozilla/5.0') > -1 && navigator.userAgent.indexOf('Android ') > -1 && navigator.userAgent.indexOf('AppleWebKit') > -1) && !(navigator.userAgent.indexOf('Chrome') > -1));
-
-	self.states = [];
-	console.log('Is it chrome: ', self.isChrome);
 });
 
 Strive.service('Utils', function() {

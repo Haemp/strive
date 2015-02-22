@@ -11,7 +11,7 @@
 		<link rel="shortcut icon" href="img/favicon.png" type="image/png">
 		<script src="bower_components/jquery/dist/jquery.js"></script>
 		<script src="bower_components/angular/angular.js"></script>
-		
+
 		<script src="bower_components/fastclick/lib/fastclick.js"></script>
 		<script src="bower_components/AngularSugar/AngularSugar.js"></script>
 		<script src="bower_components/sync/src/Sync.js"></script>
@@ -35,9 +35,13 @@
 
 		<!-- Strive -->
 		<script src="src/Strive.js"></script>
+		<script src="src/models/StateModel.js"></script>
 		<script src="src/modules/home/StriveHome.js"></script>
 		<script src="src/modules/habit/HabitModel.js"></script>
 		<script src="src/modules/habit/HabitCtrl.js"></script>
+        <script src="src/modules/s-habit/sHabit.js"></script>
+        <script src="src/modules/calc/CalcHelper.js"></script>
+        <script src="src/modules/calc/ReCalcService.js"></script>
 		<script src="src/modules/habit/HabitPublic.js"></script>
 		<script src="src/modules/monitor/Monitor.js"></script>
 		<script src="src/modules/monitor/MonitorPublic.js"></script>
@@ -49,7 +53,7 @@
 		<script src="src/modules/OnBoarding.js"></script>
 		<script src="src/modules/StriveNotifications.js"></script>
 		<script src="libs/sync-model/SyncModel.js"></script>
-		
+
 		<script src="src/controllers/StriveCtrl.js"></script>
 		<script src="src/StriveHelper.js"></script>
 		<script src="src/controllers/MonitorCtrl.js"></script>
@@ -58,7 +62,11 @@
 		<script src="src/User/User.js"></script>
 
 	</head>
-	<body ng-app="Strive" auto-top ng-csp ng-controller="StriveCtrl" >
+	<div ></div>
+	<body ng-app="Strive" auto-top ng-csp ng-controller="StriveCtrl" ha:on-load ha:on-model-load>
+		<div class="Splash">
+			<img class="Splash-image" src="img/logo-strive-2x.png" alt="Strive">
+		</div>
 		<div class="MainHeader">
 			<div class="MainHeader-hamburger" ng-click="StateModel.basementOpen = !StateModel.basementOpen">
 				<i class="Icon hamburger"></i>
@@ -66,11 +74,15 @@
 			<div class="MainHeader-title" ng-click="StateModel.basementOpen = !StateModel.basementOpen">{{ $state.current.name }}</div>
 			<img class="MainHeader-logo" src="img/logo-strive-2x.png" alt="">
 		</div>
-		<div ui-view="main" class="MainContent slide">
-
+		<div class="MainContent ">
+			<div class="slide" ng-show="activeState == 'habits'" ng-hide="activeState != 'habits'" ng-controller="HabitCtrl" ng-include="'views/view-habits.html'"></div>
+			<div class="slide" ng-show="activeState == 'monitors'" ng-hide="activeState != 'monitors'" ng-controller="MonitorCtrl" ng-include="'views/view-monitors.html'" ></div>
+			<div class="slide" ng-show="activeState == 'archived'" ng-hide="activeState != 'archived'" ng-controller="ArchiveCtrl" ng-include="'views/view-archive.html'" ></div>
+			<div class="slide" ng-show="activeState == 'recipes'" ng-hide="activeState != 'recipes'" ng-controller="RecipeCtrl" ng-include="'views/view-recipes.html'" ></div>
+			<div class="slide" ng-show="activeState == 'recipecreate'" ng-hide="activeState != 'recipecreate'" ng-controller="CreateRecipeCtrl" ng-include="'views/view-create-recipe.html'" ></div>
+			<div class="slide" ng-show="activeState == 'recipeupdate'" ng-hide="activeState != 'recipeupdate'" ng-controller="UpdateRecipeCtrl" ng-include="'views/view-update-recipe.html'" ></div>
 		</div>
-
-		<basement open="StateModel.basementOpen">
+		<basement open="StateModel.basementOpen" anim:on-complete anim:name="basement">
 			<ul class="Basement-menu" gesture="false">
 				<li class="Basement-menu-item L-hbox L-hbox-vcenter" ng-if="UserModel.user">
 					<i ng-class="{'Icon-circle-green': UserModel.user.authorized, 'Icon-circle-red':!UserModel.user.authorized  }" style="margin-right:10px"></i>
@@ -82,31 +94,30 @@
 					<i class="Basement-menu-item_active" class="Icon-circle-white" ng-if="$state.includes('habits')"></i>
 					<span class="Basement-menu-item-name">Habits</span>
 				</li>
-				<li as-touch-active class="Basement-menu-item" ng-click="switch('monitors')">
+				<li class="Basement-menu-item" ng-click="switch('monitors')">
 					<i class="Basement-menu-item_active" ng-if="$state.includes('monitors')"></i>
 					<span class="Basement-menu-item-name">Monitors</span>
 				</li>
-				<li as-touch-active class="Basement-menu-item" ng-click="switch('archived')">
+				<li class="Basement-menu-item" ng-click="switch('archived')">
 					<i class="Basement-menu-item_active" ng-if="$state.includes('archived')"></i>
 					<span class="Basement-menu-item-name">Archived</span>
 				</li>
-				<li as-touch-active class="Basement-menu-item" ng-click="switch('recipes')">
+				<li class="Basement-menu-item" ng-click="switch('recipes')">
 					<i class="Basement-menu-item_active" ng-if="$state.includes('recipes')"></i>
 					<span class="Basement-menu-item-name">recipes</span>
 				</li>
-				<li as-touch-active class="Basement-menu-item" ng-click="switch('home')">
+				<li class="Basement-menu-item" ng-click="switch('home')">
 					<i class="Basement-menu-item_active" ng-if="$state.includes('home')"></i>
 					<span class="Basement-menu-item-name">home</span>
 				</li>
-				<li as-touch-active class="Basement-menu-item" ng-if="!UserModel.user || !UserModel.user.authorized" ng-click="UserModel.showUserLogin = true">
+				<li class="Basement-menu-item" ng-if="!UserModel.user || !UserModel.user.authorized" ng-click="UserModel.showUserLogin = true">
 					<span class="Basement-menu-item-name">Login</span>
 				</li>
-				<li as-touch-active class="Basement-menu-item" ng-if="UserModel.user" ng-click="sync()">
+				<li class="Basement-menu-item" ng-if="UserModel.user" ng-click="sync()">
 					<span class="Basement-menu-item-name">Sync</span>
 				</li>
 				<li as-touch-active class="Basement-menu-item" ng-if="UserModel.user" >
 					<span class="Basement-menu-item-name" ng-click="basementState.logoutPopup = true">Logout</span>
-					{{ logoutPopup }}
 					<div class="Basement-confirm" ng-if="basementState.logoutPopup">
 						<div>Orly? Unsynced data will be lost.</div>
 						<button	class="L-center Btn Btn-lilly Btn_small dark" ng-click="logoutConfirm($event, false)">Cancel</button>
@@ -124,6 +135,6 @@
 
 		</div>
 
-	
+
 	</body>
 </html>
