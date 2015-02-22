@@ -46,6 +46,8 @@ angular.module('SyncModel', ['JsonStorage'])
 
 						model['_' + method](data, function(valid) {
 							if (valid) {
+                                console.log('Adding new transaction', method);
+
 								TransactionModel.push({
 									name: method,
 									data: data,
@@ -55,7 +57,9 @@ angular.module('SyncModel', ['JsonStorage'])
 								if(SyncOptions.autoSync === true){
 									self.sync();
 								}
-							}
+							}else{
+                                console.log('done status is false');
+                            }
 						})
 					}
 				})();
@@ -89,11 +93,12 @@ angular.module('SyncModel', ['JsonStorage'])
 			}
 			console.log('Syncing Up...', TransactionModel.transactions, 'with syncVersion', TransactionModel.syncVersion);
 			self.isSyncing = true;
+            var syncedTrans = angular.copy(TransactionModel.get());
 			return $http({
 				method: 'POST',
 				url: URL_SYNC,
 				data: {
-					transactions: TransactionModel.get(),
+					transactions: syncedTrans,
 					version: TransactionModel.syncVersion
 				},
 				withCredentials: true
@@ -101,15 +106,13 @@ angular.module('SyncModel', ['JsonStorage'])
 				.then(function(res){
 
 					// after sync reset the transactions
-					// TODO: if an actino is performed
+					// TODO: if an action is performed
 					// in the middle of a sync it will be
 					// lost
 					if( TransactionModel.transactions && TransactionModel.transactions.length > 0){
 						console.log('Clearing transaction Model, all should now be synced');
-						TransactionModel.clearTransactions();
+						TransactionModel.clearTransactions(syncedTrans);
 					}
-					
-					
 					
 					if( res.data.transactions && res.data.transactions.length > 0 ){
 						console.log('Playing ', res.data.transactions);
@@ -224,9 +227,26 @@ angular.module('SyncModel', ['JsonStorage'])
 		self.transactions.push(t);
 		self._save();
 	}
-	self.clearTransactions = function(){
-		self.transactions.length = 0;
-		console.log('Clearing transactions...');
+	self.clearTransactions = function(transactions){
+
+        if(transactions){
+            console.log('Removing transactions...', self.transactions);
+
+            transactions.forEach(function(syncedTrans, index){
+                for (var i = 0; i < self.transactions.length; i++) {
+                    if( self.transactions[i].time == syncedTrans.time ){
+                        self.transactions.splice(i, 1);
+                    }
+                }
+            });
+
+            console.log('Transactions now removed, new transactions: ', self.transactions);
+        }else{
+
+            self.transactions.length = 0;
+            console.log('Clearing transactions...');
+        }
+
 		JsonStorage.serial_save('transactions', angular.copy(self.transactions));
 	}
 	self.clear = function(){

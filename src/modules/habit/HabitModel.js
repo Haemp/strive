@@ -10,7 +10,8 @@ Strive.service('HabitModel', function(
 	$rootScope,
 	rfc4122,
 	Workers,
-	CalcService
+	ReCalcService,
+    CalcHelper
 ) {
 	var self = this;
 
@@ -176,6 +177,7 @@ Strive.service('HabitModel', function(
 	self.tickHabit = function(params, done) {
 
 		var habit = self.getHabit(params.habitId);
+        console.log('Ticking habit', habit.name);
 
 		// for play back
 		if(!params.createdAt)
@@ -188,9 +190,8 @@ Strive.service('HabitModel', function(
 
 		if (!habit.ticks)
 			habit.ticks = [];
-
 		
-		if( StriveHelper.tickedToday(habit) ){
+		if( CalcHelper.tickedToday(habit) ){
 			habit.tickedToday = true;
 			self.save();
 			done(false);
@@ -211,7 +212,7 @@ Strive.service('HabitModel', function(
 		habit.tickedToday = true;
 
 		// calculate the streak
-		return CalcService.recalcHabit(habit).then(function(){
+		return ReCalcService.recalcHabit(habit).then(function(){
 
 			console.log('HabitCalcWorkflow: #6 Saving habit to have streak, streakRecord and tickedToday persist.');
 			self.save();
@@ -226,64 +227,12 @@ Strive.service('HabitModel', function(
 			// same date, month and year as the new ticks
 			// we don't want to add it since that makes it a
 			// duplicate. 
-			if( StriveHelper.isTicksOnSameDay(ticks[i], targetTick) ){
+			if( CalcHelper.isTicksOnSameDay(ticks[i], targetTick) ){
 				return true;		
 			}
 		}
 		
 		return false;
-	}
-
-	self.habitDirtyCheck = function(habit){
-		if(habit.lastCalc){
-			var bestBefore = StriveHelper.getBestBeforeCalcDate(habit.lastCalc);
-
-			if(new Date().isAfter(bestBefore)){
-				habit.dirty = true;
-			}
-		}
-	}
-
-	self.allDirtyCheck = function(){
-		if(self.lastCalculation){
-
-			var bestBefore = StriveHelper.getBestBeforeCalcDate(self.lastCalculation);
-
-			if(new Date().isAfter(bestBefore)){
-				return true;
-			}
-		}
-		return false;
-	}
-
-
-	self.asyncRecalc = function(){
-		return Workers.postMessage({name: 'recalc', habits: self.habits, lastCalculation: self.lastCalculation}).then(function(message){
-			self.habits = message.data.habits;
-			self.lastCalculation = message.data.lastCalculation;
-		});
-	}
-
-	self.recalculateAllStreaks = function() {
-
-		// check if we've already calculated for today
-		// TODO: This does not count streak day
-		if (self.lastCalculation && self.lastCalculation.today()) return;
-
-		if (!self.habits || self.habits.length == 0) return;
-
-		for (var i = 0; i < self.habits.length; i++) {
-			var habit = self.habits[i];
-			if (!habit.ticks) continue;
-
-			if( StriveHelper.tickedToday(habit) ) habit.tickedToday = true;
-			habit.streak = StriveHelper.newCalcStreak(habit.ticks);
-			habit.streakRecord = StriveHelper.newCalcStreakRecord(habit.ticks);
-			habit.lastCalc = new Date();
-		}
-
-		self.lastCalculation = new Date();
-		self.save();
 	}
 
 	self.save = function() {

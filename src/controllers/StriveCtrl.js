@@ -18,7 +18,7 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 	RecipeModel,
 	AnimService,
 	$timeout,
-	CalcService
+    ReCalcService
 ){
 	var self = this;
 
@@ -47,7 +47,7 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 			.then(function(){
 
 				console.log('AllCalcWorkflow: #1 Loaded habits, now going to recalc');
-				return CalcService.recalcAll(HabitModel.habits);
+				return ReCalcService.recalcAll(HabitModel.habits);
 			}).then(function () {
 				console.log('Finished calc');
 			})
@@ -77,8 +77,8 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 				MonitorModel.sort();
 				HabitModel.sort();
 
-				CalcService.invalidateAll();
-				CalcService.recalcAll(HabitModel.habits);
+				ReCalcService.invalidateAll();
+				ReCalcService.recalcAll(HabitModel.habits);
 			}
 		})
 
@@ -128,7 +128,7 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 		// checkmarks to tick
 		if( typeof chrome != 'undefined' && chrome.runtime && chrome.runtime.onSuspendCanceled ){
 			chrome.runtime.onSuspendCanceled.addListener(function(){
-				CalcService.recalcAll(HabitModel.habits);
+				ReCalcService.recalcAll(HabitModel.habits);
 			});
 		}
 
@@ -173,7 +173,7 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 		MonitorModel.clear();
 		RecipeModel.clear();
 		TransactionModel.clear();
-		CalcService.invalidateAll();
+		ReCalcService.invalidateAll();
 		UserModel.logout()
 			.then(function(){
 				$scope.basementState.logoutPopup = false;
@@ -253,9 +253,16 @@ Strive.service('AnimService', function($q){
 	var self = this;
 	self.promises = {};
 
+    // TODO: There is an issue here with multiple
+    // triggers. Tick two times only triggers one finished
+
 	self.onAnimEnd = function(name){
 		var d = $q.defer();
-		self.promises[name] = d;
+        console.log('AnimService.ANIMATION_START', name);
+
+        // add another queued animation to the end of the array
+        if(!self.promises[name]) self.promises[name] = [];
+		self.promises[name].push(d);
 		return d.promise;
 	}
 
@@ -268,9 +275,13 @@ Strive.directive('animOnComplete', function($rootScope, AnimService){
 			
 			element.on('$animate:close', function(e){
 				console.log('Anim close');
-				if(AnimService.promises[attr.animName]){
+				if(AnimService.promises[attr.animName] && AnimService.promises[attr.animName].length > 0){
 					console.log('Resolving...');
-					AnimService.promises[attr.animName].resolve();	
+
+                    // take the first entry int he array
+                    // FIFO queue
+                    console.log('AnimService.ANIMATION_END', attr.animName);
+					AnimService.promises[attr.animName].shift().resolve();
 				}
 			})
 		}

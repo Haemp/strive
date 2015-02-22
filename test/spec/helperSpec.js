@@ -6,6 +6,7 @@ describe('StriveHelper', function(){
       StriveHelper = _StriveHelper_;
       CalcService = __CalcService__;
   }));
+
   Date.prototype.format = function(){
     return this.toString('yyyy-MM-dd HH:mm:ss');  
   }

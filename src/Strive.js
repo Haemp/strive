@@ -1,11 +1,13 @@
-
+// TODO: figure out what is causing problems with recalc with ticked after 12 habits
+// TODO: Integrate calc helper instead of StriveHelper
 var Strive = angular.module('Strive', [
 	'ui.router',
 	'ClickHide',
 	'ngAnimate',
 	'fileSystem',
 	'JsonStorage',
-    'Calculations',
+    'calc.CalcHelper',
+    'calc.ReCalcService',
 	'Basement',
 	'AngularSugar',
 	'User',

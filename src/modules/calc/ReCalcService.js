@@ -1,16 +1,22 @@
-/**
- * Created by Haemp on 17/01/2015.
- */
 (function(){
+    angular.module('calc.ReCalcService', ['JsonStorage', 'Workers'])
+        .service('ReCalcService', ReCalcService)
 
-    angular.module('Calculations', ['JsonStorage'])
-        .service('CalcService', CalcService)
-    
 
-    function CalcService(JsonStorage, $q, Workers, $timeout, $rootScope){
+    /**
+     * Responsible for: Handling the state of recalculation and triggering worker threads
+     * - storing the last calculated date
+     * - Trigger recalculations in worker thread
+     *
+     * ReCalcService uses Workers and CalcHelper
+     */
+    function ReCalcService(JsonStorage, $q, Workers, $timeout, $rootScope){
         var lastCalculation;
 
         function _init(){
+            
+            console.log('Initiating clacs');
+            
             JsonStorage.serial_get('strive.CalcService').then(function(d){
                 console.log('CalcService: Loading last calculation...', d.lastCalculation);
                 lastCalculation = d ? new Date.parse(d.lastCalculation || 0) : new Date(0);
@@ -111,9 +117,9 @@
          */
         function getBestBeforeCalcDate(calcDate){
             if(calcDate.getHours() < 3){
-                return new Date.parse(calcDate).set({hour: 3, minute: 0, second:0, millisecond:0})
+                return new Date(calcDate).set({hour: 3, minute: 0, second:0, millisecond:0})
             }else{
-                return new Date.parse(calcDate).add(1).day().set({hour: 3, minute: 0, second:0, millisecond:0})
+                return new Date(calcDate).add(1).day().set({hour: 3, minute: 0, second:0, millisecond:0})
             }
         }
 

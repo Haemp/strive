@@ -31,12 +31,15 @@ module.exports = function (config) {
 
             // tests
             //'test/**/helperSpec.js',
+
+            'src/modules/calc/CalcHelper.js',
             'test/**/calcSpec.js',
 
             // src
-            'src/Strive.js',
-            'src/CalcService.js',
-            'src/**/*.js',
+            //'src/Strive.js',
+            'src/modules/calc/ReCalcService.js',
+
+
             'src/**/*.html'
         ],
 
