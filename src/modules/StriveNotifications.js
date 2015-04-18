@@ -17,15 +17,30 @@
                 }
             });
 
-            chrome.notifications.create('striveOverview', {
-				type: 'list',
-				title: 'Reminder',
-				message: 'Your habits today:',
-				iconUrl: 'img/strive-128.png',
-				items: habitsList
-			}, function(){
-                console.log('Notifications updated!');
-			});
+            if(habitsList.length == 0){
+
+                chrome.notifications.create('striveOverview', {
+                    type: 'list',
+                    title: 'Complete!',
+                    message: 'Booyah - you made all your habits today!',
+                    iconUrl: 'img/strive-128.png',
+                }, function(){
+                    console.log('Notifications updated!');
+                });
+
+            }else{
+
+                chrome.notifications.create('striveOverview', {
+                    type: 'list',
+                    title: 'Reminder',
+                    message: 'Your habits today:',
+                    iconUrl: 'img/strive-128.png',
+                    items: habitsList
+                }, function(){
+                    console.log('Notifications updated!');
+                });
+            }
+
 
         }
     })
