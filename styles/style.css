@@ -713,8 +713,7 @@ input {
 /* MainInput */
 .MainInput {
   position: static;
-  margin-top: 30px;
-  margin: 30px 15px; }
+  margin: 0 15px 30px 15px; }
 
 .MainInput-inner {
   overflow: hidden; }
@@ -724,6 +723,10 @@ input {
 
 .MainInput-input-name {
   padding: 15px 10px 15px 30px; }
+
+/** MainList */
+.MainList {
+  margin-bottom: 30px; }
 
 /* TabList */
 .TabList {
@@ -777,7 +780,8 @@ input {
   margin-bottom: 20px;
   width: 100%;
   max-width: 600px;
-  min-width: 100px; }
+  min-width: 100px;
+  margin-top: 20px; }
 
 .Tip > div {
   margin: 0 10px;
@@ -1070,11 +1074,13 @@ input {
 
 /* Section Transitions */
 .ng-hide-add {
+  top: 0;
   position: fixed;
   width: 100%;
   -webkit-animation: 0.7s slideOut ease; }
 
 .ng-hide-remove {
+  top: 0;
   position: fixed;
   width: 100%;
   -webkit-animation: 0.7s slideIn ease; }
@@ -1085,24 +1091,25 @@ input {
 .ng-hide.ng-hide-remove-pre {
   display: block !important;
   position: fixed;
+  top: 0;
   width: 100%;
   transform: translateX(100%); }
 
 /* light speed out */
 @-webkit-keyframes slideIn {
   0% {
-    transform: translateX(100%) translateY(-20px); }
+    transform: translateX(100%); }
   20% {
-    transform: translateX(100%) translateY(-20px); }
+    transform: translateX(100%); }
   100% {
-    transform: translateX(0%) translateY(-20px); } }
+    transform: translateX(0%); } }
 @-webkit-keyframes slideOut {
   0% {
-    transform: translateX(0%) translateY(-20px); }
+    transform: translateX(0%); }
   20% {
-    transform: translateX(0%) translateY(-20px); }
+    transform: translateX(0%); }
   100% {
-    transform: translateX(-100%) translateY(-20px); } }
+    transform: translateX(-100%); } }
 /**
  * CSS Spinner
  */

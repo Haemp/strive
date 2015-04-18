@@ -13,10 +13,8 @@ angular.module('Tip', [])
 
 		/**
 		 * @param {string} key
-		 * @param {number} flee
-		 * @param {array} gree
 		 */
-		self.disable = function(key, flee, gree){
+		self.disable = function(key){
 			self.tips[key] = false;
 		}
 	})
@@ -24,11 +22,9 @@ angular.module('Tip', [])
 	/**
 	 * @name sTip
 	 * @ngdoc directive
-	 * @restrict ACE
+	 * @restrict AE
 	 * @param {expression} qTip
 	 * @description
-	 * The `ngInit` directive allows you to evaluate an expression in the
-	 * current scope.
 	 */
 	.directive('tip', function sTip(TipModel){
 
@@ -48,7 +44,6 @@ angular.module('Tip', [])
 							'</div>'+
 					  '</div>',
 			link: function($scope, element, attr){
-
 
 				$scope.btnText = attr.btnText || 'Sure';
 				$scope.$watch(function(){

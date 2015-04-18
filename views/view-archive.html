@@ -9,7 +9,7 @@
             <b>Warning</b> Archived habits will loose their current streak. (Yup that’s pretty logical, but you know how people are)</p>
         </p>
     </div>
-     <ul class="L-vbox-15">
+     <ul class="L-vbox-15 MainList">
         <li class="ListItem"  ng-class="{'ListItem_selected': habit.selected}" ng-repeat="habit in HabitModel.habits | filter:showArchived">
            <habit habit="habit"></habit>
         </li>

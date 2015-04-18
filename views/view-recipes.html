@@ -1,17 +1,14 @@
 <div>
 
     <div>
-        <div tip="recipe-tip" class="Tip">
-            <div>
-                <div class="Tip-title">Recipes</div>
-                <p class="Tip-text">Recipes are interesting</p>
-            </div>
-            <div class="Tip-footer">
-                <button class="Tip-close" ng-click="closeTip()">Right...</button>
-            </div>
+        <div tip="recipe-tip" btn-text="Good to know" class="Tip">
+            <div class="Tip-title">Recipes are grouped monitors and habits</div>
+            You can group monitors and habits into neat little packages that act
+            as simple recipes for a working habit. Recipes can also be <b>shared</b> to other
+            users through the publish button.
         </div>
         
-        <div class="L-vbox-10">
+        <div class="L-vbox-10 MainList">
             <div class="ListItem" ng-repeat="recipe in RecipeModel.recipes | filter: archived">    
                 <recipe recipe="recipe" edit-recipe="editRecipe"></recipe>
             </div>

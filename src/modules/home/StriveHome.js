@@ -2,57 +2,77 @@
 
 	angular.module('Strive')
 
-	.config(function($stateProvider, $httpProvider) {
+        .config(function($stateProvider, $httpProvider) {
 
-		$stateProvider.state('home', {
-			url: "/home",
-			views: {
-				main: {
-					templateUrl: "src/modules/home/home.html",
-					controller: 'HomeCtrl'
-				}
-			}
-		})
+            $stateProvider.state('home', {
+                url: "/home",
+                views: {
+                    main: {
+                        templateUrl: "src/modules/home/home.html",
+                        controller: 'HomeCtrl'
+                    }
+                }
+            })
 
-	})
+        })
 
-	.controller('HomeCtrl', function($scope, $http, DOMAIN, SyncModel, $state){
+        .controller('HomeCtrl', function($scope, $http, DOMAIN, SyncModel, $state, TipModel, $rootScope){
 
-		var self = this;
-		$scope.recipes = [];
-
-
-		self._init = function(){
-
-			// fetch all published recipes
-			$http({ 
-				url: DOMAIN+'/api/recipe/published',
-				method: 'GET'
-			}).then(function(res){
-				$scope.recipes = res.data;
-			})
-		}	
+            var self = this;
+            $scope.recipes = [];
 
 
-		$scope.fork = function(recipe){
+            self._init = function(){
 
-			// 1) send the request to fork - this will all be handled on the backend
-			$http.post(DOMAIN+'/api/recipe/'+recipe.id+'/fork').then(function(){
+                TipModel.enable('home-tip');
+                $rootScope.$on('$stateChangeSuccess', function(e, toState){
+                    if(toState.name == 'home'){
+                        fetch();
+                    }
+                })
 
-				// 2) Request a sync after the request is done
-				return SyncModel.sync();
+                fetch();
+            }
 
-			}, function(){
-				
-			}).then(function(){
 
-				// 3) The recipe should now be downsynced and ready
-				// Add a notifcation to tell the user 
-				$state.transitionTo('recipes');
-			})
-		}
+            function fetch(){
 
-		self._init();
-	})
+                // fetch all published recipes
+                $http({
+                    url: DOMAIN+'/api/recipe/published',
+                    method: 'GET'
+                }).then(function(res){
+
+                    $scope.unAuthorized = false;
+                    $scope.recipes = res.data;
+
+
+                }, function(res){
+                    if(res.status == 401){
+                        $scope.unAuthorized = true;
+                    }
+                })
+            }
+
+            $scope.fork = function(recipe){
+
+                // 1) send the request to fork - this will all be handled on the backend
+                $http.post(DOMAIN+'/api/recipe/'+recipe.id+'/fork').then(function(){
+
+                    // 2) Request a sync after the request is done
+                    return SyncModel.sync();
+
+                }, function(){
+
+                }).then(function(){
+
+                    // 3) The recipe should now be downsynced and ready
+                    // Add a notifcation to tell the user
+                    $state.transitionTo('recipes');
+                })
+            }
+
+            self._init();
+        })
 
 })()

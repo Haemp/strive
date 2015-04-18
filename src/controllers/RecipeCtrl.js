@@ -36,11 +36,11 @@
 		
 		$scope.HabitModel = HabitModel;
 		$scope.MonitorModel = MonitorModel;
-		$scope.newRecipe = {};
+		$scope.vm = { newRecipe: {} };
 		
 		self._init = function(){
 			
-			$scope.$watch('newRecipe', function(newVal){
+			$scope.$watch('vm.newRecipe', function(newVal){
 				if(newVal === undefined){
 					$state.transitionTo('recipes')
 				}

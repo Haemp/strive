@@ -75,12 +75,13 @@
 			<img class="MainHeader-logo" src="img/logo-strive-2x.png" alt="">
 		</div>
 		<div class="MainContent ">
-			<div class="slide" ng-show="activeState == 'habits'" ng-hide="activeState != 'habits'" ng-controller="HabitCtrl" ng-include="'views/view-habits.html'"></div>
-			<div class="slide" ng-show="activeState == 'monitors'" ng-hide="activeState != 'monitors'" ng-controller="MonitorCtrl" ng-include="'views/view-monitors.html'" ></div>
-			<div class="slide" ng-show="activeState == 'archived'" ng-hide="activeState != 'archived'" ng-controller="ArchiveCtrl" ng-include="'views/view-archive.html'" ></div>
-			<div class="slide" ng-show="activeState == 'recipes'" ng-hide="activeState != 'recipes'" ng-controller="RecipeCtrl" ng-include="'views/view-recipes.html'" ></div>
-			<div class="slide" ng-show="activeState == 'recipecreate'" ng-hide="activeState != 'recipecreate'" ng-controller="CreateRecipeCtrl" ng-include="'views/view-create-recipe.html'" ></div>
-			<div class="slide" ng-show="activeState == 'recipeupdate'" ng-hide="activeState != 'recipeupdate'" ng-controller="UpdateRecipeCtrl" ng-include="'views/view-update-recipe.html'" ></div>
+			<div class="slide" ng-show="activeState == 'habits'"  ng-controller="HabitCtrl" ng-include="'views/view-habits.html'"></div>
+			<div class="slide" ng-show="activeState == 'monitors'" ng-controller="MonitorCtrl" ng-include="'views/view-monitors.html'" ></div>
+			<div class="slide" ng-show="activeState == 'archived'"  ng-controller="ArchiveCtrl" ng-include="'views/view-archive.html'" ></div>
+			<div class="slide" ng-show="activeState == 'recipes'"  ng-controller="RecipeCtrl" ng-include="'views/view-recipes.html'" ></div>
+			<div class="slide" ng-show="activeState == 'recipecreate'"  ng-controller="CreateRecipeCtrl" ng-include="'views/view-create-recipe.html'" ></div>
+			<div class="slide" ng-show="activeState == 'recipeupdate'" ng-controller="UpdateRecipeCtrl" ng-include="'views/view-update-recipe.html'" ></div>
+            <div class="slide" ng-show="activeState == 'home'"  ng-controller="HomeCtrl" ng-include="'src/modules/home/home.html'" ></div>
 		</div>
 		<basement open="StateModel.basementOpen" anim:on-complete anim:name="basement">
 			<ul class="Basement-menu" gesture="false">
@@ -111,7 +112,7 @@
 					<span class="Basement-menu-item-name">home</span>
 				</li>
 				<li class="Basement-menu-item" ng-if="!UserModel.user || !UserModel.user.authorized" ng-click="UserModel.showUserLogin = true">
-					<span class="Basement-menu-item-name">Login</span>
+					<span class="Basement-menu-item-name">Login / Signup</span>
 				</li>
 				<li class="Basement-menu-item" ng-if="UserModel.user" ng-click="sync()">
 					<span class="Basement-menu-item-name">Sync</span>
@@ -126,7 +127,7 @@
 					</div>
 				</li>
 				<li>
-					<span style="font-size: 12px; color: #999; margin: 10px; float: right;">v0.5.3</span>
+					<span style="font-size: 12px; color: #999; margin: 10px; float: right;">v0.5.4</span>
 				</li>
 			</ul>
 		</basement>

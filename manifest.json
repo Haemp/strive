@@ -1,7 +1,7 @@
 {
   "name": "Strive",
   "description": "Habit tracking app",
-  "version": "0.5.2",
+  "version": "0.5.4",
   "app": {
     "background": {
       "scripts": [
@@ -25,8 +25,6 @@
     "<all_urls>"
   ],
   "oauth2": {
-    // client_id below is specifc to the application key. Follow the
-    // documentation to obtain one for your app.
     "client_id": "679381996523-nrcpp1obfd1d00gm2vb2fd832l79737k.apps.googleusercontent.com",
     "scopes": [
     	"https://www.googleapis.com/auth/plus.login",

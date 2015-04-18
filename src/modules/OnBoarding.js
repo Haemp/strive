@@ -1,8 +1,8 @@
 angular.module('OnBoarding', ['Tip'])
 
-.run(function(HabitModel, MonitorModel, $rootScope, TipModel){
+.run(function(HabitModel, MonitorModel, $rootScope, TipModel, RecipeModel){
 	var init = $rootScope.$watch(function(){
-		return HabitModel.initiated && MonitorModel.initiated;
+		return HabitModel.initiated && MonitorModel.initiated && RecipeModel.initiated;;
 	}, function(newValue){
 		if(newValue === true){
 
@@ -25,6 +25,10 @@ angular.module('OnBoarding', ['Tip'])
 				console.log('User has no monitors');
 				TipModel.enable('monitors-tip')
 			}
+
+            if(RecipeModel.recipes.length == 0){
+                TipModel.enable('recipe-tip')
+            }
 
 			// we don't need this more now
 			// remove the watcher

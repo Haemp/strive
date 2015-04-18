@@ -164,10 +164,13 @@
 	.IconText_medium{ font: normal 18px "RobotoSlab", sans-serif;  }
 
 /* MainInput */
-	.MainInput{ position: static; margin-top: 30px; margin: 30px 15px;; }
+	.MainInput{ position: static; margin: 0 15px 30px 15px; }
 	.MainInput-inner{ overflow:hidden; }
 	.MainInput-btn{ padding: 15px 30px; }
 	.MainInput-input-name{ padding: 15px 10px 15px 30px;}
+
+/** MainList */
+    .MainList{ margin-bottom:30px; }
 
 /* TabList */
 	.TabList{ @extend .L-hbox; @extend .T-stout; @extend .T-medium-; letter-spacing:0px;}
@@ -183,7 +186,7 @@
 	.MainContent{ margin-top:20px; }
 
 /* Tip */
-	.Tip{ margin:0 auto; margin-bottom: 20px; width: 100%; max-width: 600px; min-width: 100px; }
+	.Tip{ margin:0 auto; margin-bottom: 20px; width: 100%; max-width: 600px; min-width: 100px; margin-top: 20px; }
 	.Tip > div{ margin: 0 10px; border-top: 2px solid #ccc; border-bottom: 1px solid #ccc;  padding: 10px 20px 20px 20px; background-color: #ddd; @include rounded(5px);  @extend .L-vbox-20; }
 	.Tip-title{ font: normal 18px "RobotoSlab", sans-serif; font-weight: 900; letter-spacing: -1px; }
 	.Tip-text{ font-weight: 200;}
@@ -305,39 +308,16 @@
 	.Splash-image{ margin-top: 200px; }
 
 /* Section Transitions */
-.slide{ 
-	//transform: translateZ(0);
+.slide{
 }
-// .slide.ng-hide-add.ng-hide-add-active,
-// .slide.ng-hide-remove.ng-hide-remove-active {
-  
-//   transition:1s;
-// }
-// .slide.ng-hide.ng-hide-add{
-// 	  position: absolute; width: 100%; margin-top: 50px;
 
-// 	transition:1s;
-// 	display:block !important;
-// 	-webkit-transform: translateX(-100%);
-// 	transform: translateX(-100%);
-// }
-// .slide.ng-hide.ng-hide-remove{
-// 	position: absolute; width: 100%; margin-top: 50px;
-// 	transition:1s;
-// 	display:block !important;
-// 	transform: translateX(0px);
-// }
-// .slide.ng-hide.ng-hide-remove-active{
-// 	position: absolute; width: 100%; margin-top: 50px;
-// 	transition:1s;
-// 	display:block !important;
-// 	transform: translateX(100%);
-// }
 .ng-hide-add{
+    top:0;
 	position: fixed; width: 100%;
 	-webkit-animation:0.7s slideOut ease;
 }
 .ng-hide-remove{
+    top:0;
 	position: fixed; width: 100%;
 	-webkit-animation:0.7s slideIn ease;
 }
@@ -348,6 +328,7 @@
 .ng-hide.ng-hide-remove-pre{ 
 	display: block !important;
 	position: fixed;
+    top:0;
 	width: 100%;
 	transform: translateX(100%);
 }
@@ -355,24 +336,24 @@
 /* light speed out */
 @-webkit-keyframes slideIn {
   0% {
-    transform: translateX(100%) translateY(-20px);
+    transform: translateX(100%);
   }
   20% {
-  	transform: translateX(100%) translateY(-20px);	
+  	transform: translateX(100%);
   }
   100% {
-    transform: translateX(0%) translateY(-20px);
+    transform: translateX(0%);
   }
 }
 @-webkit-keyframes slideOut {
   0% {
-    transform: translateX(0%) translateY(-20px);
+    transform: translateX(0%);
   }
   20% {
-    transform: translateX(0%) translateY(-20px);
+    transform: translateX(0%);
   }
   100% {
-    transform: translateX(-100%) translateY(-20px);
+    transform: translateX(-100%);
   }
 }
 

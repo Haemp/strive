@@ -1,8 +1,19 @@
 <div class="StriveHome">
-	
-	<ul class="L-vbox-10">
+
+    <div tip="home-tip" btn-text="Handy, thanks" class="Tip">
+        Strive home a place where you can view recipes that
+        other people have shared.
+    </div>
+
+    <div class="Tip" ng-show="unAuthorized">
+        <div class="L-center">
+            <div class="Tip-title">You need a user account to see this section</div>
+        </div>
+    </div>
+
+    <ul class="L-vbox-10">
 		<li ng-repeat="recipe in recipes" class="ListItem">
-			<recipe-public recipe="recipe"></recipe>
+			<recipe-public recipe="recipe"></recipe-public>
 		</li>
 	</ul>
 
