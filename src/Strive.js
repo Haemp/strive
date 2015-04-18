@@ -132,7 +132,7 @@ Strive.directive('haOnModelLoad', function(StateModel, $state){
 				], { duration: 500, easing: 'ease' }).onfinish = function(){
 					splash.style.transform = 'translateX(-100%)';
 
-					$state.transitionTo('recipes');
+					$state.transitionTo('habits');
 				}
 
 			})

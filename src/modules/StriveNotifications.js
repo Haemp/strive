@@ -2,7 +2,7 @@
 
     angular.module('Strive')
 
-    .service('StriveNotifications', function(HabitModel, StriveHelper){
+    .service('StriveNotifications', function(HabitModel, CalcHelper){
         var self = this;
 
         self.refreshOverview = function(){
@@ -12,7 +12,7 @@
             var habitsList = [];
             angular.forEach(HabitModel.habits, function(habit){
 
-                if(!habit.isArchived && !StriveHelper.tickedToday(habit)){
+                if(!habit.isArchived && !CalcHelper.tickedToday(habit)){
                     habitsList.push({ title: habit.name, message: habit.description || 'No description' });
                 }
             });

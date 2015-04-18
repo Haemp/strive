@@ -6,7 +6,7 @@ Strive.controller('MonitorCtrl', function( $scope, MonitorModel ){
 
 	$scope.createMonitor = function(newMonitor){
 		MonitorModel.createMonitor(newMonitor);
-		self.newMonitor = undefined;
+		$scope.newMonitor = undefined;
 	}
 	
 	// $scope.addDataPoint = function( monitor, newDataValue ){

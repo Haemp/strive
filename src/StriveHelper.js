@@ -13,7 +13,7 @@ function _StriveHelper(){
 			return 'blue';
 		}else if( streak >= 3){
 			return 'green';
-		}else if( streak > 0){
+		}else if( streak >= 0){
 			return 'gray';
 		}
 	}

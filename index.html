@@ -116,8 +116,8 @@
 				<li class="Basement-menu-item" ng-if="UserModel.user" ng-click="sync()">
 					<span class="Basement-menu-item-name">Sync</span>
 				</li>
-				<li as-touch-active class="Basement-menu-item" ng-if="UserModel.user" >
-					<span class="Basement-menu-item-name" ng-click="basementState.logoutPopup = true">Logout</span>
+				<li as-touch-active class="Basement-menu-item" ng-if="UserModel.user" ng-click="basementState.logoutPopup = true" >
+					<span class="Basement-menu-item-name" >Logout</span>
 					<div class="Basement-confirm" ng-if="basementState.logoutPopup">
 						<div>Orly? Unsynced data will be lost.</div>
 						<button	class="L-center Btn Btn-lilly Btn_small dark" ng-click="logoutConfirm($event, false)">Cancel</button>
