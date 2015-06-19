@@ -7,20 +7,6 @@ chrome.app.runtime.onLaunched.addListener(function() {
   });
 });
 
-console.log('From bg');
-window.addEventListener('focus', function(){
-  console.log('onfocus');
-});
-window.addEventListener('blur', function(){
-  console.log('blur');
-});
-window.addEventListener('focusin', function(){
-  console.log('focusin');
-});
-window.addEventListener('focusout', function(){
-  console.log('focusout');
-});
-
 // check if the periodical alarm is set
 chrome.alarms.get('dailyAlarm', function( alarm ){
 	if( !alarm ){
@@ -37,6 +23,22 @@ chrome.alarms.get('dailyAlarm', function( alarm ){
 var JsonStorage = angular.bootstrap(undefined, ['fileSystem', 'AngularSugar', 'JsonStorage']).get('JsonStorage');
 console.log('Json initiated', JsonStorage);
 
+
+chrome.notifications.onClicked.addListener(function(){
+
+    // restore the window
+    var windows = chrome.app.window.getAll();
+    if(windows && windows[0]){
+        windows[0].restore();
+    }else{
+        chrome.app.window.create('index.html', {
+            'bounds': {
+                'width': 400,
+                'height': 600
+            }
+        });
+    }
+})
 
 chrome.alarms.onAlarm.addListener(function( alarm ){
 

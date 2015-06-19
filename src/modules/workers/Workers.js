@@ -8,7 +8,7 @@
 		self.habitWorker;
 
 		self._init = function(){
-			if( chrome.storage ){ // if in phone
+			if( typeof chrome != 'undefined' && chrome.storage ){ // if in phone
 				self.habitWorker = new Worker('/src/modules/workers/habitWorker.js');
 			}else{
 				self.habitWorker = new Worker('/amplex/src/modules/workers/habitWorker.js');

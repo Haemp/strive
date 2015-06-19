@@ -19,7 +19,6 @@
                         StriveNotifications.refreshOverview();
                     }
                     scope.selectHabit = HabitModel.selectHabit;
-                    scope.isTickedToday = StriveHelper.tickedToday;
 
                     scope.archive = function(habit){
                         HabitModel.archive(habit);

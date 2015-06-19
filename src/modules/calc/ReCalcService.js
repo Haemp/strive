@@ -18,8 +18,8 @@
             console.log('Initiating clacs');
             
             JsonStorage.serial_get('strive.CalcService').then(function(d){
-                console.log('CalcService: Loading last calculation...', d.lastCalculation);
-                lastCalculation = d ? new Date.parse(d.lastCalculation || 0) : new Date(0);
+                //console.log('CalcService: Loading last calculation...', d.lastCalculation);
+                lastCalculation = d ? Date.parse(d.lastCalculation || 0) : new Date(0);
             });
         }
 

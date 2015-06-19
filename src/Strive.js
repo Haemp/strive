@@ -119,22 +119,21 @@ Strive.directive('haOnLoad', function($rootScope){
 	}
 })
 
-Strive.directive('haOnModelLoad', function(StateModel, $state){
+Strive.directive('haOnModelLoad', function(StateModel, $state, $timeout){
 	return {
 		link: function(){
 			StateModel.whenLoaded().then(function(){
 				console.timeEnd('Model load');
 				console.log('Models loaded');
-				var splash = document.querySelector('.Splash');
-				splash.animate([
-					{transform: 'translateX(0)'},
-					{transform: 'translateX(-100%)'}
-				], { duration: 500, easing: 'ease' }).onfinish = function(){
-					splash.style.transform = 'translateX(-100%)';
 
+                // slide the splash screen
+                var splash = document.querySelector('.Splash');
+                splash.classList.add('Splash_finished');
+
+                // trigger first state
+                $timeout(function(){
 					$state.transitionTo('habits');
-				}
-
+                },700);
 			})
 		}
 	}

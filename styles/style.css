@@ -321,16 +321,26 @@
 .Basement {
   padding-top: 60px;
   color: #fff;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
   transition: 0.2s;
   position: fixed;
   width: 50%;
   background: #353335;
   -webkit-transform: translateX(-80%) translateY(100%);
+  -moz-transform: translateX(-80%) translateY(100%);
+  -ms-transform: translateX(-80%) translateY(100%);
+  -o-transform: translateX(-80%) translateY(100%);
+  transform: translateX(-80%) translateY(100%);
   bottom: 0;
   z-index: 1; }
 
 .Basement_open {
-  -webkit-transform: translateX(0%) translateY(0%); }
+  -webkit-transform: translateX(0%) translateY(0%);
+  -moz-transform: translateX(0%) translateY(0%);
+  -ms-transform: translateX(0%) translateY(0%);
+  -o-transform: translateX(0%) translateY(0%);
+  transform: translateX(0%) translateY(0%); }
 
 .Basement {
   position: fixed;
@@ -435,9 +445,9 @@ input {
 
 .ListItem-head.active {
   background-color: #ddd;
-  -webkit-transition: all 0.1s ease-out;
-  -moz-transition: all 0.1s ease-out;
-  transition: all 0.1s ease-out; }
+  -webkit-transition: 0.1s;
+  -moz-transition: 0.1s;
+  transition: 0.1s; }
 
 .ListItem-name, .Recipe-title {
   font-family: "RobotoSlab", sans-serif;
@@ -466,27 +476,51 @@ input {
   -moz-transition: 0.2s;
   transition: 0.2s; }
 .ListItem-edit.ng-enter {
-  -webkit-transform: translateX(-30px); }
+  -webkit-transform: translateX(-30px);
+  -moz-transform: translateX(-30px);
+  -ms-transform: translateX(-30px);
+  -o-transform: translateX(-30px);
+  transform: translateX(-30px); }
 .ListItem-edit.ng-enter.ng-enter-active {
-  -webkit-transform: translateX(0px); }
+  -webkit-transform: translateX(0px);
+  -moz-transform: translateX(0px);
+  -ms-transform: translateX(0px);
+  -o-transform: translateX(0px);
+  transform: translateX(0px); }
 .ListItem-edit.ng-leave {
   -webkit-transition: 0.1s !important;
   -moz-transition: 0.1s !important;
   transition: 0.1s !important;
-  -webkit-transform: translateX(-30px); }
+  -webkit-transform: translateX(-30px);
+  -moz-transform: translateX(-30px);
+  -ms-transform: translateX(-30px);
+  -o-transform: translateX(-30px);
+  transform: translateX(-30px); }
 
 .ListItem.ng-enter {
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
   transition: 0.3s;
-  -webkit-transform: translateX(-100%); }
+  -webkit-transform: translateX(-100%);
+  -moz-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  -o-transform: translateX(-100%);
+  transform: translateX(-100%); }
 .ListItem.ng-enter.ng-enter-active {
-  -webkit-transform: translateX(0px); }
+  -webkit-transform: translateX(0px);
+  -moz-transform: translateX(0px);
+  -ms-transform: translateX(0px);
+  -o-transform: translateX(0px);
+  transform: translateX(0px); }
 .ListItem.ng-leave {
   -webkit-transition: 0.13s !important;
   -moz-transition: 0.13s !important;
   transition: 0.13s !important;
-  -webkit-transform: translateX(-100%); }
+  -webkit-transform: translateX(-100%);
+  -moz-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  -o-transform: translateX(-100%);
+  transform: translateX(-100%); }
 
 .T-stout, .TabList, .Basement-menu-item {
   text-transform: uppercase;
@@ -498,19 +532,29 @@ input {
 
 /* FullCheckbox */
 .FullCheckbox {
-  transition: 0.1s;
-  transition-timing-function: ease-in;
+  -webkit-transition: -webkit-transform 0.1s ease-in;
+  -moz-transition: -moz-transform 0.1s ease-in;
+  transition: transform 0.1s ease-in;
   padding: 10px;
   width: 70%;
+  -webkit-transform: translateX(-100px);
+  -moz-transform: translateX(-100px);
+  -ms-transform: translateX(-100px);
+  -o-transform: translateX(-100px);
   transform: translateX(-100px);
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   padding-left: 120px; }
 
 .FullCheckbox-selected {
-  transition: 0.15s;
-  transform: translateX(-20px);
-  transition-timing-function: ease-out; }
+  -webkit-transition: -webkit-transform 0.15s ease-out;
+  -moz-transition: -moz-transform 0.15s ease-out;
+  transition: transform 0.15s ease-out;
+  -webkit-transform: translateX(-20px);
+  -moz-transform: translateX(-20px);
+  -ms-transform: translateX(-20px);
+  -o-transform: translateX(-20px);
+  transform: translateX(-20px); }
 
 /* Button */
 [class*='Btn-']:active {
@@ -909,6 +953,7 @@ input {
   bottom: 0;
   z-index: 10;
   padding: 20px;
+  background: -webkit-radial-gradient(top, circle cover, #545454 0%, #333333 30%);
   background: -webkit-radial-gradient(top, circle cover, #545454 0%, #333333 30%); }
   .Login .Noti {
     margin: 30px 0 50px; }
@@ -916,14 +961,26 @@ input {
     -webkit-transition: 0.7s;
     -moz-transition: 0.7s;
     transition: 0.7s;
-    -webkit-transform: translateY(-100%); }
+    -webkit-transform: translateY(-100%);
+    -moz-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    -o-transform: translateY(-100%);
+    transform: translateY(-100%); }
   .Login.ng-enter.ng-enter-active {
-    -webkit-transform: translateY(0%); }
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    transform: translateY(0%); }
   .Login.ng-leave {
     -webkit-transition: 1s !important;
     -moz-transition: 1s !important;
     transition: 1s !important;
-    -webkit-transform: translateY(-100%); }
+    -webkit-transform: translateY(-100%);
+    -moz-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    -o-transform: translateY(-100%);
+    transform: translateY(-100%); }
 
 .Login-close {
   float: right; }
@@ -963,7 +1020,8 @@ input {
   right: 0;
   width: 100%;
   top: initial;
-  will-change: transform;
+  -webkit-transition: 0.12s;
+  -moz-transition: 0.12s;
   transition: 0.12s;
   position: fixed; }
 
@@ -972,8 +1030,9 @@ input {
 
 .Basement-menu-item {
   border-bottom: 1px solid #222222;
-  box-shadow: 0px 1px 0px #444;
   -webkit-box-shadow: 0px 1px 0px #444;
+  -moz-box-shadow: 0px 1px 0px #444;
+  box-shadow: 0px 1px 0px #444;
   padding: 10px; }
 
 .Basement-menu-item.active {
@@ -985,10 +1044,16 @@ input {
 
 /* Flip card */
 .Flip-inner.switched {
-  -webkit-transform: rotateY(180deg); }
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg); }
 
 .Flip-container {
-  -webkit-perspective: 200; }
+  -webkit-perspective: 200px;
+  -moz-perspective: 200px;
+  perspective: 200px; }
 
 .Flip-inner.animate.no-border {
   border: none;
@@ -997,16 +1062,27 @@ input {
 .Flip-inner.animate {
   margin-top: -1px;
   border: 1px solid #ddd;
-  -webkit-animation: .6s flip ease-out;
+  -webkit-animation: 0.6s flip ease-out;
+  -moz-animation: 0.6s flip ease-out;
+  animation: 0.6s flip ease-out;
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
   transform: rotateY(180deg); }
 
 .Flip-inner {
-  -webkit-transform-style: preserve-3d; }
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d; }
 
 .Flip-front, .Flip-back {
   height: 50px;
   box-sizing: border-box;
-  -webkit-backface-visibility: hidden; }
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden; }
 
 .Flip-front {
   z-index: 2;
@@ -1018,16 +1094,54 @@ input {
   padding-left: 39px;
   margin-top: -50px;
   position: relative;
-  -webkit-transform: rotateY(180deg); }
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg); }
 
 @-webkit-keyframes flip {
   0% {
+    -webkit-transform: rotateY(0deg); }
+  20% {
+    -webkit-transform: rotateY(90deg); }
+  85% {
+    -webkit-transform: rotateY(170deg); }
+  100% {
+    -webkit-transform: rotateY(180deg); } }
+@-moz-keyframes flip {
+  0% {
+    -moz-transform: rotateY(0deg); }
+  20% {
+    -moz-transform: rotateY(90deg); }
+  85% {
+    -moz-transform: rotateY(170deg); }
+  100% {
+    -moz-transform: rotateY(180deg); } }
+@keyframes flip {
+  0% {
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    -o-transform: rotateY(0deg);
     transform: rotateY(0deg); }
   20% {
+    -webkit-transform: rotateY(90deg);
+    -moz-transform: rotateY(90deg);
+    -ms-transform: rotateY(90deg);
+    -o-transform: rotateY(90deg);
     transform: rotateY(90deg); }
   85% {
+    -webkit-transform: rotateY(170deg);
+    -moz-transform: rotateY(170deg);
+    -ms-transform: rotateY(170deg);
+    -o-transform: rotateY(170deg);
     transform: rotateY(170deg); }
   100% {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
     transform: rotateY(180deg); } }
 /* Indentions */
 .Indent-10-30 {
@@ -1060,6 +1174,9 @@ input {
 
 /* Splash Screen */
 .Splash {
+  -webkit-transition: all 0.6s ease;
+  -moz-transition: all 0.6s ease;
+  transition: all 0.6s ease;
   z-index: 99;
   position: absolute;
   top: 0;
@@ -1069,6 +1186,13 @@ input {
   background-color: #eee;
   text-align: center; }
 
+.Splash_finished {
+  -webkit-transform: translateX(-100%);
+  -moz-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  -o-transform: translateX(-100%);
+  transform: translateX(-100%); }
+
 .Splash-image {
   margin-top: 200px; }
 
@@ -1077,13 +1201,17 @@ input {
   top: 0;
   position: fixed;
   width: 100%;
-  -webkit-animation: 0.7s slideOut ease; }
+  -webkit-animation: 0.7s slideOut ease;
+  -moz-animation: 0.7s slideOut ease;
+  animation: 0.7s slideOut ease; }
 
 .ng-hide-remove {
   top: 0;
   position: fixed;
   width: 100%;
-  -webkit-animation: 0.7s slideIn ease; }
+  -webkit-animation: 0.7s slideIn ease;
+  -moz-animation: 0.7s slideIn ease;
+  animation: 0.7s slideIn ease; }
 
 .ng-hide.ng-hide-add {
   display: block !important; }
@@ -1093,22 +1221,78 @@ input {
   position: fixed;
   top: 0;
   width: 100%;
+  -webkit-transform: translateX(100%);
+  -moz-transform: translateX(100%);
+  -ms-transform: translateX(100%);
+  -o-transform: translateX(100%);
   transform: translateX(100%); }
 
 /* light speed out */
 @-webkit-keyframes slideIn {
   0% {
+    -webkit-transform: translateX(100%); }
+  20% {
+    -webkit-transform: translateX(100%); }
+  100% {
+    -webkit-transform: translateX(0%); } }
+@-moz-keyframes slideIn {
+  0% {
+    -moz-transform: translateX(100%); }
+  20% {
+    -moz-transform: translateX(100%); }
+  100% {
+    -moz-transform: translateX(0%); } }
+@keyframes slideIn {
+  0% {
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
     transform: translateX(100%); }
   20% {
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
     transform: translateX(100%); }
   100% {
+    -webkit-transform: translateX(0%);
+    -moz-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    -o-transform: translateX(0%);
     transform: translateX(0%); } }
 @-webkit-keyframes slideOut {
   0% {
+    -webkit-transform: translateX(0%); }
+  20% {
+    -webkit-transform: translateX(0%); }
+  100% {
+    -webkit-transform: translateX(-100%); } }
+@-moz-keyframes slideOut {
+  0% {
+    -moz-transform: translateX(0%); }
+  20% {
+    -moz-transform: translateX(0%); }
+  100% {
+    -moz-transform: translateX(-100%); } }
+@keyframes slideOut {
+  0% {
+    -webkit-transform: translateX(0%);
+    -moz-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    -o-transform: translateX(0%);
     transform: translateX(0%); }
   20% {
+    -webkit-transform: translateX(0%);
+    -moz-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    -o-transform: translateX(0%);
     transform: translateX(0%); }
   100% {
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
     transform: translateX(-100%); } }
 /**
  * CSS Spinner
@@ -1141,27 +1325,23 @@ input {
     -webkit-transform: scale(0); }
   40% {
     -webkit-transform: scale(1); } }
+@-moz-keyframes bouncedelay {
+  0%, 80%, 100% {
+    -moz-transform: scale(0); }
+  40% {
+    -moz-transform: scale(1); } }
 @keyframes bouncedelay {
   0%, 80%, 100% {
-    transform: scale(0);
-    -webkit-transform: scale(0); }
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    transform: scale(0); }
   40% {
-    transform: scale(1);
-    -webkit-transform: scale(1); } }
-/*
-.slide.ng-enter, .slide.ng-leave.ng-leave-active {
-  -webkit-transform: scaleX(0.0001);
-       -o-transform: scaleX(0.0001);
-          transform: scaleX(0.0001);
-  opacity: 0;
-}
-
-// default state
-.slide, .slide.ng-enter.ng-enter-active {
-  -webkit-transform: scaleX(1);
-       -o-transform: scaleX(1);
-          transform: scaleX(1);
-  opacity: 1;
-}*/
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1); } }
 
 /*# sourceMappingURL=style.css.map */

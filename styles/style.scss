@@ -2,6 +2,7 @@
 @import '../bower_components/staggolee/Effects';
 @import '../bower_components/ah-basement/basement';
 @import '../bower_components/nvd3/nv.d3.css';
+@import "bourbon/bourbon";
 
 
 
@@ -66,22 +67,22 @@
 	// animations
 	.ListItem-edit{
 		&.ng-enter{ @include trans(0.2s); }
-		&.ng-enter{ -webkit-transform: translateX(-30px); }
-		&.ng-enter.ng-enter-active{ -webkit-transform: translateX(0px); }
-		&.ng-leave{ @include trans(0.1s !important); -webkit-transform: translateX(-30px); }
+		&.ng-enter{ @include transform( translateX(-30px)); }
+		&.ng-enter.ng-enter-active{ @include transform( translateX(0px)); }
+		&.ng-leave{ @include transition(0.1s !important); @include transform( translateX(-30px)); }
 	}
 	.ListItem{
-		&.ng-enter{ @include trans(0.3s); -webkit-transform: translateX(-100%); }
-		&.ng-enter.ng-enter-active{ -webkit-transform: translateX(0px); }
-		&.ng-leave{ @include trans(0.13s !important); -webkit-transform: translateX(-100%); }
+		&.ng-enter{ @include transition(0.3s); @include transform( translateX(-100%)); }
+		&.ng-enter.ng-enter-active{ @include transform( translateX(0px)); }
+		&.ng-leave{ @include transition(0.13s !important); @include transform( translateX(-100%)); }
 	}
 
 	.T-stout{ text-transform: uppercase; font-size: 14px; font-weight: bold; }
 	.T-medium-{ font-size: 16px}
 
 /* FullCheckbox */
-	.FullCheckbox{ transition:0.1s; transition-timing-function: ease-in; @extend .Box-ali; padding: 10px; width: 70%; transform: translateX(-100px); border-top-right-radius: 20px; border-bottom-right-radius: 20px; padding-left: 120px; }                 
-	.FullCheckbox-selected{ transition:0.15s; transform: translateX(-20px); transition-timing-function: ease-out;}
+	.FullCheckbox{ @include transition(transform 0.1s ease-in); @extend .Box-ali; padding: 10px; width: 70%; @include transform( translateX(-100px)); border-top-right-radius: 20px; border-bottom-right-radius: 20px; padding-left: 120px; }
+	.FullCheckbox-selected{ @include transition(transform 0.15s ease-out); @include transform( translateX(-20px)); }
 	
 /* Button */
 	[class*='Btn-']{
@@ -231,11 +232,11 @@
 	.Recipe-title{ text-align: center; font-weight: 900; letter-spacing: 0px;  @extend .ListItem-name; }
 
 /* Login */
-	.Login{ overflow-y:auto; font-weight:300; color: #ccc; position:fixed; background-color: #333; top:0; left:0; right:0; bottom:0; z-index:10; padding: 20px; background: -webkit-radial-gradient(top, circle cover, #545454 0%,#333333 30%);	
+	.Login{ overflow-y:auto; font-weight:300; color: #ccc; position:fixed; background-color: #333; top:0; left:0; right:0; bottom:0; z-index:10; padding: 20px; @include background(-webkit-radial-gradient(top, circle cover, #545454 0%,#333333 30%));
 		.Noti{ margin: 30px 0 50px; }
-		&.ng-enter{ @include trans(0.7s); -webkit-transform: translateY(-100%); }
-		&.ng-enter.ng-enter-active{ -webkit-transform: translateY(0%); }
-		&.ng-leave{ @include trans(1s !important); -webkit-transform: translateY(-100%); }
+		&.ng-enter{ @include transition(0.7s); @include transform(translateY(-100%)); }
+		&.ng-enter.ng-enter-active{ @include transform(translateY(0%)); }
+		&.ng-leave{ @include transition(1s !important); @include transform(translateY(-100%)); }
 	}
 	.Login-close{ float:right; }
 	.Login-logo{ margin: 50px 0;}
@@ -247,42 +248,36 @@
 	.CreateRecipe-description{ width: 100%; min-height: 150px; border: none; border-bottom: 1px solid #bbb; }
 	.CreateRecipe-name-input{ width: 100%; }
 
-
-
 /* Basement */
-	.Basement{ padding-top: 0; bottom:40px; right:0; width:100%; top:initial; will-change: transform; transition: 0.12s; position: fixed;}
+	.Basement{ padding-top: 0; bottom:40px; right:0; width:100%; top:initial; @include transition( 0.12s); position: fixed;}
 	.Basement-menu-item_active{ margin-right: 5px; @extend .Icon-circle-white; }
-	.Basement-menu-item{ border-bottom: 1px solid #222222; box-shadow: 0px 1px 0px #444; -webkit-box-shadow: 0px 1px 0px #444; padding: 10px; @extend .T-stout}
+	.Basement-menu-item{ border-bottom: 1px solid #222222; @include box-shadow( 0px 1px 0px #444);  padding: 10px; @extend .T-stout}
 	.Basement-menu-item.active{ background-color: #999; }
 	.Basement-confirm{ @extend .L-center; @extend .L-vbox-10; font-weight: normal; text-transform: initial; }
 
 
 /* Flip card */
-	.Flip-inner.switched{ -webkit-transform: rotateY(180deg);
-		.Flip-front{ }
-	}
-
-	.Flip-container { -webkit-perspective: 200; 
-	}
+	.Flip-inner.switched{ @include transform(rotateY(180deg));  }
+	.Flip-container { @include perspective(200px); }
 	.Flip-inner.animate.no-border{ border:none; margin-top:0; }	
-	.Flip-inner.animate{ margin-top: -1px; border: 1px solid #ddd; -webkit-animation:.6s flip ease-out; transform: rotateY(180deg); }
-	.Flip-inner { -webkit-transform-style: preserve-3d; }
-	.Flip-front, .Flip-back { height:50px; box-sizing: border-box; -webkit-backface-visibility: hidden; }
+	.Flip-inner.animate{ margin-top: -1px; border: 1px solid #ddd; @include animation(0.6s flip ease-out); @include transform( rotateY(180deg)); }
+	.Flip-inner { @include transform-style(preserve-3d); }
+	.Flip-front, .Flip-back { height:50px; box-sizing: border-box; @include backface-visibility(hidden); }
 	.Flip-front { z-index: 2; padding: 18px 50px; border-left: 1px solid #eee; }
-	.Flip-back { background-color: #fff; padding-left: 39px; margin-top: -50px; position: relative; -webkit-transform: rotateY(180deg); }
+	.Flip-back { background-color: #fff; padding-left: 39px; margin-top: -50px; position: relative; @include transform(rotateY(180deg)); }
 
-	@-webkit-keyframes flip {
+	@include keyframes(flip){
 	  0% {
-	    transform: rotateY(0deg);
+        @include transform(rotateY(0deg));
 	  }
 	  20% {
-	    transform: rotateY(90deg);
+        @include transform(rotateY(90deg));
 	  }
 	  85% {
-	    transform: rotateY(170deg);
+        @include transform(rotateY(170deg));
 	  }
 	  100% {
-	    transform: rotateY(180deg);
+        @include transform(rotateY(180deg));
 	  }
 	}
 	
@@ -304,56 +299,38 @@
 }
 
 /* Splash Screen */
-	.Splash{ z-index: 99; position: absolute; top:0; bottom:0; left:0; right:0; background-color:#eee; text-align:center; }
+	.Splash{ @include transition(all 0.6s ease); z-index: 99; position: absolute; top:0; bottom:0; left:0; right:0; background-color:#eee; text-align:center; }
+    .Splash_finished{ @include transform(translateX(-100%));}
 	.Splash-image{ margin-top: 200px; }
 
 /* Section Transitions */
-.slide{
-}
-
-.ng-hide-add{
-    top:0;
-	position: fixed; width: 100%;
-	-webkit-animation:0.7s slideOut ease;
-}
-.ng-hide-remove{
-    top:0;
-	position: fixed; width: 100%;
-	-webkit-animation:0.7s slideIn ease;
-}
-
-.ng-hide.ng-hide-add{
-  display:block !important;
-}
-.ng-hide.ng-hide-remove-pre{ 
-	display: block !important;
-	position: fixed;
-    top:0;
-	width: 100%;
-	transform: translateX(100%);
-}
+.ng-hide-add{ top:0; position: fixed; width: 100%;  @include animation(0.7s slideOut ease); }
+.ng-hide-remove{ top:0; position: fixed; width: 100%; @include animation(0.7s slideIn ease); }
+.ng-hide.ng-hide-add{ display:block !important; }
+.ng-hide.ng-hide-remove-pre{ display: block !important; position: fixed; top:0; width: 100%; @include transform(translateX(100%)); }
 
 /* light speed out */
-@-webkit-keyframes slideIn {
+@include keyframes(slideIn) {
   0% {
-    transform: translateX(100%);
+    @include transform(translateX(100%));
   }
   20% {
-  	transform: translateX(100%);
+    @include transform(translateX(100%));
   }
   100% {
-    transform: translateX(0%);
+    @include transform(translateX(0%));
   }
 }
-@-webkit-keyframes slideOut {
+
+@include keyframes(slideOut){
   0% {
-    transform: translateX(0%);
+    @include transform(translateX(0%));
   }
   20% {
-    transform: translateX(0%);
+    @include transform(translateX(0%));
   }
   100% {
-    transform: translateX(-100%);
+    @include transform(translateX(-100%));
   }
 }
 
@@ -364,33 +341,7 @@
 .Anim-spinner > div {  width: 10px;  height: 10px; background-color: #444; border-radius: 100%; display: inline-block; -webkit-animation: bouncedelay 1.4s infinite ease-in-out; animation: bouncedelay 1.4s infinite ease-in-out; -webkit-animation-fill-mode: both;   animation-fill-mode: both; }
 .Anim-spinner-b1 { -webkit-animation-delay: -0.32s; animation-delay: -0.32s; }
 .Anim-spinner-b2 { -webkit-animation-delay: -0.16s; animation-delay: -0.16s; }
-@-webkit-keyframes bouncedelay {
-  0%, 80%, 100% { -webkit-transform: scale(0.0) }
-  40% { -webkit-transform: scale(1.0) }
+@include keyframes(bouncedelay) {
+  0%, 80%, 100% { @include transform(scale(0.0)) }
+  40% { @include transform(scale(1.0)) }
 }
-@keyframes bouncedelay {
-  0%, 80%, 100% {
-    transform: scale(0.0);
-    -webkit-transform: scale(0.0);
-  } 40% {
-      transform: scale(1.0);
-      -webkit-transform: scale(1.0);
-    }
-}
-
-
-/*
-.slide.ng-enter, .slide.ng-leave.ng-leave-active {
-  -webkit-transform: scaleX(0.0001);
-       -o-transform: scaleX(0.0001);
-          transform: scaleX(0.0001);
-  opacity: 0;
-}
-
-// default state
-.slide, .slide.ng-enter.ng-enter-active {
-  -webkit-transform: scaleX(1);
-       -o-transform: scaleX(1);
-          transform: scaleX(1);
-  opacity: 1;
-}*/

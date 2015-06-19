@@ -11,7 +11,7 @@
         </div>
 
         <!-- Fancy pancy flippy thingy if we're in a chrome environment -->
-        <div ng-if="StateModel.isChrome">
+        <div>
             <div class="Flip-container" ng-hide="habit.dirty">
                 <div class="Flip-inner" anim:on-complete anim:name="flip" ng-class="{animate: triggerFlip, 'no-border': noBorder, switched: habit.tickedToday}">
                     <div class="Box_medium Flip-front Btn-reg Btn_icon"  ng-click="tickHabit(habit.id)">
@@ -31,14 +31,14 @@
                 </div>
             </div>
         </div>
-        <div ng-if="habit.tickedToday && !StateModel.isChrome" class="Box_medium">
-            <div class="IconText IconText_medium">
-                <i class="Icon flame-{{ StriveHelper.getStreakIcon(habit.streak); }} IconText-icon"></i>
-                <div class="IconText-text">{{ habit.streak }}</div>
-            </div>
-        </div>
-        <button ng-if="!habit.tickedToday && !StateModel.isChrome" ng-click="tickHabit(habit.id)" class="Btn-reg Btn_icon Btn_medium Habit-tick"><i class="Icon checkmark-gray"></i>
-        </button>
+        <!--<div ng-if="habit.tickedToday && !StateModel.isChrome" class="Box_medium">-->
+            <!--<div class="IconText IconText_medium">-->
+                <!--<i class="Icon flame-{{ StriveHelper.getStreakIcon(habit.streak); }} IconText-icon"></i>-->
+                <!--<div class="IconText-text">{{ habit.streak }}</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<button ng-if="!habit.tickedToday && !StateModel.isChrome" ng-click="tickHabit(habit.id)" class="Btn-reg Btn_icon Btn_medium Habit-tick"><i class="Icon checkmark-gray"></i>-->
+        <!--</button>-->
     </div>
 
     <div class="ListItem-meta" ng-if="habit.selected">

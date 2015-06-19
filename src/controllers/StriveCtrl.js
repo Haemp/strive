@@ -90,7 +90,7 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 
 		// load in separate stylesheet for
 		// the pre-kitkat android browser.
-		yepnope([{ test: Browser.isAndroid, yep: 'styles/android.css' }]);
+		//yepnope([{ test: Browser.isAndroid, yep: 'styles/android.css' }]);
 
 
 		// handling backwards button
