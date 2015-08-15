@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Sat Apr 05 2014 12:53:57 GMT+0100 (BST)
+// Generated on Sat Aug 15 2015 12:17:41 GMT-0700 (PDT)
 
 module.exports = function (config) {
     config.set({
@@ -16,8 +16,8 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         files: [
             // libs
-            'bower_components/jquery/jquery.js',
             'bower_components/angular/angular.js',
+            'bower_components/jquery/dist/jquery.js',
             'bower_components/Datejs/build/date.js',
             'bower_components/angular-mocks/angular-mocks.js',
             'bower_components/angular-ui-router/release/angular-ui-router.min.js',
@@ -39,7 +39,6 @@ module.exports = function (config) {
             //'src/Strive.js',
             'src/modules/calc/ReCalcService.js',
 
-
             'src/**/*.html'
         ],
 
@@ -59,11 +58,14 @@ module.exports = function (config) {
             moduleName: "strive.templates"
         },
 
+
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['spec'],
-
+        reporters: ['progress'],
+        //specReporter: {maxLogLines: 5},
+        //plugins: ["karma-spec-reporter", 'karma-jasmine', 'karma-chrome-launcher'],
+        //
 
         // web server port
         port: 9876,
@@ -90,5 +92,5 @@ module.exports = function (config) {
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
         singleRun: false
-    });
-};
+    })
+}

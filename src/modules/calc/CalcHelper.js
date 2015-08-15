@@ -6,7 +6,10 @@
 function _CalcHelper(){
 
     // fix for Date parsing inconsistencies
-    Date.dateParse = Date.parse;
+    // in different browsers
+    if(typeof Date.dateParse === 'undefined')
+        Date.dateParse = Date.parse;
+
     Date.parse = function(d){
         var r = Date.dateParse(d);
         if(!r) r = new Date(d);

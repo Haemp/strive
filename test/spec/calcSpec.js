@@ -19,6 +19,7 @@ describe('Calculations', function(){
             expect(r).toBe(true);
         })
 
+
         it('Should by dirty 28/3 02:00 -> 28/3 20:00', function () {
 
             var lastCalcDate = new Date.parse('2015-03-28 02:00:00');
@@ -58,6 +59,7 @@ describe('Calculations', function(){
 
             expect(r).toBe(false);
         })
+
 
         it('Should be clean 28/3 23:00 -> 29/3 02:00', function () {
 
