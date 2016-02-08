@@ -11,7 +11,7 @@
 			scope:{
 				habit: '=?'
 			},
-			templateUrl: 'src/modules/habit/habit-public.html',
+			templateUrl: 'habit-public.html',
 			link: function(scope){
 				scope.selectHabit = HabitModel.selectHabit;
 			}

@@ -318,7 +318,7 @@
 				recipe: '=?',
 				editRecipe: '&'
 			},
-			templateUrl: 'src/modules/recipe/recipe.html',
+			templateUrl: 'recipe.html',
 			link: function(scope){
 
 				// When initiating a recipe we need to pair the 
@@ -361,7 +361,7 @@
 			scope: {
 				recipe: '=?'
 			},
-			templateUrl: 'src/modules/recipe/recipe-public.html',
+			templateUrl: 'recipe-public.html',
 			link: function(scope){
 
 				// When initiating a recipe we need to pair the 
@@ -385,7 +385,7 @@
 				habits: '=?',
 				monitors: '=?'
 			},
-			templateUrl: 'src/modules/recipe/create-recipe.html',
+			templateUrl: 'create-recipe.html',
 			link: function(scope){
 
 				self._init = function(){

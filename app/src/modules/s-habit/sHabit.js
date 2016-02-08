@@ -8,7 +8,7 @@
                 scope:{
                     habit: '=?'
                 },
-                templateUrl: 'src/modules/habit/habit.html',
+                templateUrl: '../habit/habit.html',
                 link: function(scope){
 
                     scope.StriveHelper = StriveHelper;

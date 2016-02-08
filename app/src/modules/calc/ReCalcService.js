@@ -40,6 +40,16 @@
             });
         }
 
+        this.recalcRecords = function(habits){
+            if(allAreDirty()){
+                habits.forEach(function(habit){
+                    habit.recordDirty = true;
+                });
+
+                _recalcRecords(habits);
+            }
+        }
+        
         this.recalcAll = function(habits){
 
             // dirty check habit
@@ -80,6 +90,24 @@
                     oldHabit.streakRecord = habit.streakRecord;
                     oldHabit.tickedToday = habit.tickedToday;
                     oldHabit.dirty = false;
+                })
+
+                save();
+                console.log('AllCalcWorkflow: #9 Done! Now saving the last calculation time: ', lastCalculation);
+            });
+        }
+
+        function _recalcRecords(habits){
+
+            console.log('AllCalcWorkflow: #1a Sending habits to the worker thread for record calc');
+            return Workers.postMessage({name: 'recalcRecords', habits: habits}).then(function(message){
+
+                console.log('AllCalcWorkflow: #8 Recieced habits from worker - now looping through and setting streak, streak reccord and tickedToday');
+                var oldHabit;
+                message.data.habits.forEach( function(habit){
+                    oldHabit = habits.filter(function(h){ return h.id == habit.id })[0];
+                    oldHabit.streakRecord = habit.streakRecord;
+                    oldHabit.recordDirty = false;
                 })
 
                 lastCalculation = new Date();

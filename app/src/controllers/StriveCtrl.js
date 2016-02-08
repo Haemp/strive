@@ -47,8 +47,14 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 			.then(function(){
 
 				console.log('AllCalcWorkflow: #1 Loaded habits, now going to recalc');
-				return ReCalcService.recalcAll(HabitModel.habits);
+				return ReCalcService.recalcAll(HabitModel.habits.filter(function(habit){
+                    return !habit.isArchived;
+				}));
 			}).then(function () {
+
+                ReCalcService.recalcRecords(HabitModel.habits.filter(function(habit){
+                    return !habit.isArchived;
+                }));
 				console.log('Finished calc');
 			})
 
@@ -78,7 +84,9 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 				HabitModel.sort();
 
 				ReCalcService.invalidateAll();
-				ReCalcService.recalcAll(HabitModel.habits);
+				ReCalcService.recalcAll(HabitModel.habits.filter(function(habit){
+				    return !habit.isArchived;
+				}));
 			}
 		})
 
@@ -128,7 +136,9 @@ Strive.controller('StriveCtrl', function StriveCtrl(
 		// checkmarks to tick
 		if( typeof chrome != 'undefined' && chrome.runtime && chrome.runtime.onSuspendCanceled ){
 			chrome.runtime.onSuspendCanceled.addListener(function(){
-				ReCalcService.recalcAll(HabitModel.habits);
+				ReCalcService.recalcAll(HabitModel.habits.filter(function(habit){
+				    return !habit.isArchived;
+				}));
 			});
 		}
 

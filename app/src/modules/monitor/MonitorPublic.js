@@ -8,7 +8,7 @@
 			scope: {
 				monitor: '=?'
 			},
-			templateUrl: 'src/modules/monitor/monitor-public.html',
+			templateUrl: 'monitor-public.html',
 			link: function(scope) {
 				scope.selectMonitor = MonitorModel.selectMonitor;
 			}

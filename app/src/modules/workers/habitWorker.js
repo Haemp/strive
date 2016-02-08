@@ -27,11 +27,34 @@ function recalcAll(habits){
 
 		habit.tickedToday = CalcHelper.tickedToday(habit);
 		habit.streak = CalcHelper.newCalcStreak(habit.ticks);
-		habit.streakRecord = CalcHelper.newCalcStreakRecord(habit.ticks);
 	}
 
 	console.log('AllCalcWorkflow: #7 Worker: Sending habits back to main thread', habits.length + ' Habits calculated!');
 	postMessage({name: 'recalcAll', habits: habits});
+}
+
+
+/**
+ * This is the most time consuming function, so we evaluate it separatley from
+ * the general streak calc
+ * @param habits
+ */
+function recalcRecords(habits){
+
+    if (!habits || habits.length == 0) return;
+
+    console.log('AllCalcWorkflow: #6 Worker: Recalculating habits');
+
+    // TODO: Refactor this into CalcHelper so it can more easily be tested
+    for (var i = 0; i < habits.length; i++) {
+        var habit = habits[i];
+        if (!habit.ticks) continue;
+
+        habit.streakRecord = CalcHelper.newCalcStreakRecord(habit.ticks);
+    }
+
+    console.log('AllCalcWorkflow: #7 Worker: Sending habits back to main thread', habits.length + ' Habits calculated!');
+    postMessage({name: 'recalcAll', habits: habits});
 }
 
 function recalcHabit(habit){

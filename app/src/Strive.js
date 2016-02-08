@@ -39,7 +39,7 @@ Strive.config(function($stateProvider, $httpProvider) {
 
 			views: {
 				main: {
-					templateUrl: "views/view-habits.html",
+					templateUrl: "../../views/view-habits.html",
 					controller: 'HabitCtrl'
 				}
 			}
@@ -49,7 +49,7 @@ Strive.config(function($stateProvider, $httpProvider) {
 
 			views: {
 				main: {
-					templateUrl: "views/view-monitors.html",
+					templateUrl: "../../views/view-monitors.html",
 					controller: 'MonitorCtrl'
 				}
 			}
@@ -59,7 +59,7 @@ Strive.config(function($stateProvider, $httpProvider) {
 			url: "/recipes",
 			views: {
 				main: {
-					templateUrl: "views/view-recipes.html",
+					templateUrl: "../../views/view-recipes.html",
 					controller: 'RecipeCtrl'
 				}
 			}
@@ -69,7 +69,7 @@ Strive.config(function($stateProvider, $httpProvider) {
 
 			views: {
 				main:{
-					templateUrl: "views/view-create-recipe.html",
+					templateUrl: "../../views/view-create-recipe.html",
 					controller: "CreateRecipeCtrl"
 				}
 			}
@@ -79,7 +79,7 @@ Strive.config(function($stateProvider, $httpProvider) {
 
 			views: {
 				main:{
-					templateUrl: "views/view-update-recipe.html",
+					templateUrl: "../../views/view-update-recipe.html",
 					controller: "UpdateRecipeCtrl"
 				}
 			}
@@ -89,7 +89,7 @@ Strive.config(function($stateProvider, $httpProvider) {
 
 			views: {
 				main: {
-					templateUrl: "views/view-archive.html",
+					templateUrl: "../../views/view-archive.html",
 					controller: 'ArchiveCtrl'
 				}
 			}
