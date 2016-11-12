@@ -8,9 +8,9 @@
 		self.habitWorker;
 
 		function init(){
-
-            self.habitWorker = new Worker('/src/modules/workers/habitWorker.js');
-
+			
+			self.habitWorker = new Worker('/src/modules/workers/habitWorker.js');
+			
 			self.habitWorker.addEventListener('message', function(data){
 				console.log('Resolving');
 				self.d.resolve(data)

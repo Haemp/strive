@@ -8,7 +8,7 @@
 		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0 user-scalable=0' name='viewport' />
 
 		<link rel="stylesheet" href="styles/style.css">
-		<link rel="shortcut icon" href="../img/favicon.png" type="image/png">
+		<link rel="shortcut icon" href="img/favicon.png" type="image/png">
 		<script src="bower_components/jquery/dist/jquery.js"></script>
 		<script src="bower_components/angular/angular.js"></script>
 
@@ -30,7 +30,7 @@
 		<script src="bower_components/yepnope/yepnope.js"></script>
 		<script src="bower_components/angular-uuid-service/uuid-svc.min.js"></script>
 		<script src="bower_components/remarkable/dist/remarkable.min.js"></script>
-		<script src="../libs/JsonStorage.js"></script>
+		<script src="libs/JsonStorage.js"></script>
 		<script src="src/libs/RemarkableNg.js"></script>
 
 		<!-- Strive -->
@@ -49,10 +49,10 @@
 		<script src="src/modules/workers/Workers.js"></script>
 
 		<!-- Own Libraires -->
-		<script src="../libs/Tip.js"></script>
+		<script src="libs/Tip.js"></script>
 		<script src="src/modules/OnBoarding.js"></script>
 		<script src="src/modules/StriveNotifications.js"></script>
-		<script src="../libs/sync-model/SyncModel.js"></script>
+		<script src="libs/sync-model/SyncModel.js"></script>
 
 		<script src="src/controllers/StriveCtrl.js"></script>
 		<script src="src/StriveHelper.js"></script>
@@ -65,14 +65,14 @@
 	<div ></div>
 	<body ng-app="Strive" auto-top ng-csp ng-controller="StriveCtrl" ha:on-load ha:on-model-load>
 		<div class="Splash">
-			<img class="Splash-image" src="../img/logo-strive-2x.png" alt="Strive">
+			<img class="Splash-image" src="img/logo-strive-2x.png" alt="Strive">
 		</div>
 		<div class="MainHeader">
 			<div class="MainHeader-hamburger" ng-click="StateModel.basementOpen = !StateModel.basementOpen">
 				<i class="Icon hamburger"></i>
 			</div>
 			<div class="MainHeader-title" ng-click="StateModel.basementOpen = !StateModel.basementOpen">{{ $state.current.name }}</div>
-			<img class="MainHeader-logo" src="../img/logo-strive-2x.png" alt="">
+			<img class="MainHeader-logo" src="img/logo-strive-2x.png" alt="">
 		</div>
 		<div class="MainContent ">
 			<div class="slide" ng-show="activeState == 'habits'"  ng-controller="HabitCtrl" ng-include="'views/view-habits.html'"></div>

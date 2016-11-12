@@ -7,8 +7,8 @@
 /**
  * Adjustment classes. Solves exceptions.
  */
-@import url(../../bower_components/nvd3/nv.d3.css);
-@import url(../../sprites.css);
+@import url(../bower_components/nvd3/nv.d3.css);
+@import url(sprites.css);
 .L-fr {
   float: right; }
 
@@ -387,8 +387,8 @@ input {
 /* Fonts */
 @font-face {
   font-family: 'RobotoSlab';
-  src: url("../../fonts/robotoslab-regular-webfont.eot");
-  src: url("../../fonts/robotoslab-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../../fonts/robotoslab-regular-webfont.woff") format("woff"), url("../../fonts/robotoslab-regular-webfont.ttf") format("truetype"), url("../../fonts/robotoslab-regular-webfont.svg#roboto_slabregular") format("svg");
+  src: url("../fonts/robotoslab-regular-webfont.eot");
+  src: url("../fonts/robotoslab-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/robotoslab-regular-webfont.woff") format("woff"), url("../fonts/robotoslab-regular-webfont.ttf") format("truetype"), url("../fonts/robotoslab-regular-webfont.svg#roboto_slabregular") format("svg");
   font-weight: normal;
   font-style: normal; }
 /* Typography */

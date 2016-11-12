@@ -280,7 +280,7 @@
 			scope:{
 				monitor: '=?'
 			},
-			templateUrl: 'monitor.html',
+			templateUrl: 'src/modules/monitor/monitor.html',
 			link: function(scope){
 				
 				scope.StriveHelper = StriveHelper;

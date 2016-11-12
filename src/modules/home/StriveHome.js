@@ -8,7 +8,7 @@
                 url: "/home",
                 views: {
                     main: {
-                        templateUrl: "home.html",
+                        templateUrl: "src/modules/home/home.html",
                         controller: 'HomeCtrl'
                     }
                 }
