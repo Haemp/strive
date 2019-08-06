@@ -167,8 +167,8 @@
 /* MainInput */
 	.MainInput{ position: static; margin: 0 15px 30px 15px; }
 	.MainInput-inner{ overflow:hidden; }
-	.MainInput-btn{ padding: 15px 30px; }
-	.MainInput-input-name{ padding: 15px 10px 15px 30px;}
+	.MainInput-btn{ padding: 15px 30px; box-sizing: border-box; }
+	.MainInput-input-name{ padding: 15px 10px 15px 30px; width: 0; /* This is needed to prevent the button from being clipped */}
 
 /** MainList */
     .MainList{ margin-bottom:30px; }
@@ -229,7 +229,7 @@
 	.nv-group{ stroke: #999 !important; stroke-width: 4px !important; }
 
 /* Recipe */
-	.Recipe-title{ text-align: center; font-weight: 900; letter-spacing: 0px;  @extend .ListItem-name; }
+	.Recipe-title{ text-align: center;  font-weight: 900; letter-spacing: 0px;  @extend .ListItem-name; }
 
 /* Login */
 	.Login{ overflow-y:auto; font-weight:300; color: #ccc; position:fixed; background-color: #333; top:0; left:0; right:0; bottom:0; z-index:10; padding: 20px; @include background(-webkit-radial-gradient(top, circle cover, #545454 0%,#333333 30%));

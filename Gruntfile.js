@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 				tempateUrl: "styles/template.mustache"
 			}
 		},
-		'sass-watch': {
+		'sassWatch': {
 			style: {
 				options: {
 					path: 'styles'
@@ -42,13 +42,13 @@ module.exports = function(grunt) {
 
 	// These plugins provide necessary tasks.
 	grunt.loadNpmTasks('grunt-spritesheet');
-	grunt.loadNpmTasks('grunt-sass-watch');
+	grunt.loadNpmTasks('grunt-sassWatch');
 	grunt.loadNpmTasks('grunt-complexity');
 
 	//grunt.registerTask('watch', ['sass-watch']);
 
 	// Default task.
 	grunt.registerTask('default', ['spritesheet:generate']);
-	grunt.registerTask('watch', ['sass-watch:style']);
+	grunt.registerTask('watch', ['sassWatch:style']);
 	grunt.registerTask('complex?', ['complexity']);
 };

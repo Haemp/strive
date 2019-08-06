@@ -252,54 +252,64 @@
 
 .L-hbox-sep5 > * {
   margin-left: 5px; }
+
 .L-hbox-sep5 > *:first-child {
   margin-left: 0; }
 
 .L-hbox-sep10 > * {
   margin-left: 10px; }
+
 .L-hbox-sep10 > *:first-child {
   margin-left: 0; }
 
 .L-hbox-sep15 > * {
   margin-left: 15px; }
+
 .L-hbox-sep15 > *:first-child {
   margin-left: 0; }
 
 .L-hbox-sep20 > * {
   margin-left: 20px; }
+
 .L-hbox-sep20 > *:first-child {
   margin-left: 0; }
 
 /* ---------------------------------- *
- * 	Containers
- * ---------------------------------- */
+  * 	Containers
+  * ---------------------------------- */
 .L-vbox-30 > * {
   margin-top: 30px; }
+
 .L-vbox-30 > *:first-child {
   margin-top: 0px; }
 
 .L-vbox-25 > * {
   margin-top: 25px; }
+
 .L-vbox-25 > *:first-child {
   margin-top: 0px; }
 
 .L-vbox-20 > *, .Tip > div > * {
   margin-top: 20px; }
+
 .L-vbox-20 > *:first-child, .Tip > div > *:first-child {
   margin-top: 0px; }
 
 .L-vbox-15 > * {
   margin-top: 15px; }
+
 .L-vbox-15 > *:first-child {
   margin-top: 0px; }
 
 .L-vbox-10 > *, .CreateRecipe-select-wrapper > *, .Basement-confirm > * {
   margin-top: 10px; }
+
 .L-vbox-10 > *:first-child, .CreateRecipe-select-wrapper > *:first-child, .Basement-confirm > *:first-child {
   margin-top: 0px; }
 
 .L-vbox-5 > * {
   margin-top: 5px; }
+
 .L-vbox-5 > *:first-child {
   margin-top: 0px; }
 
@@ -361,7 +371,7 @@ button, input {
   border: none; }
 
 * {
-  -webkit-tap-highlight-color: transparent; }
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
 body {
   background-color: #eee;
@@ -391,6 +401,7 @@ input {
   src: url("../fonts/robotoslab-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/robotoslab-regular-webfont.woff") format("woff"), url("../fonts/robotoslab-regular-webfont.ttf") format("truetype"), url("../fonts/robotoslab-regular-webfont.svg#roboto_slabregular") format("svg");
   font-weight: normal;
   font-style: normal; }
+
 /* Typography */
 .T-alt, .MainHeader-title, .CreateRecipe-subtitle {
   font-family: "RobotoSlab", sans-serif; }
@@ -475,18 +486,21 @@ input {
   -webkit-transition: 0.2s;
   -moz-transition: 0.2s;
   transition: 0.2s; }
+
 .ListItem-edit.ng-enter {
   -webkit-transform: translateX(-30px);
   -moz-transform: translateX(-30px);
   -ms-transform: translateX(-30px);
   -o-transform: translateX(-30px);
   transform: translateX(-30px); }
+
 .ListItem-edit.ng-enter.ng-enter-active {
   -webkit-transform: translateX(0px);
   -moz-transform: translateX(0px);
   -ms-transform: translateX(0px);
   -o-transform: translateX(0px);
   transform: translateX(0px); }
+
 .ListItem-edit.ng-leave {
   -webkit-transition: 0.1s !important;
   -moz-transition: 0.1s !important;
@@ -506,12 +520,14 @@ input {
   -ms-transform: translateX(-100%);
   -o-transform: translateX(-100%);
   transform: translateX(-100%); }
+
 .ListItem.ng-enter.ng-enter-active {
   -webkit-transform: translateX(0px);
   -moz-transform: translateX(0px);
   -ms-transform: translateX(0px);
   -o-transform: translateX(0px);
   transform: translateX(0px); }
+
 .ListItem.ng-leave {
   -webkit-transition: 0.13s !important;
   -moz-transition: 0.13s !important;
@@ -559,6 +575,7 @@ input {
 /* Button */
 [class*='Btn-']:active {
   outline: none; }
+
 [class*='Btn-']:focus {
   outline: none; }
 
@@ -587,6 +604,7 @@ input {
   border: 1px solid #666;
   color: #333;
   padding: 8px  15px; }
+
 .Btn.blacky {
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
@@ -647,9 +665,9 @@ input {
     background: #666;
     color: #333;
     text-shadow: 0 1px 1px rgba(255, 255, 255, 0);
-    -webkit-box-shadow: 0 1px 1px transparent;
-    -moz-box-shadow: 0 1px 1px transparent;
-    box-shadow: 0 1px 1px transparent; }
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0);
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0); }
 
 .Btn_medium {
   padding: 5px 10px;
@@ -763,10 +781,13 @@ input {
   overflow: hidden; }
 
 .MainInput-btn {
-  padding: 15px 30px; }
+  padding: 15px 30px;
+  box-sizing: border-box; }
 
 .MainInput-input-name {
-  padding: 15px 10px 15px 30px; }
+  padding: 15px 10px 15px 30px;
+  width: 0;
+  /* This is needed to prevent the button from being clipped */ }
 
 /** MainList */
 .MainList {
@@ -914,12 +935,16 @@ input {
 .Monitor-chart svg {
   position: relative;
   left: -20px; }
+
 .Monitor-chart .nv-axis line {
   display: none; }
+
 .Monitor-chart .nv-axis {
   display: none; }
+
 .Monitor-chart .domain {
   display: none; }
+
 .Monitor-chart .nv-series {
   display: none; }
 
@@ -1109,6 +1134,7 @@ input {
     -webkit-transform: rotateY(170deg); }
   100% {
     -webkit-transform: rotateY(180deg); } }
+
 @-moz-keyframes flip {
   0% {
     -moz-transform: rotateY(0deg); }
@@ -1118,6 +1144,7 @@ input {
     -moz-transform: rotateY(170deg); }
   100% {
     -moz-transform: rotateY(180deg); } }
+
 @keyframes flip {
   0% {
     -webkit-transform: rotateY(0deg);
@@ -1143,6 +1170,7 @@ input {
     -ms-transform: rotateY(180deg);
     -o-transform: rotateY(180deg);
     transform: rotateY(180deg); } }
+
 /* Indentions */
 .Indent-10-30 {
   padding: 10px 30px; }
@@ -1235,6 +1263,7 @@ input {
     -webkit-transform: translateX(100%); }
   100% {
     -webkit-transform: translateX(0%); } }
+
 @-moz-keyframes slideIn {
   0% {
     -moz-transform: translateX(100%); }
@@ -1242,6 +1271,7 @@ input {
     -moz-transform: translateX(100%); }
   100% {
     -moz-transform: translateX(0%); } }
+
 @keyframes slideIn {
   0% {
     -webkit-transform: translateX(100%);
@@ -1261,6 +1291,7 @@ input {
     -ms-transform: translateX(0%);
     -o-transform: translateX(0%);
     transform: translateX(0%); } }
+
 @-webkit-keyframes slideOut {
   0% {
     -webkit-transform: translateX(0%); }
@@ -1268,6 +1299,7 @@ input {
     -webkit-transform: translateX(0%); }
   100% {
     -webkit-transform: translateX(-100%); } }
+
 @-moz-keyframes slideOut {
   0% {
     -moz-transform: translateX(0%); }
@@ -1275,6 +1307,7 @@ input {
     -moz-transform: translateX(0%); }
   100% {
     -moz-transform: translateX(-100%); } }
+
 @keyframes slideOut {
   0% {
     -webkit-transform: translateX(0%);
@@ -1294,6 +1327,7 @@ input {
     -ms-transform: translateX(-100%);
     -o-transform: translateX(-100%);
     transform: translateX(-100%); } }
+
 /**
  * CSS Spinner
  */
@@ -1325,11 +1359,13 @@ input {
     -webkit-transform: scale(0); }
   40% {
     -webkit-transform: scale(1); } }
+
 @-moz-keyframes bouncedelay {
   0%, 80%, 100% {
     -moz-transform: scale(0); }
   40% {
     -moz-transform: scale(1); } }
+
 @keyframes bouncedelay {
   0%, 80%, 100% {
     -webkit-transform: scale(0);
@@ -1343,5 +1379,3 @@ input {
     -ms-transform: scale(1);
     -o-transform: scale(1);
     transform: scale(1); } }
-
-/*# sourceMappingURL=style.css.map */

@@ -1,3 +1,4 @@
-/node_modules
-/.idea
+node_modules
+.idea
+.firebase
 atlassian-ide-plugin.xml
