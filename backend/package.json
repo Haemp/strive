@@ -1,0 +1,39 @@
+{
+  "name": "StriveApi",
+  "version": "1.0.0",
+  "description": "Habit tracking app",
+  "scripts": {
+    "mongo:prod": "mongod --dbpath=/home/Haemp/mongo/data --fork --logpath=/home/Haemp/mongo/logs/mongodb.log --logappend --smallfiles",
+    "mongo:dev": "mongod --dbpath=/Users/Haemp/mongo/data --fork --logpath=/Users/Haemp/mongo/logs/mongodb.log --logappend --smallfiles",
+    "mongo:prod:shutdown": "mongod --shutdown",
+    "mongo:dev:append": "mongod --dbpath=/Users/Haemp/mongo/data --smallfiles",
+    "start:prod": "npm run mongo:prod; export RUNNING_MODE='prod'; forever start server.js",
+    "stop:prod": "forever stop server.js",
+    "logs:prod": "forever logs server.js",
+    "start:dev": "npm run mongo:dev; export RUNNING_MODE='dev'; node server.js"
+  },
+  "author": {
+    "name": "Hampus Ahlgren",
+    "email": "hampus@ahlgren.co",
+    "url": "https://ahlgren.co"
+  },
+  "homepage": "https://ahlgren.co",
+  "dependencies": {
+    "date-utils": "1.2.15",
+    "express": "3.4.4",
+    "g": "1.0.2",
+    "mongodb": "^2.2.11",
+    "mongoose": "^4.6.7",
+    "node-uuid": "^1.4.1",
+    "passport": "0.2.0",
+    "passport-local": "1.0.0",
+    "password-hash": "1.2.1",
+    "q": "1.0.1"
+  },
+  "devDependencies": {
+    "supervisor": "0.5.7"
+  },
+  "bundleDependencies": [],
+  "private": true,
+  "main": "server.js"
+}
