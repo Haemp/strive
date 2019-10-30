@@ -20,7 +20,7 @@
   "homepage": "https://ahlgren.co",
   "dependencies": {
     "date-utils": "1.2.15",
-    "express": "3.4.4",
+    "express": "4.17.1",
     "g": "1.0.2",
     "mongodb": "^2.2.11",
     "mongoose": "^4.6.7",
