@@ -18,7 +18,7 @@
     "grunt-sass-watch": "^0.0.1",
     "grunt-spritesheet": "~0.1.2",
     "jasmine-core": "^2.3.4",
-    "jquery": "^2.1.1",
+    "jquery": "^3.5.0",
     "karma": "^0.12.3",
     "karma-chrome-launcher": "^0.2.0",
     "karma-jasmine": "^0.2.2",
