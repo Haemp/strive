@@ -19,7 +19,7 @@
     "grunt-spritesheet": "~0.1.2",
     "jasmine-core": "^2.3.4",
     "jquery": "^2.1.1",
-    "karma": "^0.12.3",
+    "karma": "^6.3.14",
     "karma-chrome-launcher": "^0.2.0",
     "karma-jasmine": "^0.2.2",
     "karma-ng-html2js-preprocessor": "^0.1.2",
